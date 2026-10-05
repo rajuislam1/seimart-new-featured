@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Sei Mart | Product Management</title>
+
+
+    <link
+        rel="stylesheet"
+        href="products.css"
+    >
+
+    <script src="../js/admin-auth.js"></script>
+</head>
+
+
+<body>
+
+
+    <div class="products-page">
+
+
+        <!-- =====================================================
+             PAGE HEADER
+        ====================================================== -->
+
+        <div class="products-header">
+
+            <div>
+
+                <span class="products-label">
+                    PRODUCT MANAGEMENT
+                </span>
+
+                <h1 id="productPageTitle">
+                    All Products
+                </h1>
+
+                <p id="productPageDescription">
+                    View and manage your Sei Mart products.
+                </p>
+
+            </div>
+
+
+            <a
+                href="../../admin.html"
+                class="products-back-button"
+            >
+                ← Back to Dashboard
+            </a>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             PRODUCT SUMMARY
+        ====================================================== -->
+
+        <div class="product-summary-grid">
+
+
+            <div class="product-summary-card">
+
+                <div class="summary-icon">
+                    📦
+                </div>
+
+                <div>
+
+                    <span>
+                        Total Products
+                    </span>
+
+                    <strong id="totalProducts">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="product-summary-card">
+
+                <div class="summary-icon">
+                    🟢
+                </div>
+
+                <div>
+
+                    <span>
+                        Active Products
+                    </span>
+
+                    <strong id="activeProducts" title="Products with status Active (listed for sale)">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="product-summary-card">
+
+                <div class="summary-icon">
+                    📊
+                </div>
+
+                <div>
+
+                    <span>
+                        Total Stock
+                    </span>
+
+                    <strong id="totalStock">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="product-summary-card">
+
+                <div class="summary-icon">
+                    ⚠️
+                </div>
+
+                <div>
+
+                    <span>
+                        Low Stock
+                    </span>
+
+                    <strong id="lowStockProducts">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =====================================================
+             MAIN PRODUCT CARD
+        ====================================================== -->
+
+        <section class="products-card">
+
+
+            <!-- =================================================
+                 CARD HEADER
+            ================================================== -->
+
+            <div class="products-card-header">
+
+                <div>
+
+                    <h2 id="moduleTitle">
+                        All Products
+                    </h2>
+
+                    <p id="moduleDescription">
+                        View and manage your product inventory.
+                    </p>
+
+                </div>
+
+
+                <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                    <button type="button" class="add-product-button" onclick="showProductModule('product-coupons')">Coupons</button>
+                    <button type="button" class="add-product-button" id="addProductButton">+ Add Product</button>
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 ALL PRODUCTS
+            ================================================== -->
+
+            <div
+                class="product-module"
+                id="all-products-module"
+            >
+
+
+                <div class="product-filter-area">
+
+
+                    <div class="product-search-box">
+
+                        <input
+                            type="text"
+                            id="productSearch"
+                            placeholder="Search products..."
+                        >
+
+                    </div>
+
+
+                    <div class="product-filter-select">
+
+                        <select id="productCategoryFilter">
+
+                            <option value="all">
+                                All Categories
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="product-filter-select">
+
+                        <select id="productStatusFilter">
+
+                            <option value="all">
+                                All Status
+                            </option>
+
+                            <option value="active">
+                                Active
+                            </option>
+
+                            <option value="inactive">
+                                Inactive
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="products-table-wrapper">
+
+                    <table class="products-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Product
+                                </th>
+
+                                <th>
+                                    Category
+                                </th>
+
+                                <th>
+                                    Price
+                                </th>
+
+                                <th>
+                                    Stock
+                                </th>
+
+                                <th>Seller / Shop</th>
+<th>
+                                    Status
+                                </th>
+
+                                <th>
+                                    Action
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="productsTableBody">
+
+                            <tr>
+
+                                <td
+                                    colspan="6"
+                                    class="products-empty"
+                                >
+                                    No products available.
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 ADD PRODUCT
+            ================================================== -->
+
+            <div
+                class="product-module"
+                id="add-product-module"
+                style="display: none;"
+            >
+
+                <div class="product-form-grid">
+
+
+                    <div class="product-form-group">
+
+                        <label>
+                            Product Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="addProductName"
+                            placeholder="Enter product name"
+                        >
+
+                    </div>
+
+
+                    <div class="product-form-group">
+
+                        <label>
+                            Category
+                        </label>
+
+                        <select id="addProductCategory">
+
+    <option value="">
+        Select Category
+    </option>
+
+    <option value="Fashion">
+        Fashion
+    </option>
+
+    <option value="Beauty & Cosmetics">
+        Beauty & Cosmetics
+    </option>
+
+    <option value="Perfume">
+        Perfume
+    </option>
+
+    <option value="Electronics">
+        Electronics
+    </option>
+
+    <option value="Mobile Accessories">
+        Mobile Accessories
+    </option>
+
+    <option value="Shoes">
+        Shoes
+    </option>
+
+    <option value="Watches">
+        Watches
+    </option>
+
+    <option value="Home & Living">
+        Home & Living
+    </option>
+
+    <option value="Other">
+        Other
+    </option>
+
+</select>
+
+                    </div>
+
+
+                    <div class="product-form-group">
+
+                        <label>
+                            Price
+                        </label>
+
+                        <input
+                            type="number"
+                            id="addProductPrice"
+                            placeholder="0"
+                            min="0"
+                        >
+
+                    </div>
+
+
+                    <div class="product-form-group">
+
+                        <label>
+                            Stock Quantity
+                        </label>
+
+                        <input
+                            type="number"
+                            id="addProductStock"
+                            placeholder="0"
+                            min="0"
+                        >
+
+                    </div>
+
+
+                    <div class="product-form-group">
+
+                        <label>
+                            Status
+                        </label>
+
+                        <select id="addProductStatus">
+
+                            <option value="active">
+                                Active
+                            </option>
+
+                            <option value="inactive">
+                                Inactive
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="product-form-group full-width">
+                        <label>Product Image</label>
+                        <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;margin-top:6px;">
+                            <div>
+                                <input type="file" id="addProductImage" accept="image/*" style="margin-bottom:8px;">
+                                <div style="font-size:12px;color:#7b877f;margin-bottom:6px;">Or put file in <code>image/products/</code> and enter path:</div>
+                                <input type="text" id="addProductImagePath" placeholder="image/products/my-photo.jpg" style="width:280px;padding:8px;border:1px solid #ccc;border-radius:6px;">
+                            </div>
+                            <img id="addProductImagePreview" src="" alt="" style="width:100px;height:100px;object-fit:cover;border-radius:8px;border:1px solid #e3e9e4;display:none;background:#f5f7f5;">
+                        </div>
+                    </div>
+
+
+                    <div class="product-form-group full-width">
+
+                        <label>
+                            Product Description
+                        </label>
+
+                        <textarea
+                            id="addProductDescription"
+                            rows="5"
+                            placeholder="Enter product description"
+                        ></textarea>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="product-form-actions">
+
+                    <button
+                        type="button"
+                        id="saveProductButton"
+                        class="product-primary-button"
+                    >
+                        Save Product
+                    </button>
+
+                    <button
+                        type="button"
+                        id="clearProductForm"
+                        class="product-secondary-button"
+                    >
+                        Clear
+                    </button>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 EDIT PRODUCT
+            ================================================== -->
+
+            <div
+                class="product-module"
+                id="edit-product-module"
+                style="display: none;"
+            >
+
+                <div class="product-edit-select-area">
+
+                    <label>
+                        Search & Select Product
+                    </label>
+
+                    <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:6px;">
+                        <input
+                            type="text"
+                            id="editProductSearch"
+                            placeholder="Search by name, category or ID..."
+                            style="flex:1;min-width:220px;padding:10px 14px;border:1px solid #d0d7d3;border-radius:8px;font-size:14px;"
+                        >
+                        <select id="editProductSelect" style="flex:1;min-width:220px;padding:10px 14px;border:1px solid #d0d7d3;border-radius:8px;font-size:14px;">
+                            <option value="">
+                                Select a product to edit
+                            </option>
+                        </select>
+                    </div>
+                    <p style="margin-top:8px;font-size:12px;color:#7b877f;">
+                        Type to filter the list, then select a product. The edit form will appear below.
+                    </p>
+
+                </div>
+
+
+                <div
+                    id="editProductForm"
+                    style="display: none;"
+                >
+
+                    <div class="product-form-grid">
+
+
+                        <div class="product-form-group">
+
+                            <label>
+                                Product Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="editProductName"
+                            >
+
+                        </div>
+
+
+                        <div class="product-form-group">
+
+                            <label>
+                                Category
+                            </label>
+
+                            <select id="editProductCategory"></select>
+
+                        </div>
+
+
+                        <div class="product-form-group">
+
+                            <label>
+                                Price
+                            </label>
+
+                            <input
+                                type="number"
+                                id="editProductPrice"
+                                min="0"
+                            >
+
+                        </div>
+
+
+                        <div class="product-form-group">
+
+                            <label>
+                                Stock
+                            </label>
+
+                            <input
+                                type="number"
+                                id="editProductStock"
+                                min="0"
+                            >
+
+                        </div>
+
+
+                        <div class="product-form-group">
+
+                            <label>
+                                Status
+                            </label>
+
+                            <select id="editProductStatus">
+
+                                <option value="active">
+                                    Active
+                                </option>
+
+                                <option value="inactive">
+                                    Inactive
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="product-form-group full-width">
+                            <label>Product Image</label>
+                            <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;margin-top:6px;">
+                                <div>
+                                    <input type="file" id="editProductImage" accept="image/*" style="margin-bottom:8px;">
+                                    <div style="font-size:12px;color:#7b877f;margin-bottom:6px;">Or path from <code>image/products/</code>:</div>
+                                    <input type="text" id="editProductImagePath" placeholder="image/products/my-photo.jpg" style="width:280px;padding:8px;border:1px solid #ccc;border-radius:6px;">
+                                </div>
+                                <img id="editProductImagePreview" src="" alt="" style="width:100px;height:100px;object-fit:cover;border-radius:8px;border:1px solid #e3e9e4;display:none;background:#f5f7f5;">
+                            </div>
+                        </div>
+
+
+                        <div class="product-form-group full-width">
+
+                            <label>
+                                Product Description
+                            </label>
+
+                            <textarea
+                                id="editProductDescription"
+                                rows="5"
+                            ></textarea>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="product-form-actions">
+
+                        <button
+                            type="button"
+                            id="updateProductButton"
+                            class="product-primary-button"
+                        >
+                            Update Product
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 DELETE PRODUCT
+            ================================================== -->
+
+            <div
+                class="product-module"
+                id="delete-product-module"
+                style="display: none;"
+            >
+
+                <div class="product-danger-box">
+
+                    <h3>
+                        Delete Product
+                    </h3>
+
+                    <p>
+                        Select a product below to permanently remove it from Sei Mart.
+                    </p>
+
+                </div>
+
+
+                <div class="product-edit-select-area">
+
+                    <label>
+                        Select Product
+                    </label>
+
+                    <select id="deleteProductSelect">
+
+                        <option value="">
+                            Select a product
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="deleteProductButton"
+                    class="product-danger-button"
+                >
+                    Delete Product
+                </button>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 PRICE
+            ================================================== -->
+
+            <div
+                class="product-module"
+                id="product-price-module"
+                style="display: none;"
+            >
+
+                <div class="product-edit-select-area">
+
+                    <label>
+                        Select Product
+                    </label>
+
+                    <select id="priceProductSelect">
+
+                        <option value="">
+                            Select a product
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="product-price-box">
+
+                    <div class="product-form-group">
+
+                        <label>
+                            Current Price
+                        </label>
+
+                        <input
+                            type="number"
+                            id="currentProductPrice"
+                            readonly
+                        >
+
+                    </div>
+
+
+                    <div class="product-form-group">
+
+                        <label>
+                            New Price
+                        </label>
+
+                        <input
+                            type="number"
+                            id="newProductPrice"
+                            min="0"
+                            placeholder="Enter new price"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="updateProductPrice"
+                    class="product-primary-button"
+                >
+                    Update Price
+                </button>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 DISCOUNT
+            ================================================== -->
+
+            <div
+                class="product-module"
+                id="product-discount-module"
+                style="display: none;"
+            >
+
+                <div class="product-edit-select-area">
+
+                    <label>
+                        Select Product
+                    </label>
+
+                    <select id="discountProductSelect">
+
+                        <option value="">
+                            Select a product
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="product-discount-grid">
+
+
+                    <div class="product-form-group">
+
+                        <label>
+                            Discount Type
+                        </label>
+
+                        <select id="discountType">
+
+                            <option value="percentage">
+                                Percentage (%)
+                            </option>
+
+                            <option value="fixed">
+                                Fixed Amount
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="product-form-group">
+
+                        <label>
+                            Discount Value
+                        </label>
+
+                        <input
+                            type="number"
+                            id="discountValue"
+                            min="0"
+                            placeholder="0"
+                        >
+
+                    </div>
+
+
+                    <div class="product-form-group">
+
+                        <label>
+                            Final Price
+                        </label>
+
+                        <input
+                            type="number"
+                            id="discountFinalPrice"
+                            readonly
+                        >
+
+                    </div>
+
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="saveProductDiscount"
+                    class="product-primary-button"
+                >
+                    Save Discount
+                </button>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 STOCK
+            ================================================== -->
+
+            <div
+                class="product-module"
+                id="product-stock-module"
+                style="display: none;"
+            >
+
+                <div class="product-edit-select-area">
+
+                    <label>
+                        Select Product
+                    </label>
+
+                    <select id="stockProductSelect">
+
+                        <option value="">
+                            Select a product
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="product-stock-info-grid">
+
+
+                    <div class="product-stock-info">
+
+                        <span>
+                            Current Stock
+                        </span>
+
+                        <strong id="currentProductStock">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="product-stock-info">
+
+                        <span>
+                            Low Stock Limit
+                        </span>
+
+                        <strong>
+                            5
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="product-form-grid">
+
+
+                    <div class="product-form-group">
+
+                        <label>
+                            Stock Action
+                        </label>
+
+                        <select id="stockAction">
+
+                            <option value="add">
+                                Add Stock
+                            </option>
+
+                            <option value="remove">
+                                Remove Stock
+                            </option>
+
+                            <option value="set">
+                                Set Stock
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="product-form-group">
+
+                        <label>
+                            Quantity
+                        </label>
+
+                        <input
+                            type="number"
+                            id="stockQuantity"
+                            min="0"
+                            placeholder="0"
+                        >
+
+                    </div>
+
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="updateProductStock"
+                    class="product-primary-button"
+                >
+                    Update Stock
+                </button>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 PRODUCT IMAGES
+            ================================================== -->
+
+            <div
+                class="product-module"
+                id="product-images-module"
+                style="display: none;"
+            >
+
+                <div class="product-edit-select-area">
+
+                    <label>
+                        Select Product
+                    </label>
+
+                    <select id="imageProductSelect">
+
+                        <option value="">
+                            Select a product
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="product-image-management">
+
+                    <div
+                        class="product-image-preview"
+                        id="productImagePreview"
+                    >
+                        No Image
+                    </div>
+
+
+                    <div class="product-image-upload">
+
+                        <label>
+                            Upload / Change Product Image
+                        </label>
+
+                        <input
+                            type="file"
+                            id="productImageUpload"
+                            accept="image/*"
+                        >
+
+                        <button
+                            type="button"
+                            id="saveProductImage"
+                            class="product-primary-button"
+                        >
+                            Save Image
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="product-module" id="product-coupons-module" style="display:none;">
+                <div style="background:#fff;border:1px solid #e3e9e4;border-radius:12px;padding:18px;">
+                    <h3 style="margin-top:0;">Create Coupon</h3>
+                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;">
+                        <input id="couponCode" placeholder="Coupon code e.g. SEI10">
+                        <select id="couponType"><option value="percent">Percentage %</option><option value="fixed">Fixed ৳</option></select>
+                        <input id="couponValue" type="number" min="1" placeholder="Discount value">
+                        <input id="couponMin" type="number" min="0" placeholder="Minimum order ৳">
+                    </div>
+                    <button type="button" id="saveCouponBtn" class="product-primary-button" style="margin-top:12px;">Create Coupon</button>
+                </div>
+                <div style="overflow-x:auto;margin-top:18px;">
+                    <table class="product-table"><thead><tr><th>Code</th><th>Type</th><th>Value</th><th>Min Order</th><th>Status</th><th>Action</th></tr></thead><tbody id="couponList"></tbody></table>
+                </div>
+            </div>
+
+        </section>
+
+
+    </div>
+
+
+
+    <script src="../../script.js"></script>
+    <script src="products.js"></script>
+
+
+</body>
+
+</html>

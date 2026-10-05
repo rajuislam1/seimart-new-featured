@@ -1,0 +1,928 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sign In | Sei Mart</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        .auth-page {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 20px;
+            background: #f8f8f8;
+        }
+
+        .auth-container {
+            width: 100%;
+            max-width: 430px;
+            background: #ffffff;
+            border: 1px solid #e2e2e2;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            padding: 35px;
+        }
+
+        .auth-logo {
+            text-align: center;
+            font-size: 30px;
+            font-weight: 700;
+            color: #111111;
+            margin-bottom: 5px;
+        }
+
+        .auth-logo span {
+            color: #C9A227;
+        }
+
+        .auth-subtitle {
+            text-align: center;
+            color: #777777;
+            margin-bottom: 30px;
+        }
+
+        .auth-form h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #111111;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: 600;
+            color: #222222;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #dddddd;
+            border-radius: 7px;
+            font-size: 15px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: #C9A227;
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 7px;
+            background: #C9A227;
+            color: #111111;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .auth-btn:hover {
+            background: #A88418;
+            color: #ffffff;
+        }
+
+        .auth-message {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .auth-switch {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #eeeeee;
+        }
+
+        .auth-switch button {
+            background: none;
+            border: none;
+            color: #A88418;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .back-home {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-home a {
+            color: #555555;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back-home a:hover {
+            color: #C9A227;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =================================
+     COMMON HEADER
+================================= -->
+
+<header>
+
+    <div class="container">
+
+        <div class="header-top">
+
+           
+<a href="index.html" class="logo">
+
+    <svg
+        class="navbar-logo-icon"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+    >
+        <path
+            d="M18 22h10l7 40h40l10-29H34"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="7"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        />
+
+        <path
+            d="M42 44h27"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="7"
+            stroke-linecap="round"
+        />
+
+        <circle cx="40" cy="76" r="5" fill="currentColor" />
+        <circle cx="72" cy="76" r="5" fill="currentColor" />
+
+        <path
+            d="M12 35h13M8 45h15"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="5"
+            stroke-linecap="round"
+        />
+    </svg>
+
+    <span class="navbar-logo-text">
+        Sei <strong>Mart</strong>
+    </span>
+
+</a>
+
+
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search products..."
+                >
+
+                <button type="button">
+                    🔍
+                </button>
+
+            </div>
+
+
+            <div class="header-actions">
+
+    <div id="accountArea" class="account-link">
+
+        👤
+
+        <a href="login.html">
+            Sign In
+        </a>
+
+    </div>
+
+    <a
+        href="wishlist.html"
+        class="wishlist-link">
+
+        ❤️ Wishlist
+
+    </a>
+
+    <a
+        href="cart.html"
+        class="cart-link">
+
+        🛒 Cart
+
+        <span
+            id="cartCount"
+            class="cart-count">
+            0
+        </span>
+
+    </a>
+
+</div>
+
+        </div>
+
+    </div>
+
+
+    <nav class="navbar">
+
+        <div class="container">
+
+            <ul class="nav-menu">
+
+                <li class="category-menu">
+
+                    <button
+                        type="button"
+                        class="category-dropdown">
+
+                        ☰ All Categories
+
+                    </button>
+
+
+                    <div class="category-list">
+
+                        <a href="products.html?category=electronics">
+                            Electronics
+                        </a>
+
+                        <a href="products.html?category=mobile">
+                            Mobile Accessories
+                        </a>
+
+                        <a href="products.html?category=fashion">
+                            Fashion
+                        </a>
+
+                        <a href="products.html?category=shoes">
+                            Shoes
+                        </a>
+
+                        <a href="products.html?category=cosmetics">
+                            Cosmetics
+                        </a>
+
+                        <a href="products.html?category=perfume">
+                            Perfume
+                        </a>
+
+                        <a href="products.html?category=watches">
+                            Watches
+                        </a>
+
+                        <a href="products.html?category=home">
+                            Home & Living
+                        </a>
+
+                        <a href="products.html?category=jewellery">
+                            Jewellery
+                        </a>
+
+                        <a href="products.html?category=beauty">
+                            Beauty & Personal Care
+                        </a>
+
+                    </div>
+
+                </li>
+
+
+                <li>
+                    <a href="index.html">
+                        Home
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="products.html">
+                        Products
+                    </a>
+                </li>
+
+                    <li>
+                        <a href="order-tracking.html">
+                            Order Tracking
+                        </a>
+                    </li>
+
+
+                <li>
+                    <a href="products.html?filter=deals">
+                        Today's Deals
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="products.html?filter=new">
+                        New Arrivals
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="index.html#help">
+                        Help & Support
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="index.html#contact">
+                        Contact
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </nav>
+
+</header>
+
+
+
+<!-- =================================
+     LOGIN / SIGNUP
+================================= -->
+
+<div class="auth-page">
+
+    <div class="auth-container">
+
+
+        <div class="auth-logo">
+            Sei <span>Mart</span>
+        </div>
+
+
+        <p class="auth-subtitle">
+            Shop Smart. Shop with Sei Mart.
+        </p>
+
+
+
+        <!-- =================================
+             SIGN IN
+        ================================= -->
+
+        <div
+            id="loginSection"
+            class="auth-form">
+
+            <h2>
+                Sign In
+            </h2>
+
+
+            <form id="loginForm">
+
+
+                <div class="form-group">
+
+                    <label>
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="loginEmail"
+                        placeholder="Enter your email"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="loginPassword"
+                        placeholder="Enter your password"
+                        required>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="auth-btn">
+
+                    Sign In
+
+                </button>
+
+            </form>
+
+
+            <div
+                id="loginMessage"
+                class="auth-message">
+            </div>
+
+
+            <div class="auth-switch">
+
+                Don't have an account?
+
+                <button
+                    type="button"
+                    onclick="showSignup()">
+
+                    Create Account
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================
+             SIGN UP
+        ================================= -->
+
+        <div
+            id="signupSection"
+            class="auth-form hidden">
+
+            <h2>
+                Create Account
+            </h2>
+
+
+            <form id="signupForm">
+
+
+                <div class="form-group">
+
+                    <label>
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="signupName"
+                        placeholder="Enter your full name"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="signupEmail"
+                        placeholder="Enter your email"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="signupPassword"
+                        placeholder="Create a password"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Confirm Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="signupConfirmPassword"
+                        placeholder="Confirm your password"
+                        required>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="auth-btn">
+
+                    Create Account
+
+                </button>
+
+            </form>
+
+
+            <div
+                id="signupMessage"
+                class="auth-message">
+            </div>
+
+
+            <div class="auth-switch">
+
+                Already have an account?
+
+                <button
+                    type="button"
+                    onclick="showLogin()">
+
+                    Sign In
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="back-home">
+
+            <a href="index.html">
+                ← Back to Sei Mart
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =================================
+     LOGIN / SIGNUP JAVASCRIPT
+================================= -->
+
+<script src="js/security.js"></script>
+<script>
+
+function showSignup() {
+
+    document
+        .getElementById("loginSection")
+        .classList
+        .add("hidden");
+
+    document
+        .getElementById("signupSection")
+        .classList
+        .remove("hidden");
+
+}
+
+
+function showLogin() {
+
+    document
+        .getElementById("signupSection")
+        .classList
+        .add("hidden");
+
+    document
+        .getElementById("loginSection")
+        .classList
+        .remove("hidden");
+
+}
+
+
+
+/* =================================
+   SIGN UP
+================================= */
+
+document
+    .getElementById("signupForm")
+    .addEventListener(
+        "submit",
+        function(e) {
+
+            e.preventDefault();
+
+
+            const name =
+                document
+                    .getElementById("signupName")
+                    .value
+                    .trim();
+
+
+            const email =
+                document
+                    .getElementById("signupEmail")
+                    .value
+                    .trim()
+                    .toLowerCase();
+
+
+            const password =
+                document
+                    .getElementById("signupPassword")
+                    .value;
+
+
+            const confirmPassword =
+                document
+                    .getElementById(
+                        "signupConfirmPassword"
+                    )
+                    .value;
+
+
+            const message =
+                document
+                    .getElementById(
+                        "signupMessage"
+                    );
+
+
+            if (
+                password !==
+                confirmPassword
+            ) {
+
+                message.style.color =
+                    "red";
+
+                message.textContent =
+                    "Passwords do not match.";
+
+                return;
+
+            }
+
+
+            let users =
+                JSON.parse(
+                    localStorage.getItem(
+                        "seiMartUsers"
+                    )
+                ) || [];
+
+
+            const existingUser =
+                users.find(
+                    function(user) {
+
+                        return (
+                            user.email ===
+                            email
+                        );
+
+                    }
+                );
+
+
+            if (existingUser) {
+
+                message.style.color =
+                    "red";
+
+                message.textContent =
+                    "An account with this email already exists.";
+
+                return;
+
+            }
+
+
+            const newUser = {
+
+                name: name,
+
+                email: email,
+
+                passwordHash: SeiSecurity.hashPassword(password)
+
+            };
+
+
+            users.push(newUser);
+
+
+            localStorage.setItem(
+                "seiMartUsers",
+                JSON.stringify(users)
+            );
+
+
+            message.style.color =
+                "green";
+
+            message.textContent =
+                "Account created successfully!";
+
+
+            document
+                .getElementById("signupForm")
+                .reset();
+
+
+            setTimeout(
+                function() {
+
+                    showLogin();
+
+                },
+                1000
+            );
+
+        }
+    );
+
+
+
+/* =================================
+   SIGN IN
+================================= */
+
+document
+    .getElementById("loginForm")
+    .addEventListener(
+        "submit",
+        function(e) {
+
+            e.preventDefault();
+
+
+            const email =
+                document
+                    .getElementById("loginEmail")
+                    .value
+                    .trim()
+                    .toLowerCase();
+
+
+            const password =
+                document
+                    .getElementById("loginPassword")
+                    .value;
+
+
+            const message =
+                document
+                    .getElementById(
+                        "loginMessage"
+                    );
+
+
+            const users =
+                JSON.parse(
+                    localStorage.getItem(
+                        "seiMartUsers"
+                    )
+                ) || [];
+
+
+            let user =
+                users.find(
+                    function(account) {
+                        return account.email === email;
+                    }
+                );
+
+            if (user) {
+                const check =
+                    SeiSecurity.checkRecordPassword(
+                        user,
+                        password
+                    );
+
+                if (!check.ok) {
+                    user = null;
+                } else if (check.upgraded) {
+                    // old plain-text account -> now hashed
+                    localStorage.setItem(
+                        "seiMartUsers",
+                        JSON.stringify(users)
+                    );
+                }
+            }
+
+
+            if (!user) {
+
+                message.style.color =
+                    "red";
+
+                message.textContent =
+                    "Invalid email or password.";
+
+                return;
+
+            }
+
+
+            /* =================================
+               SAVE LOGIN SESSION
+            ================================= */
+
+            localStorage.setItem(
+                "seiMartLoggedIn",
+                "true"
+            );
+
+
+            localStorage.setItem(
+                "seiMartUser",
+                JSON.stringify(
+                    SeiSecurity.publicUser(user)
+                )
+            );
+
+
+            message.style.color =
+                "green";
+
+            message.textContent =
+                "Login successful!";
+
+
+            /* =================================
+               GO HOME
+            ================================= */
+
+            setTimeout(
+                function() {
+
+                    window.location.replace(
+                        "index.html"
+                    );
+
+                },
+                700
+            );
+
+        }
+    );
+
+</script>
+
+
+<!-- =================================
+     MAIN SCRIPT
+================================= -->
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
+```

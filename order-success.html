@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Confirmed | Sei Mart</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.success-wrap{max-width:560px;margin:50px auto;padding:0 20px 60px;text-align:center;}
+.success-card{background:#fff;border:1px solid #e3e9e4;border-radius:16px;padding:36px 28px;box-shadow:0 10px 30px rgba(0,0,0,.06);}
+.success-icon{width:72px;height:72px;border-radius:50%;background:#e9f6ed;color:#3f8c5a;display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 16px;}
+.success-card h1{color:#17231d;margin:0 0 8px;font-size:26px;}
+.order-id-box{background:#f5f7f5;border-radius:10px;padding:14px;margin:18px 0;font-size:18px;font-weight:700;color:#3f6f5a;}
+.btn-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:22px;}
+.btn-row a{display:inline-block;padding:12px 20px;border-radius:10px;font-weight:700;text-decoration:none;}
+.btn-primary{background:#3f6f5a;color:#fff;}
+.btn-secondary{background:#fff;color:#3f6f5a;border:1px solid #3f6f5a;}
+.steps{display:flex;justify-content:center;gap:8px;margin:30px 0 10px;flex-wrap:wrap;}
+.steps span{padding:6px 12px;border-radius:20px;background:#eaf2ed;color:#3f6f5a;font-size:12px;font-weight:600;}
+.steps span.done{background:#3f6f5a;color:#fff;}
+</style>
+</head>
+<body>
+<header style="background:#fff;border-bottom:1px solid #e3e9e4;padding:14px 0;">
+  <div style="width:90%;max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;">
+    <a href="index.html" style="font-weight:800;color:#3f6f5a;text-decoration:none;font-size:20px;">Sei Mart</a>
+    <a href="products.html" style="color:#333;text-decoration:none;">Continue Shopping</a>
+  </div>
+</header>
+<main class="success-wrap">
+  <div class="steps">
+    <span class="done">1. Cart</span>
+    <span class="done">2. Details</span>
+    <span class="done">3. Payment</span>
+    <span class="done">4. Done</span>
+  </div>
+  <div class="success-card">
+    <div class="success-icon">✓</div>
+    <h1>Thank you for your order!</h1>
+    <p style="color:#7b877f;">Your order has been placed successfully.</p>
+    <div class="order-id-box" id="successOrderId">Loading...</div>
+    <p style="color:#555;font-size:14px;">Save this Order ID to track your package anytime.</p>
+    <div class="btn-row">
+      <a href="#" class="btn-primary" id="trackLink">Track Order</a>
+      <a href="account.html" class="btn-secondary">My Account</a>
+      <a href="products.html" class="btn-secondary">Shop More</a>
+    </div>
+  </div>
+</main>
+<script src="script.js"></script>
+<script>
+(function(){
+  var id = "";
+  try {
+    var params = new URLSearchParams(window.location.search);
+    id = params.get("order") || "";
+    if (!id) {
+      var last = JSON.parse(localStorage.getItem("seiMartLatestOrder") || "null");
+      if (last) id = last.orderId || last.id || "";
+    }
+  } catch(e) {}
+  document.getElementById("successOrderId").textContent = id ? ("Order ID: " + id) : "Order placed";
+  var link = document.getElementById("trackLink");
+  if (id) link.href = "order-tracking.html?id=" + encodeURIComponent(id);
+  else link.href = "order-tracking.html";
+})();
+</script>
+<script src="js/pro-enhancements.js"></script>
+</body>
+</html>

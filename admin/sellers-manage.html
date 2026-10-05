@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="js/admin-auth.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sellers & Products | Sei Mart Admin</title>
+<style>
+body{margin:0;font-family:system-ui,sans-serif;background:#f3f6f4;color:#17231d;}
+.top{background:#17231d;color:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+.top a{color:#e8c65a;text-decoration:none;font-weight:600;margin-left:12px;}
+.wrap{max-width:1100px;margin:24px auto;padding:0 16px 40px;}
+.card{background:#fff;border:1px solid #e3e9e4;border-radius:14px;padding:20px;margin-bottom:16px;}
+table{width:100%;border-collapse:collapse;font-size:14px;}
+th,td{padding:10px;border-bottom:1px solid #eee;text-align:left;vertical-align:top;}
+th{background:#f5f7f5;}
+.btn{border:none;padding:8px 12px;border-radius:8px;font-weight:600;cursor:pointer;margin:2px;font-size:13px;}
+.ok{background:#3f6f5a;color:#fff;}
+.no{background:#d9534f;color:#fff;}
+select,input{padding:8px 12px;border-radius:8px;border:1px solid #ccc;}
+.badge{display:inline-block;padding:3px 8px;border-radius:10px;font-size:12px;font-weight:700;background:#eaf2ed;color:#3f6f5a;}
+</style>
+</head>
+<body>
+<div class="top">
+  <strong>🏪 Active Sellers & Products</strong>
+  <div>
+    <a href="../admin.html">← Admin</a>
+    <a href="seller-requests.html">Applications</a>
+  </div>
+</div>
+<div class="wrap">
+  <div class="card">
+    <h2 style="margin-top:0;">Sellers</h2>
+    <div id="sellersList"></div>
+  </div>
+  <div class="card">
+    <h2 style="margin-top:0;">Products by Seller</h2>
+    <div style="margin-bottom:12px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+      <label>Filter seller
+        <select id="sellerFilter" onchange="renderProducts()"></select>
+      </label>
+      <button type="button" class="btn ok" onclick="renderProducts()">Refresh</button>
+    </div>
+    <div id="productsList"></div>
+  </div>
+</div>
+<script src="../script.js"></script>
+<script>
+function getSellers(){ try{return JSON.parse(localStorage.getItem("seiMartSellers")||"[]");}catch(e){return[];} }
+function saveSellers(l){ localStorage.setItem("seiMartSellers", JSON.stringify(l||[])); }
+function esc(v){ return String(v==null?"":v).replace(/&/g,"&amp;").replace(/</g,"&lt;"); }
+
+function renderSellers(){
+  var list = getSellers();
+  var el = document.getElementById("sellersList");
+  var sel = document.getElementById("sellerFilter");
+  sel.innerHTML = '<option value="all">All sellers</option><option value="platform">Platform (no seller)</option>' +
+    list.map(function(s){ return '<option value="'+esc(s.id)+'">'+esc(s.shop||s.username)+'</option>'; }).join("");
+  if(!list.length){ el.innerHTML="<p style='color:#999;'>No approved sellers yet.</p>"; return; }
+  el.innerHTML = '<table><thead><tr><th>Shop</th><th>Contact</th><th>Username</th><th>Status</th><th>Products</th><th>Action</th></tr></thead><tbody>'+
+    list.map(function(s){
+      var products = (typeof getProducts==="function"?getProducts():[]).filter(function(p){ return String(p.sellerId)===String(s.id); });
+      return '<tr><td><strong>'+esc(s.shop)+'</strong><br><small>'+esc(s.name)+'</small></td><td>'+esc(s.phone)+'<br>'+esc(s.email)+'</td><td><code>'+esc(s.username)+'</code></td><td><span class="badge">'+esc(s.status||"Active")+'</span></td><td>'+products.length+'</td><td>'+
+        (s.status==="Active"
+          ? '<button class="btn no" onclick="setSellerStatus(\''+esc(s.id)+'\',\'Suspended\')">Suspend</button>'
+          : '<button class="btn ok" onclick="setSellerStatus(\''+esc(s.id)+'\',\'Active\')">Activate</button>') +
+        '</td></tr>';
+    }).join("")+"</tbody></table>";
+}
+function setSellerStatus(id, status){
+  var list = getSellers().map(function(s){ if(String(s.id)===String(id)) s.status=status; return s; });
+  saveSellers(list);
+  // sync application status
+  try{
+    var apps = JSON.parse(localStorage.getItem("seiMartSellerApplications")||"[]");
+    apps = apps.map(function(a){ if(String(a.id)===String(id)) a.status = status==="Active"?"Approved":status; return a; });
+    localStorage.setItem("seiMartSellerApplications", JSON.stringify(apps));
+  }catch(e){}
+  renderSellers();
+  renderProducts();
+}
+function renderProducts(){
+  var filter = document.getElementById("sellerFilter").value;
+  var products = (typeof getProducts==="function") ? getProducts() : [];
+  if(filter === "platform") products = products.filter(function(p){ return !p.sellerId; });
+  else if(filter !== "all") products = products.filter(function(p){ return String(p.sellerId)===String(filter); });
+  var el = document.getElementById("productsList");
+  if(!products.length){ el.innerHTML="<p style='color:#999;'>No products for this filter.</p>"; return; }
+  el.innerHTML = '<table><thead><tr><th>Product</th><th>Seller</th><th>Price</th><th>Stock</th><th>Category</th><th>Approval</th><th>Action</th></tr></thead><tbody>'+
+    products.map(function(p){
+      var st=p.approvalStatus||"approved";
+      return '<tr><td><strong>'+esc(p.name)+'</strong><br><small>ID: '+esc(p.id)+'</small></td><td>'+esc(p.sellerShop||p.sellerName||(p.sellerId?"Seller":"Platform"))+'</td><td>৳'+Number(p.price||0).toLocaleString("en-BD")+'</td><td>'+esc(p.stock!=null?p.stock:"-")+'</td><td>'+esc(p.category||"-")+'</td><td><span class="badge">'+esc(st)+'</span></td><td>'+(p.sellerId ? '<button class="btn '+(st==="pending"?'ok':'no')+'" onclick="setProductApproval(\''+esc(p.id)+'\',\''+(st==="pending"?'approved':'pending')+'\')">'+(st==="pending"?'Approve':'Unpublish')+'</button>' : '—')+'</td></tr>';
+    }).join("")+"</tbody></table>";
+}
+function setProductApproval(id,status){
+  var products=(typeof getProducts==="function")?getProducts():[];
+  var i=products.findIndex(function(p){return String(p.id)===String(id)});
+  if(i<0)return;
+  products[i].approvalStatus=status;
+  products[i].approvedAt=status==="approved"?new Date().toISOString():"";
+  if(typeof saveProducts==="function")saveProducts(products);else localStorage.setItem("seiMartProducts",JSON.stringify(products));
+  renderProducts();
+}
+renderSellers();
+renderProducts();
+</script>
+</body>
+</html>

@@ -1,0 +1,1668 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Help & Support | Sei Mart</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        /* =========================
+           HELP PAGE
+        ========================= */
+
+        .help-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 30px 20px 60px;
+        }
+
+        .help-hero {
+            text-align: center;
+            padding: 35px 10px 25px;
+        }
+
+        .help-hero h1 {
+            margin: 0 0 10px;
+            font-size: 36px;
+        }
+
+        .help-hero p {
+            color: #777;
+            margin: 0 0 25px;
+        }
+
+        .help-search {
+            width: 100%;
+            max-width: 650px;
+            padding: 15px 20px;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            font-size: 15px;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .help-search:focus {
+            border-color: #aaa;
+        }
+
+
+        /* =========================
+           HELP CARDS
+        ========================= */
+
+        .help-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-top: 10px;
+        }
+
+        .help-card {
+            border: 1px solid #eee;
+            border-radius: 14px;
+            padding: 22px;
+            background: #fff;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .help-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .help-icon {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .help-card h3 {
+            margin: 5px 0 8px;
+        }
+
+        .help-card p {
+            margin: 0;
+            color: #777;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+
+        /* =========================
+           SECTIONS
+        ========================= */
+
+        .help-section {
+            margin-top: 45px;
+        }
+
+        .help-section h2 {
+            margin-bottom: 18px;
+        }
+
+
+        /* =========================
+           TRACK ORDER
+        ========================= */
+
+        .track-box {
+            border: 1px solid #eee;
+            border-radius: 14px;
+            padding: 25px;
+            background: #fff;
+        }
+
+        .track-box p {
+            color: #666;
+        }
+
+        .track-input {
+            width: 100%;
+            max-width: 500px;
+            padding: 13px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 14px;
+            outline: none;
+            margin-right: 6px;
+        }
+
+        .track-input:focus {
+            border-color: #aaa;
+        }
+
+        .help-btn {
+            padding: 13px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .track-result {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            background: #f8f8f8;
+            line-height: 1.7;
+        }
+
+        .track-success {
+            border: 1px solid #ddd;
+        }
+
+        .track-error {
+            color: #b00020;
+            background: #fff4f4;
+        }
+
+        .order-item-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+
+        /* =========================
+           FAQ
+        ========================= */
+
+        .faq-item {
+            border: 1px solid #eee;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .faq-question {
+            padding: 16px 18px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-question span {
+            font-size: 20px;
+        }
+
+        .faq-answer {
+            display: none;
+            padding: 0 18px 17px;
+            color: #666;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           CONTACT
+        ========================= */
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .contact-card {
+            border: 1px solid #eee;
+            border-radius: 14px;
+            padding: 22px;
+            text-align: center;
+            background: #fff;
+        }
+
+        .contact-card h3 {
+            margin: 8px 0;
+        }
+
+        .contact-card p {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .contact-card a {
+            text-decoration: none;
+        }
+
+
+        /* =========================
+           SUPPORT FORM
+        ========================= */
+
+        .support-box {
+            border: 1px solid #eee;
+            border-radius: 14px;
+            padding: 25px;
+            background: #fff;
+        }
+
+        .support-form {
+            display: grid;
+            gap: 12px;
+        }
+
+        .support-form input,
+        .support-form textarea,
+        .support-form select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .support-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .support-message {
+            display: none;
+            padding: 12px;
+            border-radius: 8px;
+            background: #eef8ee;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 800px) {
+
+            .help-grid,
+            .contact-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 550px) {
+
+            .help-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .help-hero h1 {
+                font-size: 30px;
+            }
+
+            .track-input {
+                max-width: 100%;
+                margin-bottom: 10px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER / ORIGINAL NAVBAR
+========================= -->
+
+<header>
+
+    <div class="container">
+
+        <div class="header-top">
+
+           
+<a href="index.html" class="logo">
+
+    <svg
+        class="navbar-logo-icon"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+    >
+        <path
+            d="M18 22h10l7 40h40l10-29H34"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="7"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        />
+
+        <path
+            d="M42 44h27"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="7"
+            stroke-linecap="round"
+        />
+
+        <circle cx="40" cy="76" r="5" fill="currentColor" />
+        <circle cx="72" cy="76" r="5" fill="currentColor" />
+
+        <path
+            d="M12 35h13M8 45h15"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="5"
+            stroke-linecap="round"
+        />
+    </svg>
+
+    <span class="navbar-logo-text">
+        Sei <strong>Mart</strong>
+    </span>
+
+</a>
+
+
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search products...">
+
+                <button type="button">
+                    🔍
+                </button>
+
+            </div>
+
+
+            <div class="header-actions">
+
+    <div id="accountArea" class="account-link">
+        👤
+        <a href="login.html">
+            Sign In
+        </a>
+    </div>
+
+    <a
+        href="wishlist.html"
+        class="wishlist-link">
+
+        ❤️ Wishlist
+
+    </a>
+
+    <a
+        href="cart.html"
+        class="cart-link">
+
+        🛒 Cart
+
+        <span
+            id="cartCount"
+            class="cart-count">
+            0
+        </span>
+
+    </a>
+
+</div>
+
+        </div>
+
+    </div>
+
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="container">
+
+            <ul class="nav-menu">
+
+
+                <li class="category-menu">
+
+                    <button
+                        type="button"
+                        class="category-dropdown">
+
+                        ☰ All Categories
+
+                    </button>
+
+
+                    <div class="category-list">
+
+                        <a href="products.html?category=electronics">
+                            Electronics
+                        </a>
+
+                        <a href="products.html?category=mobile">
+                            Mobile Accessories
+                        </a>
+
+                        <a href="products.html?category=fashion">
+                            Fashion
+                        </a>
+
+                        <a href="products.html?category=shoes">
+                            Shoes
+                        </a>
+
+                        <a href="products.html?category=cosmetics">
+                            Cosmetics
+                        </a>
+
+                        <a href="products.html?category=perfume">
+                            Perfume
+                        </a>
+
+                        <a href="products.html?category=watches">
+                            Watches
+                        </a>
+
+                        <a href="products.html?category=home">
+                            Home & Living
+                        </a>
+
+                        <a href="products.html?category=jewellery">
+                            Jewellery
+                        </a>
+
+                        <a href="products.html?category=beauty">
+                            Beauty & Personal Care
+                        </a>
+
+                    </div>
+
+                </li>
+
+
+                <li>
+                    <a href="index.html">
+                        Home
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="products.html">
+                        Products
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="products.html?filter=deals">
+                        Today's Deals
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="products.html?filter=new">
+                        New Arrivals
+                    </a>
+                </li>
+
+
+                                <li>
+                    <a href="order-tracking.html">
+                        Order Tracking
+                    </a>
+                </li>
+<li>
+                    <a href="help.html">
+                        Help & Support
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="contact.html">
+                        Contact
+                    </a>
+                </li>
+
+
+            </ul>
+
+        </div>
+
+    </nav>
+
+</header>
+
+
+<!-- =========================
+     HELP CONTENT
+========================= -->
+
+<div class="help-container">
+
+
+    <!-- HERO -->
+
+    <div class="help-hero">
+
+        <h1>
+            Help & Support
+        </h1>
+
+        <p>
+            Find answers, track your order, or contact our support team.
+        </p>
+
+
+        <input
+            type="text"
+            id="helpSearch"
+            class="help-search"
+            placeholder="Search for help...">
+
+    </div>
+
+
+    <!-- HELP CATEGORIES -->
+
+    <div
+        class="help-grid"
+        id="helpGrid">
+
+
+        <div
+            class="help-card"
+            data-keywords="order orders purchase shopping">
+
+            <div class="help-icon">
+                📦
+            </div>
+
+            <h3>
+                Orders
+            </h3>
+
+            <p>
+                Learn about placing and managing your orders.
+            </p>
+
+        </div>
+
+
+        <div
+            class="help-card"
+            data-keywords="delivery shipping courier">
+
+            <div class="help-icon">
+                🚚
+            </div>
+
+            <h3>
+                Delivery Information
+            </h3>
+
+            <p>
+                Delivery time, shipping information and charges.
+            </p>
+
+        </div>
+
+
+        <div
+            class="help-card"
+            data-keywords="return refund exchange">
+
+            <div class="help-icon">
+                🔄
+            </div>
+
+            <h3>
+                Return & Refund
+            </h3>
+
+            <p>
+                Information about returns, refunds and exchanges.
+            </p>
+
+        </div>
+
+
+        <div
+            class="help-card"
+            data-keywords="payment cash cod money">
+
+            <div class="help-icon">
+                💳
+            </div>
+
+            <h3>
+                Payment Help
+            </h3>
+
+            <p>
+                Information about available payment methods.
+            </p>
+
+        </div>
+
+
+        <div
+            class="help-card"
+            data-keywords="account login profile password">
+
+            <div class="help-icon">
+                👤
+            </div>
+
+            <h3>
+                Account Help
+            </h3>
+
+            <p>
+                Get help with login, profile and account information.
+            </p>
+
+        </div>
+
+
+        <div
+            class="help-card"
+            data-keywords="contact support help">
+
+            <div class="help-icon">
+                🎧
+            </div>
+
+            <h3>
+                Contact Support
+            </h3>
+
+            <p>
+                Contact Sei Mart support for assistance.
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =========================
+         TRACK ORDER
+    ========================== -->
+
+    <div class="help-section">
+
+        <h2>
+            📦 Track Your Order
+        </h2>
+
+
+        <div class="track-box">
+
+            <p>
+                Enter your Order ID to view your order details.
+            </p>
+
+
+            <input
+                type="text"
+                id="orderIdInput"
+                class="track-input"
+                placeholder="Enter your Order ID">
+
+
+            <button
+                type="button"
+                class="help-btn"
+                onclick="trackOrder()">
+
+                Track Order
+
+            </button>
+
+
+            <div
+                id="trackResult"
+                class="track-result">
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         FAQ
+    ========================== -->
+
+    <div class="help-section">
+
+        <h2>
+            ❓ Frequently Asked Questions
+        </h2>
+
+
+        <div class="faq-item">
+
+            <div
+                class="faq-question"
+                onclick="toggleFAQ(this)">
+
+                How can I place an order?
+
+                <span>+</span>
+
+            </div>
+
+            <div class="faq-answer">
+
+                Select your product, add it to the cart,
+                continue to checkout and provide your
+                shipping information. Currently,
+                Cash on Delivery is available.
+
+            </div>
+
+        </div>
+
+
+        <div class="faq-item">
+
+            <div
+                class="faq-question"
+                onclick="toggleFAQ(this)">
+
+                What payment method is available?
+
+                <span>+</span>
+
+            </div>
+
+            <div class="faq-answer">
+
+                Sei Mart currently supports
+                Cash on Delivery (COD).
+
+            </div>
+
+        </div>
+
+
+        <div class="faq-item">
+
+            <div
+                class="faq-question"
+                onclick="toggleFAQ(this)">
+
+                How can I check my order?
+
+                <span>+</span>
+
+            </div>
+
+            <div class="faq-answer">
+
+                Enter your Order ID in the Track Your Order
+                section above to find your order details.
+
+            </div>
+
+        </div>
+
+
+        <div class="faq-item">
+
+            <div
+                class="faq-question"
+                onclick="toggleFAQ(this)">
+
+                Can I change my shipping address?
+
+                <span>+</span>
+
+            </div>
+
+            <div class="faq-answer">
+
+                You can update your saved shipping address
+                from your Account page. For an order that has
+                already been placed, contact support as soon
+                as possible.
+
+            </div>
+
+        </div>
+
+
+        <div class="faq-item">
+
+            <div
+                class="faq-question"
+                onclick="toggleFAQ(this)">
+
+                How can I request a return or refund?
+
+                <span>+</span>
+
+            </div>
+
+            <div class="faq-answer">
+
+                Contact Sei Mart support with your Order ID
+                and explain the reason for your return or
+                refund request.
+
+            </div>
+
+        </div>
+
+
+        <div class="faq-item">
+
+            <div
+                class="faq-question"
+                onclick="toggleFAQ(this)">
+
+                I have another problem. What should I do?
+
+                <span>+</span>
+
+            </div>
+
+            <div class="faq-answer">
+
+                Submit a Support Request below or contact
+                Sei Mart support.
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         CONTACT SUPPORT
+    ========================== -->
+
+    <div class="help-section">
+
+        <h2>
+            📞 Contact Support
+        </h2>
+
+
+        <div class="contact-grid">
+
+
+            <div class="contact-card">
+
+                <div class="help-icon">
+                    📱
+                </div>
+
+                <h3>
+                    Phone
+                </h3>
+
+                <p>
+                    Contact us by phone.
+                </p>
+
+                <a href="tel:+8801XXXXXXXXX">
+                    Call Support
+                </a>
+
+            </div>
+
+
+            <div class="contact-card">
+
+                <div class="help-icon">
+                    💬
+                </div>
+
+                <h3>
+                    WhatsApp
+                </h3>
+
+                <p>
+                    Chat with our support team.
+                </p>
+
+                <a
+                    href="https://wa.me/8801XXXXXXXXX"
+                    target="_blank">
+
+                    WhatsApp Support
+
+                </a>
+
+            </div>
+
+
+            <div class="contact-card">
+
+                <div class="help-icon">
+                    ✉️
+                </div>
+
+                <h3>
+                    Email
+                </h3>
+
+                <p>
+                    Send us your questions.
+                </p>
+
+                <a href="mailto:support@seimart.com">
+                    Email Support
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         SUPPORT REQUEST
+    ========================== -->
+
+    <div class="help-section">
+
+        <h2>
+            📝 Submit a Support Request
+        </h2>
+
+
+        <div class="support-box">
+
+
+            <form
+                class="support-form"
+                onsubmit="submitSupport(event)">
+
+
+                <input
+                    type="text"
+                    id="supportName"
+                    placeholder="Your Name"
+                    required>
+
+
+                <input
+                    type="email"
+                    id="supportEmail"
+                    placeholder="Your Email"
+                    required>
+
+
+                <input
+                    type="text"
+                    id="supportOrder"
+                    placeholder="Order ID (optional)">
+
+
+                <select
+                    id="supportTopic"
+                    required>
+
+                    <option value="">
+                        Select Problem Type
+                    </option>
+
+                    <option value="Order Problem">
+                        Order Problem
+                    </option>
+
+                    <option value="Delivery Problem">
+                        Delivery Problem
+                    </option>
+
+                    <option value="Payment Problem">
+                        Payment Problem
+                    </option>
+
+                    <option value="Return / Refund">
+                        Return / Refund
+                    </option>
+
+                    <option value="Account Problem">
+                        Account Problem
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+
+                <textarea
+                    id="supportMessage"
+                    placeholder="Describe your problem..."
+                    required>
+                </textarea>
+
+
+                <button
+                    type="submit"
+                    class="help-btn">
+
+                    Submit Request
+
+                </button>
+
+
+                <div
+                    id="supportSuccess"
+                    class="support-message">
+
+                    Your support request has been submitted successfully.
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- =========================
+     PAGE JAVASCRIPT
+========================= -->
+
+<script>
+
+
+    /* =========================
+       HELP SEARCH
+    ========================= */
+
+    const helpSearch =
+        document.getElementById("helpSearch");
+
+    const helpCards =
+        document.querySelectorAll(".help-card");
+
+
+    helpSearch.addEventListener("input", function () {
+
+        const search =
+            this.value.toLowerCase().trim();
+
+
+        helpCards.forEach(function (card) {
+
+            const text =
+                card.innerText.toLowerCase();
+
+            const keywords =
+                card.dataset.keywords.toLowerCase();
+
+
+            if (
+                search === "" ||
+                text.includes(search) ||
+                keywords.includes(search)
+            ) {
+
+                card.style.display = "";
+
+            } else {
+
+                card.style.display = "none";
+
+            }
+
+        });
+
+    });
+
+
+    /* =========================
+       FAQ
+    ========================= */
+
+    function toggleFAQ(element) {
+
+        const answer =
+            element.nextElementSibling;
+
+        const icon =
+            element.querySelector("span");
+
+
+        if (answer.style.display === "block") {
+
+            answer.style.display = "none";
+
+            icon.textContent = "+";
+
+        } else {
+
+            answer.style.display = "block";
+
+            icon.textContent = "−";
+
+        }
+
+    }
+
+
+    /* =========================
+       TRACK ORDER
+    ========================= */
+
+    function trackOrder() {
+
+        const input =
+            document.getElementById("orderIdInput");
+
+        const result =
+            document.getElementById("trackResult");
+
+
+        const searchId =
+            input.value.trim().toLowerCase();
+
+
+        result.style.display = "block";
+
+        result.className = "track-result";
+
+
+        if (!searchId) {
+
+            result.classList.add("track-error");
+
+            result.innerHTML =
+                "Please enter your Order ID.";
+
+            return;
+
+        }
+
+
+        let orders = [];
+
+
+        try {
+
+            orders = JSON.parse(
+                localStorage.getItem("seiMartOrders") || "[]"
+            );
+
+        } catch (error) {
+
+            orders = [];
+
+        }
+
+
+        if (!Array.isArray(orders)) {
+
+            orders = [];
+
+        }
+
+
+        const order =
+            orders.find(function (item) {
+
+                if (!item) {
+                    return false;
+                }
+
+
+                const possibleIds = [
+
+                    item.orderId,
+
+                    item.id,
+
+                    item.orderID,
+
+                    item.order_id
+
+                ];
+
+
+                return possibleIds.some(function (value) {
+
+                    return (
+                        value !== undefined &&
+                        value !== null &&
+                        String(value).trim().toLowerCase() === searchId
+                    );
+
+                });
+
+            });
+
+
+        if (!order) {
+
+            result.classList.add("track-error");
+
+            result.innerHTML = `
+                <strong>Order not found.</strong><br>
+                Please check your Order ID and try again.
+            `;
+
+            return;
+
+        }
+
+
+        /* ORDER INFORMATION */
+
+        const orderId =
+            order.orderId ||
+            order.id ||
+            order.orderID ||
+            order.order_id ||
+            searchId;
+
+
+        const orderDate =
+            order.createdAt ||
+            order.date ||
+            order.orderDate;
+
+
+        let formattedDate = "Not available";
+
+
+        if (orderDate) {
+
+            const date =
+                new Date(orderDate);
+
+
+            if (!isNaN(date.getTime())) {
+
+                formattedDate =
+                    date.toLocaleString();
+
+            }
+
+        }
+
+
+        const status =
+            order.status ||
+            "Order Received";
+
+
+        const total =
+            order.total !== undefined
+                ? order.total
+                : (
+                    order.grandTotal !== undefined
+                        ? order.grandTotal
+                        : 0
+                );
+
+
+        /* FIND ITEMS */
+
+        let items =
+            order.items ||
+            order.products ||
+            order.cart ||
+            [];
+
+
+        if (!Array.isArray(items)) {
+
+            items = [];
+
+        }
+
+
+        let itemsHTML = "";
+
+
+        if (items.length > 0) {
+
+            itemsHTML =
+                items.map(function (item) {
+
+                    const name =
+                        item.name ||
+                        item.title ||
+                        "Product";
+
+
+                    const quantity =
+                        item.quantity ||
+                        item.qty ||
+                        1;
+
+
+                    const price =
+                        item.price !== undefined
+                            ? item.price
+                            : 0;
+
+
+                    return `
+                        <div class="order-item-row">
+                            <span>
+                                ${name} × ${quantity}
+                            </span>
+
+                            <strong>
+                                ৳${price}
+                            </strong>
+                        </div>
+                    `;
+
+                }).join("");
+
+        } else {
+
+            itemsHTML =
+                "Product details are not available.";
+
+        }
+
+
+        result.classList.add("track-success");
+
+
+        result.innerHTML = `
+
+            <h3 style="margin-top:0;">
+                Order Found ✓
+            </h3>
+
+            <p>
+                <strong>Order ID:</strong>
+                ${orderId}
+            </p>
+
+            <p>
+                <strong>Order Date:</strong>
+                ${formattedDate}
+            </p>
+
+            <p>
+                <strong>Status:</strong>
+                ${status}
+            </p>
+
+            <h4>
+                Ordered Items
+            </h4>
+
+            ${itemsHTML}
+
+            <p style="margin-top:15px;">
+                <strong>Total:</strong>
+                ৳${total}
+            </p>
+
+        `;
+
+    }
+
+
+    /* =========================
+       ENTER KEY FOR TRACKING
+    ========================= */
+
+    document
+        .getElementById("orderIdInput")
+        .addEventListener("keydown", function (event) {
+
+            if (event.key === "Enter") {
+
+                event.preventDefault();
+
+                trackOrder();
+
+            }
+
+        });
+
+
+    /* =========================
+       SUPPORT REQUEST
+    ========================= */
+
+    function submitSupport(event) {
+
+        event.preventDefault();
+
+
+        const request = {
+
+            id: "SR" + Date.now(),
+
+            name:
+                document.getElementById("supportName").value.trim(),
+
+            email:
+                document.getElementById("supportEmail").value.trim(),
+
+            orderId:
+                document.getElementById("supportOrder").value.trim(),
+
+            topic:
+                document.getElementById("supportTopic").value,
+
+            subject:
+                document.getElementById("supportTopic").value,
+
+            message:
+                document.getElementById("supportMessage").value.trim(),
+
+            createdAt:
+                new Date().toISOString(),
+
+            date:
+                new Date().toLocaleString("en-BD"),
+
+            adminReply: ""
+
+        };
+
+
+        let requests = [];
+
+
+        try {
+
+            requests = JSON.parse(
+                localStorage.getItem("seiMartSupportRequests") || "[]"
+            );
+
+        } catch (error) {
+
+            requests = [];
+
+        }
+
+
+        if (!Array.isArray(requests)) {
+
+            requests = [];
+
+        }
+
+
+        requests.push(request);
+
+
+        localStorage.setItem(
+            "seiMartSupportRequests",
+            JSON.stringify(requests)
+        );
+
+
+        document.getElementById("supportSuccess")
+            .style.display = "block";
+
+
+        event.target.reset();
+
+    }
+
+
+</script>
+
+
+<!-- EXISTING SITE SCRIPT -->
+
+<script src="script.js"></script>
+
+
+
+<!-- Live Chat Widget -->
+<style>
+#seiChatBtn{position:fixed;bottom:24px;right:24px;z-index:9999;background:#3f6f5a;color:#fff;border:none;border-radius:50px;padding:14px 20px;font-weight:700;cursor:pointer;box-shadow:0 8px 24px rgba(63,111,90,.35);}
+#seiChatPanel{display:none;position:fixed;bottom:90px;right:24px;width:340px;max-width:calc(100vw - 32px);height:420px;background:#fff;border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,.18);z-index:9999;flex-direction:column;overflow:hidden;border:1px solid #e3e9e4;}
+#seiChatPanel.open{display:flex;}
+#seiChatHead{background:#3f6f5a;color:#fff;padding:14px 16px;font-weight:700;display:flex;justify-content:space-between;align-items:center;}
+#seiChatBody{flex:1;overflow:auto;padding:12px;background:#f7f9f8;}
+#seiChatInputRow{display:flex;gap:8px;padding:10px;border-top:1px solid #e3e9e4;}
+#seiChatInput{flex:1;padding:10px;border:1px solid #ccc;border-radius:8px;}
+#seiChatSend{background:#3f6f5a;color:#fff;border:none;border-radius:8px;padding:10px 14px;cursor:pointer;font-weight:600;}
+.sei-bubble{margin:8px 0;padding:10px 12px;border-radius:10px;max-width:85%;font-size:14px;line-height:1.4;}
+.sei-bubble.me{background:#eaf2ed;margin-left:auto;}
+.sei-bubble.admin{background:#fff;border:1px solid #e3e9e4;}
+.sei-bubble small{display:block;font-size:11px;color:#7b877f;margin-bottom:4px;}
+</style>
+<button type="button" id="seiChatBtn" onclick="toggleSeiChat()">💬 Live Chat</button>
+<div id="seiChatPanel">
+  <div id="seiChatHead"><span>Sei Mart Support</span><button type="button" onclick="toggleSeiChat()" style="background:transparent;border:none;color:#fff;font-size:18px;cursor:pointer;">✕</button></div>
+  <div id="seiChatBody"></div>
+  <div id="seiChatInputRow">
+    <input id="seiChatInput" type="text" placeholder="Type a message...">
+    <button type="button" id="seiChatSend" onclick="sendSeiChat()">Send</button>
+  </div>
+</div>
+<script>
+(function(){
+  function uid(){
+    var id = localStorage.getItem("seiMartChatUserId");
+    if(!id){ id = "user_" + Date.now(); localStorage.setItem("seiMartChatUserId", id); }
+    return id;
+  }
+  function uname(){
+    try{
+      var u = JSON.parse(localStorage.getItem("seiMartUser")||"null");
+      if(u && u.name) return u.name;
+    }catch(e){}
+    return "Guest";
+  }
+  function uemail(){
+    try{
+      var u = JSON.parse(localStorage.getItem("seiMartUser")||"null");
+      if(u && u.email) return u.email;
+    }catch(e){}
+    return uid();
+  }
+  window.toggleSeiChat = function(){
+    var p = document.getElementById("seiChatPanel");
+    p.classList.toggle("open");
+    if(p.classList.contains("open")) renderSeiChat();
+  };
+  function getChats(){
+    try{ return JSON.parse(localStorage.getItem("seiMartLiveChat")||"[]"); }catch(e){ return []; }
+  }
+  function renderSeiChat(){
+    var body = document.getElementById("seiChatBody");
+    if(!body) return;
+    var my = uid();
+    var all = getChats().filter(function(m){ return String(m.userId)===String(my); });
+    if(!all.length){
+      body.innerHTML = '<div style="text-align:center;color:#7b877f;padding:24px 12px;">Say hello — our team will reply here.</div>';
+      return;
+    }
+    body.innerHTML = all.map(function(m){
+      var cls = m.from==="admin" ? "admin" : "me";
+      return '<div class="sei-bubble '+cls+'"><small>'+(m.from==="admin"?"Support":"You")+' · '+(m.label||"")+'</small>'+String(m.text||"").replace(/</g,"&lt;")+'</div>';
+    }).join("");
+    body.scrollTop = body.scrollHeight;
+  }
+  window.sendSeiChat = function(){
+    var input = document.getElementById("seiChatInput");
+    var text = (input.value||"").trim();
+    if(!text) return;
+    var all = getChats();
+    all.push({
+      userId: uid(),
+      name: uname(),
+      email: uemail(),
+      from: "customer",
+      text: text,
+      at: new Date().toISOString(),
+      label: new Date().toLocaleString("en-BD")
+    });
+    localStorage.setItem("seiMartLiveChat", JSON.stringify(all));
+    // also mirror to contact messages for admin list
+    try{
+      var msgs = JSON.parse(localStorage.getItem("seiMartContactMessages")||"[]");
+      msgs.unshift({
+        name: uname(),
+        email: uemail(),
+        subject: "Live Chat",
+        message: text,
+        date: new Date().toLocaleString("en-BD"),
+        createdAt: new Date().toISOString(),
+        source: "live-chat"
+      });
+      localStorage.setItem("seiMartContactMessages", JSON.stringify(msgs));
+    }catch(e){}
+    input.value = "";
+    renderSeiChat();
+  };
+  document.addEventListener("DOMContentLoaded", function(){
+    var input = document.getElementById("seiChatInput");
+    if(input) input.addEventListener("keydown", function(e){ if(e.key==="Enter") sendSeiChat(); });
+    // poll for admin replies
+    setInterval(function(){
+      var p = document.getElementById("seiChatPanel");
+      if(p && p.classList.contains("open")) renderSeiChat();
+    }, 3000);
+  });
+})();
+</script>
+<script src="js/pro-enhancements.js"></script>
+</body>
+
+
+</html>

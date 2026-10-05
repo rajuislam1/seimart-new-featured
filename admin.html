@@ -1,0 +1,1651 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Panel | Sei Mart</title>
+
+    <link rel="stylesheet" href="admin/css/admin.css">
+
+    <link rel="stylesheet" href="admin/css/order-details.css">
+
+    <script src="admin/js/admin-auth.js"></script>
+</head>
+
+
+<body class="admin-page">
+
+<!-- =====================================================
+     MOBILE OVERLAY
+===================================================== -->
+
+<div
+    class="sidebar-overlay"
+    id="sidebarOverlay">
+</div>
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside
+    class="sidebar"
+    id="sidebar">
+
+
+    <!-- BRAND -->
+
+    <div class="admin-brand">
+
+        <div class="brand-icon">
+            🛒
+        </div>
+
+        <div class="brand-text">
+
+            <div class="brand-name">
+                Sei Mart
+            </div>
+
+            <div class="brand-subtitle">
+                ADMIN PANEL
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ADMIN PROFILE -->
+
+    <div class="sidebar-profile">
+
+        <div class="admin-avatar">
+            A
+        </div>
+
+        <div class="admin-info">
+
+            <strong id="sidebarUserName">
+                Administrator
+            </strong>
+
+            <div class="admin-status">
+
+                <span class="online-dot"></span>
+
+                Online
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- NAVIGATION -->
+
+    <nav class="sidebar-nav">
+
+
+        <div class="menu-label">
+            Main
+        </div>
+
+
+        <!-- DASHBOARD -->
+
+        <div class="menu-item">
+
+            <button
+                class="menu-link active"
+                data-module="dashboard">
+
+                <span class="menu-icon">
+                    🏠
+                </span>
+
+                <span class="menu-title">
+                    Dashboard
+                </span>
+
+            </button>
+
+        </div>
+
+
+        <!-- ORDERS -->
+
+        <div class="menu-item has-submenu">
+
+            <button
+                class="menu-link">
+
+                <span class="menu-icon">
+                    📦
+                </span>
+
+                <span class="menu-title">
+                    Orders
+                </span>
+
+                <span class="menu-badge">
+                    0
+                </span>
+
+                <span class="menu-arrow">
+                    ▼
+                </span>
+
+            </button>
+
+            <div class="submenu">
+
+                <a href="#" data-module="all-orders">
+                    All Orders
+                </a>
+
+                <a href="#" data-module="pending-orders">
+                    Pending
+                </a>
+
+                <a href="#" data-module="confirmed-orders">
+                    Confirmed
+                </a>
+
+                <a href="#" data-module="processing-orders">
+                    Processing
+                </a>
+
+                <a href="#" data-module="shipped-orders">
+                    Shipped
+                </a>
+
+                <a href="#" data-module="delivered-orders">
+                    Delivered
+                </a>
+
+                <a href="#" data-module="cancelled-orders">
+                    Cancelled
+                </a>
+
+                <a href="#" data-module="order-details">
+                    Order Details
+                </a>
+
+                <a href="#" data-module="print-invoice">
+                    🧾 Print Invoice
+                </a>
+
+                <a href="#" data-module="delivery-management">
+                    🚚 Delivery Management
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- PRODUCTS -->
+
+        <div class="menu-item has-submenu">
+
+            <button class="menu-link">
+
+                <span class="menu-icon">
+                    🛍
+                </span>
+
+                <span class="menu-title">
+                    Products
+                </span>
+
+                <span class="menu-arrow">
+                    ▼
+                </span>
+
+            </button>
+
+            <div class="submenu">
+
+                <a href="admin/products/products.html">
+                 All Products
+                </a>
+
+                <a href="admin/products/products.html">
+               Add Product
+               </a>
+
+                <a href="#" data-module="edit-product">
+                    Edit Product
+                </a>
+
+                <a href="#" data-module="delete-product">
+                    Delete Product
+                </a>
+
+                <a href="#" data-module="product-price">
+                    Price
+                </a>
+
+                <a href="#" data-module="product-discount">
+                    Discount
+                </a>
+
+                <a href="#" data-module="product-stock">
+                    Stock
+                </a>
+
+                <a href="#" data-module="product-images">
+                    Product Images
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- CATEGORIES -->
+
+        <div class="menu-item">
+
+            <button
+                class="menu-link"
+                data-module="categories">
+
+                <span class="menu-icon">
+                    📂
+                </span>
+
+                <span class="menu-title">
+                    Categories
+                </span>
+
+            </button>
+
+        </div>
+
+
+        <!-- CUSTOMERS -->
+
+        <div class="menu-item has-submenu">
+
+            <button class="menu-link">
+
+                <span class="menu-icon">
+                    👥
+                </span>
+
+                <span class="menu-title">
+                    Customers
+                </span>
+
+                <span class="menu-arrow">
+                    ▼
+                </span>
+
+            </button>
+
+            <div class="submenu">
+
+                <a href="#" data-module="all-customers">
+                    All Customers
+                </a>
+
+                <a href="#" data-module="customer-details">
+                    Customer Details
+                </a>
+
+                <a href="#" data-module="customer-orders">
+                    Order History
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- RETURNS & REFUNDS -->
+        <div class="menu-item">
+            <button type="button" class="menu-link"
+                onclick="window.location.href='admin/returns-refunds.html'">
+                <span class="menu-icon">↩️</span>
+                <span class="menu-title">Returns & Refunds</span>
+            </button>
+        </div>
+
+
+        <div class="menu-label">
+            Commerce
+        </div>
+
+
+        <!-- PAYMENTS -->
+
+        <div class="menu-item has-submenu">
+
+            <button class="menu-link">
+
+                <span class="menu-icon">
+                    💳
+                </span>
+
+                <span class="menu-title">
+                    Payments
+                </span>
+
+                <span class="menu-arrow">
+                    ▼
+                </span>
+
+            </button>
+
+            <div class="submenu">
+
+                <a href="#" data-module="cod-payments">
+                    COD
+                </a>
+
+                <a href="#" data-module="bkash-payments">
+                    bKash
+                </a>
+
+                <a href="#" data-module="payment-status">
+                    Payment Status
+                </a>
+
+                <a href="#" data-module="transaction-id">
+                    Transaction ID
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- COUPONS -->
+
+        <div class="menu-item">
+
+            <button
+                class="menu-link"
+                data-module="coupons">
+
+                <span class="menu-icon">
+                    🏷
+                </span>
+
+                <span class="menu-title">
+                    Coupons & Discounts
+                </span>
+
+            </button>
+
+        </div>
+
+
+        <!-- REVIEWS -->
+
+        <div class="menu-item">
+
+            <button
+                class="menu-link"
+                data-module="reviews">
+
+                <span class="menu-icon">
+                    ⭐
+                </span>
+
+                <span class="menu-title">
+                    Reviews & Ratings
+                </span>
+
+            </button>
+
+        </div>
+
+
+        <!-- INVENTORY -->
+
+        <div class="menu-item has-submenu">
+
+            <button class="menu-link">
+
+                <span class="menu-icon">
+                    📦
+                </span>
+
+                <span class="menu-title">
+                    Inventory
+                </span>
+
+                <span class="menu-arrow">
+                    ▼
+                </span>
+
+            </button>
+
+            <div class="submenu">
+
+                <a href="#" data-module="inventory-stock">
+                    Stock
+                </a>
+
+                <a href="#" data-module="low-stock">
+                    Low Stock
+                </a>
+
+                <a href="#" data-module="out-stock">
+                    Out of Stock
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="menu-label">
+            Management
+        </div>
+
+
+        <!-- REPORTS -->
+
+        <div class="menu-item has-submenu">
+
+            <button class="menu-link">
+
+                <span class="menu-icon">
+                    📊
+                </span>
+
+                <span class="menu-title">
+                    Reports & Analytics
+                </span>
+
+                <span class="menu-arrow">
+                    ▼
+                </span>
+
+            </button>
+
+            <div class="submenu">
+
+                <a href="#" data-module="sales-report">
+                    Sales
+                </a>
+
+                <a href="#" data-module="orders-report">
+                    Orders
+                </a>
+
+                <a href="#" data-module="revenue-report">
+                    Revenue
+                </a>
+
+                <a href="#" data-module="top-products">
+                    Top Products
+                </a>
+
+                <a href="#" data-module="customer-report">
+                    Customers
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- SUPPORT -->
+
+        <div class="menu-item has-submenu">
+
+            <button class="menu-link">
+
+                <span class="menu-icon">
+                    🎧
+                </span>
+
+                <span class="menu-title">
+                    Support
+                </span>
+
+                <span class="menu-badge red">
+                    0
+                </span>
+
+                <span class="menu-arrow">
+                    ▼
+                </span>
+
+            </button>
+
+            <div class="submenu">
+
+                <a href="#" data-module="customer-messages">
+                    Customer Messages
+                </a>
+
+                <a href="#" data-module="support-requests">
+                    Support Requests
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- WEBSITE -->
+
+        <div class="menu-item has-submenu">
+
+            <button class="menu-link">
+
+                <span class="menu-icon">
+                    🖼
+                </span>
+
+                <span class="menu-title">
+                    Website Content
+                </span>
+
+                <span class="menu-arrow">
+                    ▼
+                </span>
+
+            </button>
+
+            <div class="submenu">
+
+                <a href="#" data-module="homepage-banner">
+                    Homepage Banner
+                </a>
+
+                <a href="#" data-module="todays-deals">
+                    Today's Deals
+                </a>
+
+                <a href="#" data-module="new-arrivals">
+                    New Arrivals
+                </a>
+
+                <a href="#" data-module="promo-popup">
+                    Promotional Popup
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="menu-label">
+            System
+        </div>
+
+
+        <!-- SETTINGS -->
+
+        <div class="menu-item">
+
+            <button
+                class="menu-link"
+                data-module="settings">
+
+                <span class="menu-icon">
+                    ⚙
+                </span>
+
+                <span class="menu-title">
+                    Settings
+                </span>
+
+            </button>
+
+        </div>
+
+
+        <!-- STAFF RULES (separate page) -->
+
+        <div class="menu-item">
+
+            <button
+                type="button"
+                class="menu-link"
+                data-module="staff-accounts"
+                id="staffRulesBtn">
+
+                <span class="menu-icon">
+                    👥
+                </span>
+
+                <span class="menu-title">
+                    Staff Rules
+                </span>
+
+            </button>
+
+        </div>
+
+
+        <div class="menu-label">
+            Sellers
+        </div>
+
+
+        <!-- SELLER REQUESTS -->
+
+        <div class="menu-item">
+
+            <button
+                type="button"
+                class="menu-link" data-module="seller-requests" onclick="window.location.href='admin/seller-requests.html'">
+
+                <span class="menu-icon">
+                    🏪
+                </span>
+
+                <span class="menu-title">
+                    Seller Requests
+                </span>
+
+            </button>
+
+        </div>
+
+        <div class="menu-item">
+            <button type="button" class="menu-link" data-module="sellers-manage"
+                onclick="window.location.href='admin/sellers-manage.html'">
+                <span class="menu-icon">📦</span>
+                <span class="menu-title">Sellers & Products</span>
+            </button>
+        </div>
+        <div class="menu-item">
+            <button type="button" class="menu-link"
+                onclick="window.location.href='admin/commission-settings.html'">
+                <span class="menu-icon">💰</span>
+                <span class="menu-title">Commission</span>
+            </button>
+        </div>
+        <div class="menu-item">
+            <button type="button" class="menu-link"
+                onclick="window.location.href='admin/seller-payments.html'">
+                <span class="menu-icon">💸</span>
+                <span class="menu-title">Seller Payments</span>
+            </button>
+        </div>
+
+
+
+        <div class="menu-label">
+            Account
+        </div>
+
+
+        <!-- AFFILIATES -->
+
+        <div class="menu-item">
+
+            <button
+                type="button"
+                class="menu-link"
+                data-module="affiliates"
+                onclick="window.location.href='admin/affiliates-manage.html'">
+
+                <span class="menu-icon">
+                    🤝
+                </span>
+
+                <span class="menu-title">
+                    Affiliates
+                </span>
+
+            </button>
+
+        </div>
+
+
+        <!-- ADMIN PROFILE -->
+
+        <div class="menu-item">
+
+            <button
+                class="menu-link"
+                data-module="admin-profile">
+
+                <span class="menu-icon">
+                    👤
+                </span>
+
+                <span class="menu-title">
+                    Admin Profile
+                </span>
+
+            </button>
+
+        </div>
+
+
+    </nav>
+
+
+    <!-- LOGOUT -->
+
+    <div class="sidebar-bottom">
+
+        <button
+            class="logout-btn"
+            id="logoutBtn">
+
+            <span>
+                🚪
+            </span>
+
+            Logout
+
+        </button>
+
+    </div>
+
+
+</aside>
+
+
+<!-- =====================================================
+     MAIN AREA
+===================================================== -->
+
+<main class="main-area">
+
+
+    <!-- =================================================
+         TOP HEADER
+    ================================================= -->
+
+    <header class="top-header">
+
+
+        <div class="header-left">
+
+            <button
+                class="mobile-menu-btn"
+                id="mobileMenuBtn">
+
+                ☰
+
+            </button>
+
+
+            <div class="page-heading">
+
+                <h1 id="pageTitle">
+                    Dashboard
+                </h1>
+
+                <p id="pageSubtitle">
+                    <span id="headerWelcomeSub">Welcome back, Administrator</span>
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="header-right">
+
+
+            <!-- SEARCH -->
+
+            <div class="header-search">
+
+                <span class="search-icon">
+                    🔍
+                </span>
+
+                <input
+                    type="text"
+                    id="adminSearch"
+                    placeholder="Search orders, products...">
+
+            </div>
+
+
+            <!-- NOTIFICATION -->
+
+            <button
+                type="button"
+                class="header-icon-btn"
+                id="adminNotifBtn"
+                title="Notifications"
+                onclick="toggleAdminNotifPanel(event)">
+
+                🔔
+
+                <span
+                    class="notification-dot"
+                    id="adminNotifDot"
+                    style="display:none;">
+                </span>
+
+            </button>
+            <div id="adminNotifPanel" style="display:none;position:absolute;right:20px;top:70px;width:340px;max-width:92vw;max-height:400px;overflow:auto;background:#fff;border:1px solid #e3e9e4;border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.15);z-index:9999;padding:12px;"></div>
+
+
+            <!-- VIEW STORE -->
+
+            <a
+                href="index.html"
+                class="header-icon-btn"
+                title="View Store">
+
+                🛒
+
+            </a>
+
+
+            <!-- ADMIN -->
+
+            <div class="top-admin">
+
+                <div class="top-avatar">
+                    A
+                </div>
+
+               <a
+    href="admin/account.html"
+    class="top-admin-info"
+>
+
+    <strong id="topUserName">
+        Administrator
+    </strong>
+
+    <span id="topUserRole">
+        Super Admin
+    </span>
+
+</a>
+
+            </div>
+
+
+        </div>
+
+    </header>
+
+
+    <!-- =================================================
+         CONTENT
+    ================================================= -->
+
+    <div class="content">
+
+
+        <!-- =================================================
+             DASHBOARD MODULE
+        ================================================= -->
+
+        <section
+            id="dashboardModule"
+            class="module-content"
+            style="display:block;">
+
+
+            <!-- WELCOME -->
+
+            <div class="welcome-card">
+
+                <div class="welcome-content">
+
+                    <h2>
+                        <span id="welcomeUserName">Welcome back, Administrator</span> 👋
+                    </h2>
+
+                    <p>
+                        Manage your Sei Mart store,
+                        orders, products, customers,
+                        payments and everything
+                        from one powerful dashboard.
+                    </p>
+
+                    <div
+                        class="welcome-date"
+                        id="currentDate">
+
+                        📅 Loading date...
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- STAT CARDS -->
+
+            <div class="stats-grid">
+
+
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <div
+                            class="stat-icon green">
+
+                            📦
+
+                        </div>
+
+                    </div>
+
+                    <div
+                        class="stat-value"
+                        id="totalOrders">
+
+                        0
+
+                    </div>
+
+                    <div class="stat-label">
+                        Total Orders
+                    </div>
+
+                    <div class="stat-change up">
+                        ↗ All time orders
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <div
+                            class="stat-icon gold">
+
+                            💰
+
+                        </div>
+
+                    </div>
+
+                    <div
+                        class="stat-value"
+                        id="totalSales">
+
+                        ৳0
+
+                    </div>
+
+                    <div class="stat-label">
+                        Total Sales
+                    </div>
+
+                    <div class="stat-change up">
+                        ↗ Current store data
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <div
+                            class="stat-icon blue">
+
+                            👥
+
+                        </div>
+
+                    </div>
+
+                    <div
+                        class="stat-value"
+                        id="totalCustomers">
+
+                        0
+
+                    </div>
+
+                    <div class="stat-label">
+                        Registered Customers
+                    </div>
+
+                    <div class="stat-change up">
+                        ↗ Customer accounts
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <div
+                            class="stat-icon red">
+
+                            ⚠
+
+                        </div>
+
+                    </div>
+
+                    <div
+                        class="stat-value"
+                        id="pendingOrders">
+
+                        0
+
+                    </div>
+
+                    <div class="stat-label">
+                        Pending Orders
+                    </div>
+
+                    <div class="stat-change warning">
+                        ● Needs attention
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <div class="stat-icon green">🏪</div>
+                    </div>
+                    <div class="stat-value" id="totalSellers">0</div>
+                    <div class="stat-label">Total Sellers</div>
+                    <div class="stat-change up">↗ Active marketplace</div>
+                </div>
+
+
+
+            </div>
+
+
+            <!-- MAIN DASHBOARD -->
+
+            <div class="dashboard-grid">
+
+
+                <!-- RECENT ORDERS -->
+
+                <div class="panel-card">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <div class="panel-title">
+                                Recent Orders
+                            </div>
+
+                            <div class="panel-subtitle">
+                                Latest customer orders
+                            </div>
+
+                        </div>
+
+                        <a
+                            href="#"
+                            class="view-all"
+                            data-module="all-orders">
+
+                            View All →
+
+                        </a>
+
+                    </div>
+
+
+                    <div class="table-wrapper">
+
+                        <table
+                            class="orders-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Order
+                                    </th>
+
+                                    <th>
+                                        Customer
+                                    </th>
+
+                                    <th>
+                                        Amount
+                                    </th>
+
+                                    <th>
+                                        Status
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody
+                                id="recentOrdersBody">
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+
+                <!-- QUICK ACTIONS -->
+
+                <div class="panel-card">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <div class="panel-title">
+                                Quick Actions
+                            </div>
+
+                            <div class="panel-subtitle">
+                                Frequently used tools
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="quick-actions">
+
+
+                        <button
+                            class="quick-action"
+                            data-module="add-product">
+
+                            <div
+                                class="quick-action-icon">
+
+                                ➕
+
+                            </div>
+
+                            <strong>
+                                Add Product
+                            </strong>
+
+                            <span>
+                                Create new product
+                            </span>
+
+                        </button>
+
+
+                        <button
+                            class="quick-action"
+                            data-module="all-orders">
+
+                            <div
+                                class="quick-action-icon">
+
+                                📦
+
+                            </div>
+
+                            <strong>
+                                View Orders
+                            </strong>
+
+                            <span>
+                                Manage customer orders
+                            </span>
+
+                        </button>
+
+
+                        <button
+                            class="quick-action"
+                            data-module="coupons">
+
+                            <div
+                                class="quick-action-icon">
+
+                                🏷
+
+                            </div>
+
+                            <strong>
+                                Manage Coupons
+                            </strong>
+
+                            <span>
+                                Discounts & offers
+                            </span>
+
+                        </button>
+
+
+                        <button
+                            class="quick-action"
+                            data-module="inventory-stock">
+
+                            <div
+                                class="quick-action-icon">
+
+                                📊
+
+                            </div>
+
+                            <strong>
+                                Check Stock
+                            </strong>
+
+                            <span>
+                                Inventory overview
+                            </span>
+
+                        </button>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- LOWER PANELS -->
+
+            <div class="lower-grid">
+
+
+                <!-- PAYMENT SUMMARY -->
+
+                <div class="panel-card">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <div class="panel-title">
+                                Payment Summary
+                            </div>
+
+                            <div class="panel-subtitle">
+                                Payment methods
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="summary-list">
+
+
+                        <div class="summary-item">
+
+                            <div class="summary-icon">
+                                💵
+                            </div>
+
+                            <div class="summary-info">
+
+                                <strong>
+                                    Cash on Delivery
+                                </strong>
+
+                                <span>
+                                    Orders
+                                </span>
+
+                            </div>
+
+                            <div
+                                class="summary-value"
+                                id="codCount">
+
+                                0
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="summary-item">
+
+                            <div class="summary-icon">
+                                💳
+                            </div>
+
+                            <div class="summary-info">
+
+                                <strong>
+                                    bKash
+                                </strong>
+
+                                <span>
+                                    Orders
+                                </span>
+
+                            </div>
+
+                            <div
+                                class="summary-value"
+                                id="bkashCount">
+
+                                0
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- ORDER STATUS -->
+
+                <div class="panel-card">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <div class="panel-title">
+                                Order Status
+                            </div>
+
+                            <div class="panel-subtitle">
+                                Current order overview
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="summary-list">
+
+
+                        <div class="summary-item">
+
+                            <div class="summary-icon">
+                                ⏳
+                            </div>
+
+                            <div class="summary-info">
+
+                                <strong>
+                                    Pending
+                                </strong>
+
+                            </div>
+
+                            <div
+                                class="summary-value"
+                                id="statusPending">
+
+                                0
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="summary-item">
+
+                            <div class="summary-icon">
+                                ⚙️
+                            </div>
+
+                            <div class="summary-info">
+
+                                <strong>
+                                    Processing
+                                </strong>
+
+                            </div>
+
+                            <div
+                                class="summary-value"
+                                id="statusProcessing">
+
+                                0
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="summary-item">
+
+                            <div class="summary-icon">
+                                🚚
+                            </div>
+
+                            <div class="summary-info">
+
+                                <strong>
+                                    Delivered
+                                </strong>
+
+                            </div>
+
+                            <div
+                                class="summary-value"
+                                id="statusDelivered">
+
+                                0
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- STORE SUMMARY -->
+
+                <div class="panel-card">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <div class="panel-title">
+                                Store Overview
+                            </div>
+
+                            <div class="panel-subtitle">
+                                Sei Mart summary
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="summary-list">
+
+
+                        <div class="summary-item">
+
+                            <div class="summary-icon">
+                                🛍
+                            </div>
+
+                            <div class="summary-info">
+
+                                <strong>
+                                    Products
+                                </strong>
+
+                            </div>
+
+                            <div
+                                class="summary-value"
+                                id="productCount">
+
+                                0
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="summary-item">
+
+                            <div class="summary-icon">
+                                📂
+                            </div>
+
+                            <div class="summary-info">
+
+                                <strong>
+                                    Categories
+                                </strong>
+
+                            </div>
+
+                            <div
+                                class="summary-value"
+                                id="categoryCount">
+
+                                10
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="summary-item">
+
+                            <div class="summary-icon">
+                                ⭐
+                            </div>
+
+                            <div class="summary-info">
+
+                                <strong>
+                                    Reviews
+                                </strong>
+
+                            </div>
+
+                            <div
+                                class="summary-value"
+                                id="reviewCount">
+
+                                0
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+        <!-- =================================================
+             DYNAMIC MODULE AREA
+        ================================================= -->
+
+        <section
+            id="moduleArea"
+            class="module-content">
+
+            <div class="module-placeholder" id="adminModuleContent">
+
+    <div
+        class="placeholder-icon"
+        id="placeholderIcon">
+        ⚙️
+    </div>
+
+    <h2 id="placeholderTitle">
+        Admin Module
+    </h2>
+
+    <p id="placeholderText">
+        This section is ready for
+        development. We will build
+        this feature step by step
+        without affecting the rest
+        of your Sei Mart website.
+    </p>
+
+    <div
+        class="development-badge"
+        id="developmentBadge">
+        🚧 Feature Ready — Development Next
+    </div>
+
+</div>
+
+        </section>
+
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <footer class="admin-footer">
+
+        © 2026
+        <strong>
+            Sei Mart
+        </strong>
+
+        — Admin Management System
+
+        <br>
+
+        Smart Shopping • Better Products • Better Life
+
+    </footer>
+
+
+</main>
+
+
+<script src="admin/js/admin.js"></script>
+
+<script src="script.js"></script>
+<script src="js/security.js"></script>
+<script src="admin/js/order-details.js"></script>
+
+</body>
+
+</html>

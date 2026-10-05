@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seller Login | Sei Mart</title>
+<style>
+body{margin:0;font-family:system-ui,sans-serif;background:#f3f6f4;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
+.card{background:#fff;border:1px solid #e3e9e4;border-radius:16px;padding:32px;max-width:400px;width:100%;box-shadow:0 12px 32px rgba(0,0,0,.06);}
+h1{margin:0 0 8px;color:#17231d;font-size:24px;}
+p{color:#7b877f;margin:0 0 20px;font-size:14px;}
+label{display:block;margin:12px 0 6px;font-weight:600;font-size:13px;}
+input{width:100%;padding:12px;border:1px solid #d5ddd8;border-radius:10px;box-sizing:border-box;}
+button{width:100%;margin-top:18px;padding:14px;background:#3f6f5a;color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;}
+.err{display:none;margin-top:12px;padding:10px;background:#fdeceb;color:#d9534f;border-radius:8px;font-size:14px;}
+a{color:#3f6f5a;font-weight:600;text-decoration:none;}
+</style>
+</head>
+<body data-panel="seller">
+<div class="card">
+  <div style="text-align:center;margin-bottom:16px;">
+    <img src="image/logo-seimart.png" alt="" style="width:48px;height:48px;object-fit:contain;">
+  </div>
+  <h1>Seller Login</h1>
+  <p>Access your Seller Portal after admin approval.</p>
+  <label>Username</label>
+  <input type="text" id="user" placeholder="username" autocomplete="username">
+  <label>Password</label>
+  <input type="password" id="pass" placeholder="password" autocomplete="current-password">
+  <button type="button" onclick="doLogin()">Login to Portal</button>
+  <div class="err" id="err"></div>
+  <p style="margin-top:18px;text-align:center;">New seller? <a href="sell-with-seimart.html">Register</a> · <a href="index.html">Store</a></p>
+</div>
+<script src="js/security.js"></script>
+<script>
+function doLogin(){
+  var u = (document.getElementById("user").value||"").trim().toLowerCase();
+  var p = document.getElementById("pass").value;
+  var err = document.getElementById("err");
+  err.style.display = "none";
+  var sellers = [];
+  try { sellers = JSON.parse(localStorage.getItem("seiMartSellers")||"[]"); } catch(e) {}
+  var s = null;
+  for (var i = 0; i < sellers.length; i++) {
+    var x = sellers[i];
+    if (String(x.username).toLowerCase() !== u) continue;
+    var ok = false;
+    if (window.SeiSecurity && typeof SeiSecurity.checkRecordPassword === "function") {
+      var r = SeiSecurity.checkRecordPassword(x, p);
+      ok = r && r.ok;
+      if (ok && r.upgraded) {
+        sellers[i] = x;
+        localStorage.setItem("seiMartSellers", JSON.stringify(sellers));
+      }
+    } else if (window.SeiSecurity && typeof SeiSecurity.verifyHash === "function" && x.passwordHash) {
+      ok = SeiSecurity.verifyHash(p, x.passwordHash);
+    } else {
+      ok = String(x.passwordHash || x.password || "") === p;
+    }
+    if (ok) { s = x; break; }
+  }
+  if(!s){
+    err.style.display="block"; err.textContent="Invalid username or password.";
+    return;
+  }
+  if(s.status && s.status !== "Active"){
+    err.style.display="block"; err.textContent="Account is "+s.status+". Contact admin.";
+    return;
+  }
+  localStorage.setItem("seiMartSellerSession", JSON.stringify({
+    id: s.id, username: s.username, name: s.name, shop: s.shop, email: s.email, phone: s.phone, category: s.category
+  }));
+  window.location.href = "seller-portal.html";
+}
+document.getElementById("pass").addEventListener("keydown", function(e){ if(e.key==="Enter") doLogin(); });
+</script>
+</body>
+</html>

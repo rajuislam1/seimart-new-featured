@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Delivery Login | Sei Mart</title>
+<link rel="stylesheet" href="css/delivery.css">
+<script src="../js/security.js"></script>
+</head>
+<body class="delivery-login-page">
+<div class="login-shell">
+  <div class="brand">Sei <span>Mart</span></div>
+  <div class="login-card">
+    <div class="login-icon">🚚</div>
+    <h1>Delivery Portal</h1>
+    <p class="muted">Sign in with your delivery staff account.</p>
+    <form id="deliveryLoginForm" autocomplete="off">
+      <label>Username<input id="deliveryUsername" type="text" required autocomplete="username" placeholder="Enter username"></label>
+      <label>Password<input id="deliveryPassword" type="password" required autocomplete="current-password" placeholder="Enter password"></label>
+      <button type="submit" class="primary-btn">Login to Delivery Portal</button>
+      <div id="loginError" class="login-error"></div>
+    </form>
+    <div class="login-note">Only active <strong>Delivery Man</strong> accounts created from Admin → Staff Rules can sign in here.</div>
+  </div>
+  <a class="back-link" href="../admin/login.html">Admin / Staff Login</a>
+</div>
+<script src="js/delivery-login.js"></script>
+</body>
+</html>

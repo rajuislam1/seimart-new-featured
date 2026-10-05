@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Affiliate | Sei Mart</title>
+<link rel="stylesheet" href="style.css">
+<style>
+body{margin:0;font-family:system-ui,sans-serif;background:#f5f7f5;}
+.hero{background:linear-gradient(135deg,#3f6f5a,#315744);color:#fff;padding:48px 20px;text-align:center;}
+.wrap{max-width:900px;margin:0 auto;padding:28px 16px 50px;display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+@media(max-width:700px){.wrap{grid-template-columns:1fr;}}
+.card{background:#fff;border:1px solid #e3e9e4;border-radius:14px;padding:22px;}
+label{display:block;margin:10px 0 4px;font-weight:600;font-size:13px;}
+input{width:100%;padding:11px;border:1px solid #ccc;border-radius:8px;box-sizing:border-box;}
+button{width:100%;margin-top:14px;padding:12px;border:none;border-radius:10px;background:#3f6f5a;color:#fff;font-weight:700;cursor:pointer;}
+.msg{display:none;margin-top:10px;padding:10px;border-radius:8px;background:#e9f6ed;color:#3f8c5a;font-weight:600;font-size:14px;}
+.err{background:#fdeceb;color:#d9534f;}
+</style>
+</head>
+<body>
+<header style="background:#fff;border-bottom:1px solid #e3e9e4;padding:12px 20px;">
+  <a href="index.html" style="color:#3f6f5a;font-weight:800;text-decoration:none;">← Sei Mart</a>
+</header>
+<section class="hero">
+  <h1 style="margin:0 0 8px;">Affiliate Program</h1>
+  <p style="margin:0;opacity:.95;">Share products, earn commission. Login or register as affiliate.</p>
+</section>
+<main class="wrap">
+  <div class="card">
+    <h2 style="margin-top:0;">Affiliate Login</h2>
+    <label>Email or Username</label>
+    <input id="affLoginUser" placeholder="email / username">
+    <label>Password</label>
+    <input id="affLoginPass" type="password" placeholder="password">
+    <button type="button" onclick="affiliateLogin()">Login</button>
+    <div class="msg" id="affLoginMsg"></div>
+  </div>
+  <div class="card">
+    <h2 style="margin-top:0;">Register as Affiliate</h2>
+    <label>Full Name</label>
+    <input id="affName" placeholder="Your name">
+    <label>Username</label>
+    <input id="affUser" placeholder="username">
+    <label>Email</label>
+    <input id="affEmail" type="email" placeholder="you@email.com">
+    <label>Phone</label>
+    <input id="affPhone" placeholder="01XXXXXXXXX">
+    <label>Password</label>
+    <input id="affPass" type="password" placeholder="password">
+    <button type="button" onclick="affiliateRegister()">Create Affiliate Account</button>
+    <div class="msg" id="affRegMsg"></div>
+  </div>
+</main>
+<div class="card" style="max-width:900px;margin:0 auto 40px;display:none;" id="affDash">
+  <h2>Affiliate Dashboard</h2>
+  <p id="affDashInfo"></p>
+  <p><strong>Your referral code:</strong> <span id="affCode"></span></p>
+  <p style="color:#666;font-size:14px;">Share: <code id="affLink"></code></p>
+  <button type="button" onclick="affiliateLogout()" style="background:#666;max-width:200px;">Logout</button>
+</div>
+<script src="script.js"></script>
+<script src="js/security.js"></script>
+<script>
+function getAffiliates(){ try{return JSON.parse(localStorage.getItem("seiMartAffiliates")||"[]");}catch(e){return[];} }
+function saveAffiliates(list){ localStorage.setItem("seiMartAffiliates", JSON.stringify(list||[])); }
+function getAffSession(){ try{return JSON.parse(localStorage.getItem("seiMartAffiliateSession")||"null");}catch(e){return null;} }
+
+function affiliateRegister(){
+  var name=document.getElementById("affName").value.trim();
+  var username=document.getElementById("affUser").value.trim().toLowerCase();
+  var email=document.getElementById("affEmail").value.trim().toLowerCase();
+  var phone=document.getElementById("affPhone").value.trim();
+  var password=document.getElementById("affPass").value;
+  var msg=document.getElementById("affRegMsg");
+  if(!name||!username||!email||!password){ msg.style.display="block"; msg.className="msg err"; msg.textContent="Fill required fields"; return; }
+  var list=getAffiliates();
+  if(list.some(function(a){return a.username===username||a.email===email;})){
+    msg.style.display="block"; msg.className="msg err"; msg.textContent="Username or email already exists"; return;
+  }
+  var code = "SEI" + username.substring(0,4).toUpperCase() + String(Date.now()).slice(-4);
+  list.push({ name:name, username:username, email:email, phone:phone, passwordHash:SeiSecurity.hashPassword(password), code:code, status:"Active", sales:0, createdAt:new Date().toISOString() });
+  saveAffiliates(list);
+  msg.style.display="block"; msg.className="msg"; msg.textContent="Registered! You can login now.";
+}
+
+function affiliateLogin(){
+  var u=document.getElementById("affLoginUser").value.trim().toLowerCase();
+  var p=document.getElementById("affLoginPass").value;
+  var msg=document.getElementById("affLoginMsg");
+  var list=getAffiliates();
+  var user=list.find(function(a){ return (a.username===u||a.email===u); });
+  if(user){ var chk=SeiSecurity.checkRecordPassword(user,p); if(!chk.ok){ user=null; } else if(chk.upgraded){ saveAffiliates(list); } }
+  if(!user){ msg.style.display="block"; msg.className="msg err"; msg.textContent="Invalid login"; return; }
+  localStorage.setItem("seiMartAffiliateSession", JSON.stringify({ username:user.username, name:user.name, code:user.code }));
+  showDash(user);
+  msg.style.display="block"; msg.className="msg"; msg.textContent="Login successful";
+}
+
+function showDash(user){
+  document.getElementById("affDash").style.display="block";
+  document.getElementById("affDashInfo").textContent = "Welcome, " + user.name + " (" + (user.status||"Active") + ")";
+  document.getElementById("affCode").textContent = user.code;
+  document.getElementById("affLink").textContent = location.origin + location.pathname.replace(/[^/]*$/,"") + "index.html?ref=" + user.code;
+}
+
+function affiliateLogout(){
+  localStorage.removeItem("seiMartAffiliateSession");
+  document.getElementById("affDash").style.display="none";
+}
+
+var sess = getAffSession();
+if(sess){
+  var list=getAffiliates();
+  var user=list.find(function(a){return a.username===sess.username;});
+  if(user) showDash(user);
+}
+</script>
+</body>
+</html>

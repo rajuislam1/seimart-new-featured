@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seller Payments | Sei Mart Admin</title>
+<script src="js/admin-auth.js"></script>
+<style>
+body{margin:0;font-family:system-ui,sans-serif;background:#f3f6f4;color:#17231d;}
+.top{background:#17231d;color:#fff;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+.top a{color:#e8c65a;text-decoration:none;font-weight:600;margin-left:10px;}
+.wrap{max-width:1100px;margin:20px auto;padding:0 14px 40px;}
+.card{background:#fff;border:1px solid #e3e9e4;border-radius:14px;padding:18px;margin-bottom:16px;}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:16px;}
+.stat{background:#fff;border:1px solid #e3e9e4;border-radius:12px;padding:14px;}
+.stat b{display:block;font-size:22px;color:#3f6f5a;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+th,td{padding:10px 8px;border-bottom:1px solid #eee;text-align:left;vertical-align:top;}
+th{background:#f5f7f5;}
+.btn{border:none;padding:8px 12px;border-radius:8px;font-weight:700;cursor:pointer;font-size:12px;margin:2px;}
+.ok{background:#3f8c5a;color:#fff;}
+.warn{background:#e8c65a;color:#17231d;}
+.muted{background:#eee;color:#333;}
+.badge{display:inline-block;padding:3px 8px;border-radius:10px;font-size:11px;font-weight:700;}
+.badge.open{background:#fff3cd;color:#856404;}
+.badge.cleared{background:#d4edda;color:#155724;}
+.badge.paid{background:#cce5ff;color:#004085;}
+select,input{padding:8px;border-radius:8px;border:1px solid #ccc;}
+@media(max-width:700px){table{font-size:12px;} .btn{width:100%;}}
+</style>
+</head>
+<body>
+<div class="top">
+  <strong>💸 Seller Payments & Weekly Clearance</strong>
+  <div>
+    <a href="../admin.html">← Admin</a>
+    <a href="sellers-manage.html">Sellers</a>
+    <a href="commission-settings.html">Commission</a>
+  </div>
+</div>
+<div class="wrap">
+  <div class="cards" id="stats"></div>
+  <div class="card">
+    <h2 style="margin-top:0;">Generate / review clearance periods</h2>
+    <p style="color:#7b877f;font-size:14px;">Sales of seller products in a week → commission deducted → clearance. Mark <b>Cleared</b> when reviewed, <b>Paid</b> when money sent to seller.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:end;margin-bottom:14px;">
+      <label>Week start (Sun)<br><input type="date" id="weekStart"></label>
+      <button type="button" class="btn ok" onclick="rebuildWeeks()">Rebuild from orders</button>
+    </div>
+    <div id="list"></div>
+  </div>
+</div>
+<script src="../script.js"></script>
+<script>
+function getComm(){
+  try { return JSON.parse(localStorage.getItem("seiMartCommission")||"{}"); } catch(e){ return {}; }
+}
+function getSellers(){ try{return JSON.parse(localStorage.getItem("seiMartSellers")||"[]");}catch(e){return[];} }
+function getPayments(){ try{return JSON.parse(localStorage.getItem("seiMartSellerPayments")||"[]");}catch(e){return[];} }
+function savePayments(list){ localStorage.setItem("seiMartSellerPayments", JSON.stringify(list||[])); }
+function getOrders(){ try{return JSON.parse(localStorage.getItem("seiMartOrders")||"[]");}catch(e){return[];} }
+function esc(v){ return String(v==null?"":v).replace(/&/g,"&amp;").replace(/</g,"&lt;"); }
+
+function weekKey(d){
+  // week starting Sunday
+  var x = new Date(d);
+  x.setHours(0,0,0,0);
+  var day = x.getDay();
+  x.setDate(x.getDate() - day);
+  return x.toISOString().slice(0,10);
+}
+function weekEnd(startStr){
+  var x = new Date(startStr+"T00:00:00");
+  x.setDate(x.getDate()+6);
+  return x.toISOString().slice(0,10);
+}
+
+function rebuildWeeks(){
+  var products = (typeof getProducts==="function") ? getProducts() : [];
+  var byId = {};
+  products.forEach(function(p){ byId[String(p.id)] = p; });
+  var comm = getComm();
+  var rate = (comm.status==="disabled") ? 0 : (Number(comm.rate)||10);
+  var orders = getOrders();
+  var map = {}; // key: sellerId|weekStart
+
+  orders.forEach(function(o){
+    var st = String(o.status||"");
+    // count non-cancelled
+    if (/cancel/i.test(st)) return;
+    var when = o.createdAt || o.date || "";
+    var dt = when ? new Date(when) : new Date();
+    if (isNaN(dt.getTime())) dt = new Date();
+    var wk = weekKey(dt);
+    (o.items||[]).forEach(function(it){
+      var p = byId[String(it.id)];
+      if (!p || !p.sellerId) return; // only marketplace sellers
+      var gross = (Number(it.price)||0) * (Number(it.quantity)||1);
+      var key = p.sellerId + "|" + wk;
+      if (!map[key]) {
+        map[key] = {
+          id: key,
+          sellerId: p.sellerId,
+          sellerShop: p.sellerShop || p.sellerName || "Seller",
+          weekStart: wk,
+          weekEnd: weekEnd(wk),
+          orders: 0,
+          items: 0,
+          gross: 0,
+          commission: 0,
+          net: 0,
+          status: "Open"
+        };
+      }
+      map[key].items += (Number(it.quantity)||1);
+      map[key].gross += gross;
+    });
+    // count order once per seller in that order
+    var sellersInOrder = {};
+    (o.items||[]).forEach(function(it){
+      var p = byId[String(it.id)];
+      if (p && p.sellerId) sellersInOrder[p.sellerId] = true;
+    });
+    Object.keys(sellersInOrder).forEach(function(sid){
+      var key = sid + "|" + weekKey(dt);
+      if (map[key]) map[key].orders += 1;
+    });
+  });
+
+  Object.keys(map).forEach(function(k){
+    var row = map[k];
+    row.commission = Math.round(row.gross * rate / 100);
+    row.net = Math.max(0, row.gross - row.commission);
+    row.rate = rate;
+  });
+
+  // merge with existing statuses
+  var existing = getPayments();
+  var statusMap = {};
+  existing.forEach(function(r){ statusMap[r.id] = r; });
+  var list = Object.keys(map).map(function(k){
+    var row = map[k];
+    if (statusMap[k]) {
+      row.status = statusMap[k].status || row.status;
+      row.paidAt = statusMap[k].paidAt;
+      row.clearedAt = statusMap[k].clearedAt;
+      row.note = statusMap[k].note || "";
+    }
+    return row;
+  });
+  // keep old paid rows not in map
+  existing.forEach(function(r){
+    if (!map[r.id]) list.push(r);
+  });
+  list.sort(function(a,b){ return String(b.weekStart).localeCompare(String(a.weekStart)); });
+  savePayments(list);
+  render();
+  alert("Rebuilt " + list.length + " clearance row(s) from orders.");
+}
+
+function setStatus(id, status){
+  var list = getPayments().map(function(r){
+    if (r.id !== id) return r;
+    r.status = status;
+    if (status === "Cleared") r.clearedAt = new Date().toISOString();
+    if (status === "Paid") r.paidAt = new Date().toISOString();
+    return r;
+  });
+  savePayments(list);
+  render();
+}
+
+function render(){
+  var list = getPayments();
+  var open = list.filter(function(r){ return r.status==="Open"; });
+  var cleared = list.filter(function(r){ return r.status==="Cleared"; });
+  var paid = list.filter(function(r){ return r.status==="Paid"; });
+  var due = open.concat(cleared).reduce(function(s,r){ return s + (Number(r.net)||0); }, 0);
+  document.getElementById("stats").innerHTML =
+    '<div class="stat"><b>'+list.length+'</b>Periods</div>'+
+    '<div class="stat"><b>'+open.length+'</b>Open</div>'+
+    '<div class="stat"><b>'+cleared.length+'</b>Cleared</div>'+
+    '<div class="stat"><b>'+paid.length+'</b>Paid</div>'+
+    '<div class="stat"><b>৳'+due.toLocaleString("en-BD")+'</b>Payable (open+cleared)</div>';
+
+  var el = document.getElementById("list");
+  if (!list.length) {
+    el.innerHTML = "<p style='color:#999;'>No data yet. Click <b>Rebuild from orders</b> after sellers have sales.</p>";
+    return;
+  }
+  el.innerHTML = '<div style="overflow-x:auto;"><table><thead><tr><th>Seller</th><th>Week</th><th>Orders</th><th>Gross</th><th>Fee</th><th>Net</th><th>Status</th><th>Action</th></tr></thead><tbody>'+
+    list.map(function(r){
+      var bc = (r.status||"Open").toLowerCase();
+      var actions = "";
+      if (r.status==="Open") actions = '<button class="btn warn" onclick="setStatus(\''+esc(r.id)+'\',\'Cleared\')">Mark Cleared</button>';
+      if (r.status==="Cleared") actions = '<button class="btn ok" onclick="setStatus(\''+esc(r.id)+'\',\'Paid\')">Mark Paid</button>';
+      if (r.status==="Paid") actions = '<span style="color:#3f8c5a;font-weight:700;">✓ Paid</span>';
+      actions += ' <button class="btn muted" onclick="setStatus(\''+esc(r.id)+'\',\'Open\')">Reset</button>';
+      return '<tr><td><strong>'+esc(r.sellerShop)+'</strong><br><small>'+esc(r.sellerId)+'</small></td>'+
+        '<td>'+esc(r.weekStart)+' → '+esc(r.weekEnd)+'</td>'+
+        '<td>'+esc(r.orders)+' / '+esc(r.items)+' items</td>'+
+        '<td>৳'+Number(r.gross||0).toLocaleString("en-BD")+'</td>'+
+        '<td>৳'+Number(r.commission||0).toLocaleString("en-BD")+' ('+(r.rate||0)+'%)</td>'+
+        '<td><strong>৳'+Number(r.net||0).toLocaleString("en-BD")+'</strong></td>'+
+        '<td><span class="badge '+bc+'">'+esc(r.status)+'</span></td>'+
+        '<td style="min-width:140px;">'+actions+'</td></tr>';
+    }).join("") + "</tbody></table></div>";
+}
+render();
+</script>
+</body>
+</html>

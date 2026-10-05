@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Staff Rules | Sei Mart Admin</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+body{margin:0;background:#f3f6f4;font-family:system-ui,sans-serif;color:#17231d;}
+.top{background:#17231d;color:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+.top a{color:#e8c65a;text-decoration:none;font-weight:600;}
+.wrap{max-width:1000px;margin:24px auto;padding:0 16px 40px;}
+.card{background:#fff;border:1px solid #e3e9e4;border-radius:14px;padding:22px;margin-bottom:18px;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:700px){.grid2{grid-template-columns:1fr;}}
+label{font-size:13px;font-weight:600;color:#444;}
+input,select{width:100%;padding:10px 12px;border:1px solid #ccc;border-radius:8px;box-sizing:border-box;margin-top:4px;}
+.powers{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:10px;}
+.powers label{font-weight:500;display:flex;gap:6px;align-items:center;}
+.btn{background:#3f6f5a;color:#fff;border:none;padding:12px 18px;border-radius:10px;font-weight:700;cursor:pointer;}
+.btn-danger{background:#d9534f;}
+table{width:100%;border-collapse:collapse;font-size:14px;}
+th,td{padding:10px;border-bottom:1px solid #eee;text-align:left;vertical-align:top;}
+th{background:#f5f7f5;}
+.role-tag{display:inline-block;padding:3px 8px;border-radius:12px;font-size:12px;font-weight:700;background:#eaf2ed;color:#3f6f5a;}
+</style>
+    <script src="js/admin-auth.js"></script>
+</head>
+<body>
+<div class="top">
+  <strong>👥 Staff Rules & Profiles</strong>
+  <div>
+    <a href="../admin.html">← Back to Admin</a>
+  </div>
+</div>
+<div class="wrap">
+  <div class="card">
+    <h2 style="margin-top:0;">Create Staff Profile</h2>
+    <p style="color:#7b877f;">Select role defaults, then fine-tune powers. Staff can only use checked features.</p><p style="color:#d89b20;font-size:13px;"><strong>Delivery role:</strong> can update order status to Processing / Out for Delivery / Delivered only — not Shipped or Cancelled.</p>
+    <div class="grid2">
+      <div><label>Full Name</label><input id="staffName" placeholder="Name"></div>
+      <div><label>Username (login)</label><input id="staffUser" placeholder="username"></div>
+      <div><label>Password</label><input id="staffPass" type="password" placeholder="password"></div>
+      <div><label>Role template</label>
+        <select id="staffRole" onchange="onRoleChange()">
+          <option value="moderator">Moderator</option>
+          <option value="delivery">Delivery Man</option>
+          <option value="maintenance">Maintenance</option>
+          <option value="affiliate-manager">Affiliate Manager</option>
+          <option value="admin">Admin (full access)</option>
+        </select>
+      </div>
+    </div>
+    <div style="margin-top:16px;"><strong>Feature Powers</strong><div id="deliveryPowerNote" style="display:none;margin-top:8px;color:#7b877f;font-size:12px;">Delivery permissions are automatic and locked: Dashboard, Orders, Order Status and Print Invoice. Assigned-order filtering is automatic.</div>
+      <div class="powers" id="staffPowers"></div>
+    </div>
+    <button class="btn" style="margin-top:16px;" onclick="createStaff()">Create Staff Profile</button>
+    <p id="msg" style="display:none;color:#3f8c5a;font-weight:600;"></p>
+  </div>
+  <div class="card">
+    <h2 style="margin-top:0;">Existing Staff</h2>
+    <div id="staffTable"></div>
+  </div>
+</div>
+<script src="../js/security.js"></script>
+<script>
+var ROLE_POWERS = {
+  admin: ["dashboard","orders","order-status","print-invoice","products","customers","coupons","inventory","reports","reviews","messages","support","returns","website","settings","staff","sellers","affiliates","all"],
+  moderator: ["dashboard","orders","products","customers","reviews","messages","support","sellers"],
+  delivery: ["dashboard","orders","order-status"],
+  maintenance: ["dashboard","inventory","products","website","settings"],
+  "affiliate-manager": ["dashboard","affiliates","reports","customers"]
+};
+var ALL_POWERS = ["dashboard","orders","order-status","print-invoice","products","customers","coupons","inventory","reports","reviews","messages","support","returns","website","settings","staff","sellers","affiliates"];
+
+function getStaff(){ try{return JSON.parse(localStorage.getItem("seiMartStaff")||"[]");}catch(e){return[];} }
+function saveStaff(list){ localStorage.setItem("seiMartStaff", JSON.stringify(list||[])); }
+
+function onRoleChange(){
+  var role = document.getElementById("staffRole").value;
+  var defaults = ROLE_POWERS[role] || [];
+  var box = document.getElementById("staffPowers");
+  var locked = role === "delivery";
+  box.innerHTML = ALL_POWERS.map(function(p){
+    var ck = (defaults.indexOf(p)>=0 || defaults.indexOf("all")>=0) ? "checked" : "";
+    var dis = locked ? "disabled" : "";
+    return '<label style="'+(locked?'opacity:.72;cursor:not-allowed;':'')+'"><input type="checkbox" class="pwr" value="'+p+'" '+ck+' '+dis+'> '+p+'</label>';
+  }).join("");
+  var note=document.getElementById("deliveryPowerNote");
+  if(note) note.style.display=locked?"block":"none";
+}
+
+function createStaff(){
+  var name = document.getElementById("staffName").value.trim();
+  var username = document.getElementById("staffUser").value.trim().toLowerCase();
+  var password = document.getElementById("staffPass").value;
+  var role = document.getElementById("staffRole").value;
+  if(!name||!username||!password){ alert("Fill name, username, password"); return; }
+  var powers=[];
+  document.querySelectorAll(".pwr:checked").forEach(function(c){ powers.push(c.value); });
+  if(role === "delivery"){ powers = ROLE_POWERS.delivery.slice(); }
+  if(!powers.length){ alert("Select at least one power/feature"); return; }
+  var list = getStaff();
+  if(list.some(function(s){ return String(s.username).toLowerCase()===username; })){
+    alert("Username already exists"); return;
+  }
+  list.push({ name:name, username:username, passwordHash:SeiSecurity.hashPassword(password), role:role, powers:powers, status:"Active", createdAt:new Date().toISOString() });
+  saveStaff(list);
+  document.getElementById("msg").style.display="block";
+  document.getElementById("msg").textContent = role === "delivery" ? "Delivery account created. Login from delivery/login.html with this username and password." : "Staff profile created.";
+  document.getElementById("staffName").value="";
+  document.getElementById("staffUser").value="";
+  document.getElementById("staffPass").value="";
+  renderTable();
+}
+
+function deleteStaff(i){
+  if(!confirm("Delete this staff?")) return;
+  var list=getStaff(); list.splice(i,1); saveStaff(list); renderTable();
+}
+
+function renderTable(){
+  var list=getStaff();
+  var el=document.getElementById("staffTable");
+  if(!list.length){ el.innerHTML="<p style='color:#999'>No staff profiles yet.</p>"; return; }
+  el.innerHTML = '<table><thead><tr><th>Name</th><th>Username</th><th>Role</th><th>Powers</th><th></th></tr></thead><tbody>'+
+    list.map(function(s,i){
+      return '<tr><td><strong>'+s.name+'</strong></td><td>'+s.username+'</td><td><span class="role-tag">'+s.role+'</span></td><td style="font-size:12px;">'+(s.powers||[]).join(", ")+'</td><td><button class="btn btn-danger" onclick="deleteStaff('+i+')">Delete</button></td></tr>';
+    }).join("") + '</tbody></table>';
+}
+onRoleChange();
+renderTable();
+</script>
+</body>
+</html>

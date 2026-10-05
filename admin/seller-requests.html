@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="js/admin-auth.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seller Requests | Sei Mart Admin</title>
+<style>
+body{margin:0;font-family:system-ui,sans-serif;background:#f3f6f4;color:#17231d;}
+.top{background:#17231d;color:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+.top a{color:#e8c65a;text-decoration:none;font-weight:600;margin-left:12px;}
+.wrap{max-width:1100px;margin:24px auto;padding:0 16px 40px;}
+.card{background:#fff;border:1px solid #e3e9e4;border-radius:14px;padding:20px;margin-bottom:16px;}
+table{width:100%;border-collapse:collapse;font-size:14px;}
+th,td{padding:10px;border-bottom:1px solid #eee;text-align:left;vertical-align:top;}
+th{background:#f5f7f5;}
+.btn{border:none;padding:8px 12px;border-radius:8px;font-weight:600;cursor:pointer;margin:2px;font-size:13px;}
+.ok{background:#3f8c5a;color:#fff;}
+.no{background:#d9534f;color:#fff;}
+.view{background:#3f6f5a;color:#fff;}
+.muted{background:#eee;color:#555;}
+.badge{display:inline-block;padding:3px 8px;border-radius:10px;font-size:12px;font-weight:700;}
+.badge.pending{background:#fff3cd;color:#856404;}
+.badge.approved{background:#d4edda;color:#155724;}
+.badge.rejected{background:#f8d7da;color:#721c24;}
+.badge.suspended{background:#e2e3e5;color:#383d41;}
+.tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+.tabs button{padding:8px 14px;border-radius:20px;border:1px solid #ccc;background:#fff;cursor:pointer;font-weight:600;}
+.tabs button.active{background:#3f6f5a;color:#fff;border-color:#3f6f5a;}
+</style>
+</head>
+<body>
+<div class="top">
+  <strong>🏪 Seller Management</strong>
+  <div>
+    <a href="../admin.html">← Admin</a>
+    <a href="sellers-manage.html">Active Sellers</a>
+    <a href="../sell-with-seimart.html" target="_blank">Public form</a>
+  </div>
+</div>
+<div class="wrap">
+  <div class="card">
+    <h2 style="margin-top:0;">Seller Applications</h2>
+    <p style="color:#7b877f;">Approve creates a Seller Portal account. Seller logs in at seller-login.html</p>
+    <div class="tabs">
+      <button type="button" class="active" data-f="all" onclick="filterTab(this,'all')">All</button>
+      <button type="button" data-f="Pending" onclick="filterTab(this,'Pending')">Pending</button>
+      <button type="button" data-f="Approved" onclick="filterTab(this,'Approved')">Approved</button>
+      <button type="button" data-f="Rejected" onclick="filterTab(this,'Rejected')">Rejected</button>
+    </div>
+    <div id="list"></div>
+  </div>
+</div>
+<script>
+var currentFilter = "all";
+function getList(){ try{return JSON.parse(localStorage.getItem("seiMartSellerApplications")||"[]");}catch(e){return[];} }
+function saveList(l){ localStorage.setItem("seiMartSellerApplications", JSON.stringify(l||[])); }
+function getSellers(){ try{return JSON.parse(localStorage.getItem("seiMartSellers")||"[]");}catch(e){return[];} }
+function saveSellers(l){ localStorage.setItem("seiMartSellers", JSON.stringify(l||[])); }
+function pushNotif(n){
+  try{
+    var list=JSON.parse(localStorage.getItem("seiMartAdminNotifications")||"[]");
+    list.unshift(n);
+    localStorage.setItem("seiMartAdminNotifications", JSON.stringify(list.slice(0,100)));
+  }catch(e){}
+}
+function esc(v){ return String(v==null?"":v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function filterTab(btn, f){
+  currentFilter = f;
+  document.querySelectorAll(".tabs button").forEach(function(b){ b.classList.remove("active"); });
+  btn.classList.add("active");
+  render();
+}
+function badgeClass(st){
+  st = (st||"Pending").toLowerCase();
+  if(st==="approved") return "approved";
+  if(st==="rejected") return "rejected";
+  if(st==="suspended") return "suspended";
+  return "pending";
+}
+function render(){
+  var list = getList();
+  if(currentFilter !== "all") list = list.filter(function(s){ return (s.status||"Pending") === currentFilter; });
+  var el = document.getElementById("list");
+  if(!list.length){ el.innerHTML="<p style='color:#999;padding:12px 0;'>No applications in this filter.</p>"; return; }
+  el.innerHTML = '<table><thead><tr><th>Shop / Seller</th><th>Login</th><th>Category</th><th>About</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead><tbody>' +
+    list.map(function(s){
+      var st = s.status || "Pending";
+      var actions = "";
+      if(st === "Pending"){
+        actions = '<button class="btn ok" onclick="approveApp(\''+esc(s.id)+'\')">✓ Approve</button> ' +
+                  '<button class="btn no" onclick="rejectApp(\''+esc(s.id)+'\')">✕ Reject</button>';
+      } else if(st === "Approved"){
+        actions = '<button class="btn muted" onclick="suspendSeller(\''+esc(s.id)+'\')">Suspend</button>';
+      } else if(st === "Rejected"){
+        actions = '<button class="btn ok" onclick="approveApp(\''+esc(s.id)+'\')">Re-approve</button>';
+      } else {
+        actions = '<button class="btn ok" onclick="approveApp(\''+esc(s.id)+'\')">Activate</button>';
+      }
+      return '<tr>' +
+        '<td><strong>'+esc(s.shop)+'</strong><br><small>'+esc(s.name)+'<br>'+esc(s.phone)+'<br>'+esc(s.email)+'</small></td>' +
+        '<td><code>'+esc(s.username||"-")+'</code></td>' +
+        '<td>'+esc(s.category)+'</td>' +
+        '<td style="max-width:200px;font-size:13px;">'+esc(s.about||"-")+'</td>' +
+        '<td>'+esc(s.date||"-")+'</td>' +
+        '<td><span class="badge '+badgeClass(st)+'">'+esc(st)+'</span></td>' +
+        '<td style="min-width:160px;">'+actions+'</td></tr>';
+    }).join("") + "</tbody></table>";
+}
+function findApp(id){
+  var list = getList();
+  return list.find(function(s){ return String(s.id) === String(id); });
+}
+function approveApp(id){
+  var list = getList();
+  var app = list.find(function(s){ return String(s.id) === String(id); });
+  if(!app) return;
+  if(!app.username || !(app.passwordHash || app.password)){
+    alert("This application has no username/password. Ask seller to re-register with login details.");
+    return;
+  }
+  app.status = "Approved";
+  app.approvedAt = new Date().toISOString();
+  saveList(list);
+
+  var sellers = getSellers();
+  var existing = sellers.findIndex(function(s){ return String(s.username).toLowerCase() === String(app.username).toLowerCase(); });
+  var seller = {
+    id: app.id,
+    shop: app.shop,
+    name: app.name,
+    phone: app.phone,
+    email: app.email,
+    category: app.category,
+    username: app.username,
+    passwordHash: app.passwordHash || app.password || "",
+    password: "",
+    about: app.about || "",
+    status: "Active",
+    createdAt: app.createdAt || new Date().toISOString(),
+    approvedAt: new Date().toISOString()
+  };
+  if(existing >= 0) sellers[existing] = Object.assign({}, sellers[existing], seller);
+  else sellers.push(seller);
+  saveSellers(sellers);
+
+  pushNotif({ id:"N"+Date.now(), to:"superadmin", from:"admin", title:"Seller approved", body: app.shop+" ("+app.username+") can now login to Seller Portal", at:new Date().toISOString(), label:new Date().toLocaleString("en-BD"), readBy:[] });
+  alert("Approved!\n\nSeller can login at seller-login.html\nUsername: "+app.username+"\nPassword: (as they set during registration)");
+  render();
+}
+function rejectApp(id){
+  if(!confirm("Reject this seller application?")) return;
+  var list = getList();
+  var app = list.find(function(s){ return String(s.id) === String(id); });
+  if(!app) return;
+  app.status = "Rejected";
+  saveList(list);
+  // deactivate seller account if exists
+  var sellers = getSellers().map(function(s){
+    if(String(s.username).toLowerCase() === String(app.username||"").toLowerCase()) s.status = "Rejected";
+    return s;
+  });
+  saveSellers(sellers);
+  pushNotif({ id:"N"+Date.now(), to:"superadmin", from:"admin", title:"Seller rejected", body: app.shop||"", at:new Date().toISOString(), label:new Date().toLocaleString("en-BD"), readBy:[] });
+  render();
+}
+function suspendSeller(id){
+  if(!confirm("Suspend this seller? They cannot login or their products can be hidden.")) return;
+  var list = getList();
+  var app = list.find(function(s){ return String(s.id) === String(id); });
+  if(!app) return;
+  app.status = "Suspended";
+  saveList(list);
+  var sellers = getSellers().map(function(s){
+    if(String(s.username).toLowerCase() === String(app.username||"").toLowerCase() || String(s.id)===String(id)) s.status = "Suspended";
+    return s;
+  });
+  saveSellers(sellers);
+  render();
+}
+render();
+</script>
+</body>
+</html>

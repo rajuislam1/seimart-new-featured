@@ -1,0 +1,1001 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>bKash Merchant Payment | Sei Mart</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css">
+
+    <style>
+
+        /* =========================================
+           BKASH PAYMENT PAGE
+        ========================================= */
+
+        .bkash-payment-page {
+            min-height: 80vh;
+            padding: 28px 20px;
+            background: linear-gradient(135deg, #fff8fb, #ffffff);
+        }
+
+        .bkash-container {
+            width: 100%;
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        .bkash-card {
+            background: #ffffff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.10);
+            border: 1px solid #eeeeee;
+        }
+
+        /* =========================================
+           HEADER
+        ========================================= */
+
+        .bkash-header {
+            background: linear-gradient(135deg, #e2136e, #c90059);
+            color: #ffffff;
+            text-align: center;
+            padding: 22px 25px;
+        }
+
+        .bkash-logo {
+            width: 54px;
+            height: 54px;
+            margin: 0 auto 8px;
+            border-radius: 14px;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            font-weight: 900;
+            color: #e2136e;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .bkash-header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .bkash-header p {
+            margin: 5px 0 0;
+            font-size: 13px;
+            color: #ffe5f0;
+        }
+
+        /* =========================================
+           BODY
+        ========================================= */
+
+        .bkash-body {
+            padding: 20px 24px;
+        }
+
+        /* =========================================
+           ORDER INFO
+        ========================================= */
+
+        .payment-info-box {
+            background: #fff4f8;
+            border: 1px solid #f5c7d9;
+            border-radius: 12px;
+            padding: 13px 16px;
+            margin-bottom: 16px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            padding: 7px 0;
+            font-size: 13px;
+        }
+
+        .info-row:not(:last-child) {
+            border-bottom: 1px solid #f3d9e3;
+        }
+
+        .info-label {
+            color: #777777;
+        }
+
+        .info-value {
+            color: #333333;
+            font-weight: 700;
+            text-align: right;
+        }
+
+        .amount-value {
+            color: #e2136e;
+            font-size: 18px;
+            font-weight: 900;
+        }
+
+        /* =========================================
+           MERCHANT PAY
+        ========================================= */
+
+        .merchant-pay-box {
+            background: #ffffff;
+            border: 1px solid #eeeeee;
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 15px;
+        }
+
+        .merchant-pay-title {
+            margin: 0 0 12px;
+            text-align: center;
+            color: #333333;
+            font-size: 19px;
+            font-weight: 800;
+        }
+
+        .merchant-pay-subtitle {
+            margin: -5px 0 14px;
+            text-align: center;
+            color: #777777;
+            font-size: 12px;
+        }
+
+        /* =========================================
+           QR CODE
+        ========================================= */
+
+        .qr-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .qr-box {
+            width: 155px;
+            height: 155px;
+            padding: 8px;
+            background: #ffffff;
+            border: 1px solid #dddddd;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+
+        .qr-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .qr-note {
+            margin: 0 0 13px;
+            text-align: center;
+            color: #666666;
+            font-size: 12px;
+        }
+
+        /* =========================================
+           MERCHANT NUMBER
+        ========================================= */
+
+        .merchant-number-title {
+            text-align: center;
+            margin: 0 0 7px;
+            color: #555555;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .merchant-number-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            background: #f8f8f8;
+            border: 1px dashed #e2136e;
+            border-radius: 9px;
+            padding: 10px 12px;
+        }
+
+        .merchant-number {
+            color: #e2136e;
+            font-size: 17px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        .copy-number-btn {
+            border: none;
+            background: #e2136e;
+            color: #ffffff;
+            padding: 7px 11px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .copy-number-btn:hover {
+            background: #c90059;
+        }
+
+        .ussd-note {
+            margin: 7px 0 0;
+            text-align: center;
+            color: #777777;
+            font-size: 11px;
+        }
+
+        /* =========================================
+           PAYMENT INSTRUCTIONS
+        ========================================= */
+
+        .payment-instructions {
+            background: #fff8fb;
+            border-radius: 9px;
+            padding: 10px 13px;
+            margin-top: 13px;
+        }
+
+        .payment-instructions p {
+            margin: 0 0 5px;
+            color: #333333;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .payment-instructions ul {
+            margin: 0;
+            padding-left: 18px;
+            color: #666666;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        /* =========================================
+           TRANSACTION ID
+        ========================================= */
+
+        .transaction-section {
+            margin-top: 14px;
+        }
+
+        .transaction-section label {
+            display: block;
+            margin-bottom: 6px;
+            color: #333333;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .transaction-section input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 11px 12px;
+            border: 1px solid #d8d8d8;
+            border-radius: 8px;
+            outline: none;
+            font-size: 13px;
+            transition: 0.25s ease;
+        }
+
+        .transaction-section input:focus {
+            border-color: #e2136e;
+            box-shadow: 0 0 0 3px rgba(226, 19, 110, 0.08);
+        }
+
+        .transaction-note {
+            margin: 5px 0 0;
+            color: #999999;
+            font-size: 11px;
+        }
+
+        /* =========================================
+           CONFIRM BUTTON
+        ========================================= */
+
+        .confirm-payment-btn {
+            width: 100%;
+            margin-top: 16px;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 9px;
+            background: #e2136e;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.25s ease;
+        }
+
+        .confirm-payment-btn:hover {
+            background: #c90059;
+            transform: translateY(-1px);
+        }
+
+        /* =========================================
+           BACK BUTTON
+        ========================================= */
+
+        .back-checkout {
+            display: block;
+            text-align: center;
+            margin-top: 11px;
+            color: #666666;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .back-checkout:hover {
+            color: #e2136e;
+        }
+
+        /* =========================================
+           MESSAGE
+        ========================================= */
+
+        .payment-message {
+            display: none;
+            margin-top: 12px;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .payment-message.error {
+            display: block;
+            background: #fff1f1;
+            color: #c0392b;
+            border: 1px solid #f0c5c5;
+        }
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media (max-width: 600px) {
+
+            .bkash-payment-page {
+                padding: 22px 14px;
+            }
+
+            .bkash-body {
+                padding: 17px;
+            }
+
+            .bkash-header {
+                padding: 20px 18px;
+            }
+
+            .bkash-logo {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
+
+            .bkash-header h1 {
+                font-size: 22px;
+            }
+
+            .merchant-number-box {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+
+            .copy-number-btn {
+                width: 100%;
+            }
+
+            .qr-box {
+                width: 145px;
+                height: 145px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================
+         BKASH PAYMENT PAGE
+    ========================================== -->
+
+    <main class="bkash-payment-page">
+
+        <div class="bkash-container">
+
+            <div class="bkash-card">
+
+
+                <!-- HEADER -->
+
+                <div class="bkash-header">
+
+                    <div class="bkash-logo">
+                        bK
+                    </div>
+
+                    <h1>
+                        bKash Merchant Pay
+                    </h1>
+
+                    <p>
+                        Complete your payment to place the order
+                    </p>
+
+                    <!--
+                        BACKEND TODO: this page currently only collects the
+                        bKash Transaction ID typed by the customer. It does NOT
+                        talk to the bKash API. When the backend is ready, verify
+                        the payment on the server (bKash Tokenized Checkout /
+                        Query Payment API) and only then mark the order as Paid.
+                    -->
+                    <p id="bkashManualNotice" style="margin-top:10px;font-size:13px;opacity:.9;">
+                        Your payment will be verified by our team before the order is processed.
+                    </p>
+
+                </div>
+
+
+                <!-- BODY -->
+
+                <div class="bkash-body">
+
+
+                    <!-- ORDER INFORMATION -->
+
+                    <div class="payment-info-box">
+
+                        <div class="info-row">
+
+                            <span class="info-label">
+                                Order ID
+                            </span>
+
+                            <span
+                                class="info-value"
+                                id="orderId">
+                                —
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-row">
+
+                            <span class="info-label">
+                                Payment Method
+                            </span>
+
+                            <span class="info-value">
+                                bKash
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-row">
+
+                            <span class="info-label">
+                                Payable Amount
+                            </span>
+
+                            <span
+                                class="amount-value"
+                                id="paymentAmount">
+                                ৳0
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- MERCHANT PAY -->
+
+                    <div class="merchant-pay-box">
+
+                        <h2 class="merchant-pay-title">
+                            📱 Merchant Pay
+                        </h2>
+
+                        <p class="merchant-pay-subtitle">
+                            Choose any one payment method
+                        </p>
+
+
+                        <!-- QR CODE -->
+
+                        <div class="qr-wrapper">
+
+                            <div class="qr-box">
+
+                                <!--
+                                    DEMO QR CODE
+
+                                    Later replace the src
+                                    with your actual bKash
+                                    Merchant QR image.
+                                -->
+
+                                <img
+                                    src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=SEI-MART-BKASH-MERCHANT"
+                                    alt="Sei Mart bKash Merchant QR Code">
+
+                            </div>
+
+                        </div>
+
+
+                        <p class="qr-note">
+                            📷 bKash App users can scan this QR code
+                            to make the payment.
+                        </p>
+
+
+                        <!-- MERCHANT NUMBER -->
+
+                        <p class="merchant-number-title">
+                            Or use bKash Merchant Number
+                        </p>
+
+                        <div class="merchant-number-box">
+
+                            <span
+                                class="merchant-number"
+                                id="merchantNumber">
+                                01XXXXXXXXX
+                            </span>
+
+                            <button
+                                type="button"
+                                class="copy-number-btn"
+                                onclick="copyMerchantNumber()">
+
+                                Copy Number
+
+                            </button>
+
+                        </div>
+
+
+                        <p class="ussd-note">
+                            📞 USSD users can use the bKash menu
+                            to pay using the merchant number above.
+                        </p>
+
+
+                        <!-- INSTRUCTIONS -->
+
+                        <div class="payment-instructions">
+
+                            <p>
+                                How to pay:
+                            </p>
+
+                            <ul>
+
+                                <li>
+                                    bKash App → Scan QR / Merchant Pay
+                                </li>
+
+                                <li>
+                                    Or use the merchant number
+                                    through bKash USSD.
+                                </li>
+
+                                <li>
+                                    Pay the exact amount shown above.
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+
+                        <!-- TRANSACTION ID -->
+
+                        <div class="transaction-section">
+
+                            <label for="transactionId">
+                                bKash Transaction ID
+                            </label>
+
+                            <input
+                                type="text"
+                                id="transactionId"
+                                placeholder="Enter your Transaction ID"
+                                autocomplete="off">
+
+                            <p class="transaction-note">
+                                Enter the Transaction ID after completing payment.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ERROR MESSAGE -->
+
+                    <div
+                        id="paymentMessage"
+                        class="payment-message">
+                    </div>
+
+
+                    <!-- CONFIRM -->
+
+                    <button
+                        type="button"
+                        class="confirm-payment-btn"
+                        onclick="confirmBkashPayment()">
+
+                        ✓ Confirm Payment & Place Order
+
+                    </button>
+
+
+                    <!-- BACK -->
+
+                    <a
+                        href="checkout.html"
+                        class="back-checkout">
+
+                        ← Back to Checkout
+
+                    </a>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <script>
+
+        /* =========================================
+           LOAD PAYMENT DATA
+        ========================================= */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                const orderData =
+                    JSON.parse(
+                        sessionStorage.getItem(
+                            "seiMartBkashPayment"
+                        )
+                    );
+
+
+                if (!orderData) {
+
+                    showPaymentError(
+                        "Payment information not found."
+                    );
+
+                    return;
+
+                }
+
+
+                document.getElementById(
+                    "orderId"
+                ).textContent =
+                    orderData.orderId || "—";
+
+
+                document.getElementById(
+                    "paymentAmount"
+                ).textContent =
+                    "৳" +
+                    Number(
+                        orderData.amount || 0
+                    ).toLocaleString();
+
+            }
+        );
+
+
+        /* =========================================
+           SHOW ERROR
+        ========================================= */
+
+        function showPaymentError(message) {
+
+            const paymentMessage =
+                document.getElementById(
+                    "paymentMessage"
+                );
+
+            paymentMessage.textContent =
+                message;
+
+            paymentMessage.className =
+                "payment-message error";
+
+        }
+
+
+        /* =========================================
+           COPY MERCHANT NUMBER
+        ========================================= */
+
+        function copyMerchantNumber() {
+
+            const number =
+                document.getElementById(
+                    "merchantNumber"
+                ).textContent.trim();
+
+
+            navigator.clipboard.writeText(number)
+                .then(function () {
+
+                    const button =
+                        document.querySelector(
+                            ".copy-number-btn"
+                        );
+
+                    button.textContent =
+                        "✓ Copied";
+
+                    setTimeout(function () {
+
+                        button.textContent =
+                            "Copy Number";
+
+                    }, 1500);
+
+                })
+                .catch(function () {
+
+                    alert(
+                        "Please copy the merchant number manually."
+                    );
+
+                });
+
+        }
+
+
+        /* =========================================
+           CONFIRM BKASH PAYMENT
+        ========================================= */
+
+        function confirmBkashPayment() {
+
+            const transactionInput =
+                document.getElementById(
+                    "transactionId"
+                );
+
+
+            const transactionId =
+                transactionInput.value.trim();
+
+
+            if (!transactionId) {
+
+                showPaymentError(
+                    "Please enter your bKash Transaction ID."
+                );
+
+                transactionInput.focus();
+
+                return;
+
+            }
+
+
+            const paymentData =
+                JSON.parse(
+                    sessionStorage.getItem(
+                        "seiMartBkashPayment"
+                    )
+                );
+
+
+            if (!paymentData) {
+
+                showPaymentError(
+                    "Payment information not found. Please return to checkout."
+                );
+
+                return;
+
+            }
+
+
+            /* =====================================
+               GET EXISTING ORDERS
+            ===================================== */
+
+            let orders =
+                JSON.parse(
+                    localStorage.getItem(
+                        "seiMartOrders"
+                    )
+                ) || [];
+
+
+            /* =====================================
+               CREATE FINAL ORDER
+            ===================================== */
+
+            const order = {
+
+                orderId:
+                    paymentData.orderId,
+
+                customer:
+                    paymentData.customer || {},
+
+                items:
+                    paymentData.items || [],
+
+                subtotal:
+                    Number(
+                        paymentData.subtotal || 0
+                    ),
+
+                couponCode:
+                    paymentData.couponCode || "",
+
+                couponDiscount:
+                    Number(
+                        paymentData.couponDiscount || 0
+                    ),
+
+                deliveryFee:
+                    Number(
+                        paymentData.deliveryFee || 0
+                    ),
+
+                deliveryCampaign:
+                    paymentData.deliveryCampaign || "",
+
+                total:
+                    Number(
+                        paymentData.amount || 0
+                    ),
+
+                status:
+                    "Order Confirmed",
+
+                paymentMethod:
+                    "bKash",
+
+                paymentStatus:
+                    "Payment Submitted",
+
+                transactionId:
+                    transactionId,
+
+                date:
+                    new Date().toLocaleString(),
+
+                createdAt:
+                    new Date().toISOString(),
+
+                statusHistory: [
+                    {
+                        status: "Order Placed",
+                        at: new Date().toISOString(),
+                        label: new Date().toLocaleString("en-BD"),
+                        note: "Order placed"
+                    },
+                    {
+                        status: "Order Confirmed",
+                        at: new Date().toISOString(),
+                        label: new Date().toLocaleString("en-BD"),
+                        note: "bKash payment submitted"
+                    }
+                ]
+
+            };
+
+
+            /* =====================================
+               SAVE ORDER
+            ===================================== */
+
+            orders.push(order);
+
+
+            localStorage.setItem(
+                "seiMartOrders",
+                JSON.stringify(orders)
+            );
+
+            if (typeof deductStockForOrder === "function") {
+                deductStockForOrder(order);
+            }
+            if (order.couponCode && typeof recordCouponUsage === "function") {
+                var uk = "";
+                try {
+                    var uu = JSON.parse(localStorage.getItem("seiMartUser") || "null");
+                    if (uu) uk = uu.email || uu.phone || "";
+                } catch (e) {}
+                recordCouponUsage(order.couponCode, uk);
+            }
+
+            /* =====================================
+               CLEAR CART
+            ===================================== */
+
+            localStorage.removeItem("cart");
+
+
+            /* =====================================
+               SAVE LAST ORDER
+            ===================================== */
+
+            sessionStorage.setItem(
+                "seiMartLastOrder",
+                JSON.stringify(order)
+            );
+
+
+            /* =====================================
+               REMOVE PAYMENT DATA
+            ===================================== */
+
+            sessionStorage.removeItem(
+                "seiMartBkashPayment"
+            );
+
+
+            /* =====================================
+               GO TO ORDER CONFIRMATION
+            ===================================== */
+
+           sessionStorage.removeItem(
+    "seiMartBkashPayment"
+);
+
+window.location.href = "order-success.html?order=" + encodeURIComponent(order.orderId || "");
+
+        }
+
+    </script>
+
+
+<script src="script.js"></script>
+<script src="js/pro-enhancements.js"></script>
+</body>
+
+</html>

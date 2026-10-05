@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seller Portal | Sei Mart</title>
+<style>
+*{box-sizing:border-box;}
+body{margin:0;font-family:system-ui,sans-serif;background:#f3f6f4;color:#17231d;display:flex;min-height:100vh;}
+.sidebar{width:240px;background:#17231d;color:#e8eee9;padding:20px 14px;flex-shrink:0;}
+.sidebar h1{font-size:16px;margin:0 0 4px;color:#e8c65a;}
+.sidebar .shop{font-size:13px;opacity:.85;margin-bottom:20px;}
+.sidebar button{display:block;width:100%;text-align:left;background:transparent;border:none;color:#c5cec8;padding:12px 12px;border-radius:8px;cursor:pointer;font-weight:600;font-size:14px;margin-bottom:4px;}
+.sidebar button:hover,.sidebar button.active{background:#3f6f5a;color:#fff;}
+.main{flex:1;padding:24px;overflow:auto;}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px;}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-bottom:22px;}
+.card{background:#fff;border:1px solid #e3e9e4;border-radius:12px;padding:18px;}
+.card .n{font-size:26px;font-weight:800;color:#3f6f5a;}
+.card .l{font-size:13px;color:#7b877f;margin-top:4px;}
+.panel{background:#fff;border:1px solid #e3e9e4;border-radius:12px;padding:20px;}
+table{width:100%;border-collapse:collapse;font-size:14px;}
+th,td{padding:10px;border-bottom:1px solid #eee;text-align:left;vertical-align:top;}
+th{background:#f5f7f5;}
+input,select,textarea{width:100%;padding:10px 12px;border:1px solid #ccc;border-radius:8px;margin-top:4px;}
+label{font-size:13px;font-weight:600;display:block;margin-top:10px;}
+.btn{border:none;padding:10px 16px;border-radius:8px;font-weight:700;cursor:pointer;background:#3f6f5a;color:#fff;}
+.btn-danger{background:#d9534f;}
+.btn-muted{background:#eee;color:#333;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:800px){
+  body{flex-direction:column;}
+  .sidebar{width:100%;padding:12px;}
+  .sidebar button{display:inline-block;width:auto;margin:4px 4px 4px 0;padding:10px 12px;font-size:13px;}
+  .sidebar .shop{margin-bottom:10px;}
+  .main{padding:14px;}
+  .grid2{grid-template-columns:1fr;}
+  .cards{grid-template-columns:1fr 1fr;}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+}
+@media(max-width:420px){.cards{grid-template-columns:1fr;}}
+.hide{display:none;}
+.msg{display:none;margin-top:10px;padding:10px;border-radius:8px;background:#e9f6ed;color:#3f8c5a;font-weight:600;}
+</style>
+</head>
+<body data-panel="seller">
+<aside class="sidebar">
+  <h1>Seller Portal</h1>
+  <div class="shop" id="sideShop">—</div>
+  <button type="button" class="active" data-tab="dash" onclick="showTab('dash')">Dashboard</button>
+  <button type="button" data-tab="products" onclick="showTab('products')">My Products</button>
+  <button type="button" data-tab="add" onclick="showTab('add')">Add Product</button>
+  <button type="button" data-tab="orders" onclick="showTab('orders')">Orders</button>
+  <button type="button" data-tab="payments" onclick="showTab('payments')">Payments</button>
+  <button type="button" data-tab="profile" onclick="showTab('profile')">Shop Profile</button>
+  <button type="button" onclick="logout()" style="margin-top:20px;color:#e8c65a;">Logout</button>
+  <a href="index.html" style="display:block;margin-top:12px;color:#9ab;font-size:13px;text-decoration:none;padding:8px;">← View Store</a>
+  <a id="publicShopLink" href="shop.html" style="display:block;margin-top:4px;color:#e8c65a;font-size:13px;text-decoration:none;padding:8px;">🔗 Public shop page</a>
+</aside>
+<main class="main">
+  <div class="top">
+    <div>
+      <h2 id="pageTitle" style="margin:0;">Dashboard</h2>
+      <p id="pageSub" style="margin:4px 0 0;color:#7b877f;font-size:14px;">Welcome</p>
+    </div>
+  </div>
+
+  <section id="tab-dash">
+    <div class="cards">
+      <div class="card"><div class="n" id="statProducts">0</div><div class="l">Products</div></div>
+      <div class="card"><div class="n" id="statOrders">0</div><div class="l">Orders</div></div>
+      <div class="card"><div class="n" id="statSales">৳0</div><div class="l">Gross sales</div></div>
+      <div class="card"><div class="n" id="statEarnings">৳0</div><div class="l">After commission</div></div>
+      <div class="card"><div class="n" id="statFee">—</div><div class="l">Platform fee</div></div>
+      <div class="card"><div class="n" id="statStock">0</div><div class="l">Low stock (≤5)</div></div>
+    </div>
+    <div class="panel">
+      <h3 style="margin-top:0;">Quick tips</h3>
+      <ul style="color:#555;line-height:1.6;">
+        <li>Add products from <strong>Add Product</strong></li>
+        <li>Orders show only when customers buy <em>your</em> products</li>
+        <li>Admin can suspend your account — keep stock & prices updated</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="tab-products" class="hide">
+    <div class="panel">
+      <h3 style="margin-top:0;">My Products</h3>
+      <div id="myProducts"></div>
+    </div>
+  </section>
+
+  <section id="tab-add" class="hide">
+    <div class="panel" style="max-width:640px;">
+      <h3 style="margin-top:0;" id="addTitle">Add Product</h3>
+      <input type="hidden" id="editId">
+      <div class="grid2">
+        <div><label>Name</label><input id="pName" required></div>
+        <div><label>Category</label>
+          <select id="pCat">
+            <option value="electronics">Electronics</option>
+            <option value="fashion">Fashion</option>
+            <option value="beauty">Beauty</option>
+            <option value="home">Home</option>
+            <option value="shoes">Shoes</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div><label>Price (৳)</label><input id="pPrice" type="number" min="0"></div>
+        <div><label>Stock</label><input id="pStock" type="number" min="0" value="10"></div>
+      </div>
+      <label>Description</label>
+      <textarea id="pDesc" rows="3"></textarea>
+      <label>Image path (optional)</label>
+      <input id="pImage" placeholder="image/products/product-1.png">
+      <div style="margin-top:14px;display:flex;gap:8px;">
+        <button type="button" class="btn" onclick="saveProduct()">Save Product</button>
+        <button type="button" class="btn btn-muted" onclick="resetForm()">Clear</button>
+      </div>
+      <div class="msg" id="saveMsg">Saved!</div>
+    </div>
+  </section>
+
+  <section id="tab-orders" class="hide">
+    <div class="panel">
+      <h3 style="margin-top:0;">Orders containing your products</h3>
+      <div id="myOrders"></div>
+    </div>
+  </section>
+
+  <section id="tab-payments" class="hide">
+    <div class="panel">
+      <h3 style="margin-top:0;">Weekly clearance & payments</h3>
+      <p style="color:#7b877f;font-size:14px;line-height:1.5;">Sales of your products (minus platform commission) appear as weekly periods. Admin marks <b>Cleared</b> then <b>Paid</b> when settlement is done.</p>
+      <div class="cards" id="payStats" style="margin-bottom:14px;"></div>
+      <div id="payList"></div>
+    </div>
+  </section>
+
+  <section id="tab-profile" class="hide">
+    <div class="panel" style="max-width:520px;">
+      <h3 style="margin-top:0;">Shop Profile</h3>
+      <label>Shop name</label><input id="profShop">
+      <label>Contact name</label><input id="profName">
+      <label>Phone</label><input id="profPhone">
+      <label>Email</label><input id="profEmail">
+      <label>About</label><textarea id="profAbout" rows="3"></textarea>
+      <button type="button" class="btn" style="margin-top:14px;" onclick="saveProfile()">Save Profile</button>
+      <div class="msg" id="profMsg">Profile updated</div>
+    </div>
+  </section>
+</main>
+
+<script src="script.js"></script>
+<script>
+var session = null;
+try { session = JSON.parse(localStorage.getItem("seiMartSellerSession") || "null"); } catch(e) {}
+if (!session || !session.id) {
+  window.location.href = "seller-login.html";
+}
+
+function getSellers(){ try{return JSON.parse(localStorage.getItem("seiMartSellers")||"[]");}catch(e){return[];} }
+function saveSellers(l){ localStorage.setItem("seiMartSellers", JSON.stringify(l||[])); }
+function esc(v){ return String(v==null?"":v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;"); }
+
+function myProducts(){
+  var all = (typeof getProducts === "function") ? getProducts() : [];
+  return all.filter(function(p){ return String(p.sellerId) === String(session.id); });
+}
+
+function showTab(name){
+  ["dash","products","add","orders","payments","profile"].forEach(function(t){
+    var el = document.getElementById("tab-"+t);
+    if(el) el.classList.toggle("hide", t !== name);
+  });
+  document.querySelectorAll(".sidebar button[data-tab]").forEach(function(b){
+    b.classList.toggle("active", b.getAttribute("data-tab") === name);
+  });
+  var titles = { dash:"Dashboard", products:"My Products", add:"Add Product", orders:"Orders", payments:"Payments", profile:"Shop Profile" };
+  document.getElementById("pageTitle").textContent = titles[name] || name;
+  if(name === "dash") refreshDash();
+  if(name === "products") renderProducts();
+  if(name === "orders") renderOrders();
+  if(name === "payments") renderPayments();
+  if(name === "profile") loadProfile();
+  if(name === "add") { document.getElementById("addTitle").textContent = document.getElementById("editId").value ? "Edit Product" : "Add Product"; }
+}
+
+function refreshDash(){
+  var prods = myProducts();
+  document.getElementById("statProducts").textContent = prods.length;
+  var low = prods.filter(function(p){ return Number(p.stock) <= 5; }).length;
+  document.getElementById("statStock").textContent = low;
+  var orders = [];
+  try { orders = JSON.parse(localStorage.getItem("seiMartOrders")||"[]"); } catch(e) {}
+  var myIds = {};
+  prods.forEach(function(p){ myIds[String(p.id)] = true; });
+  var related = orders.filter(function(o){
+    return (o.items||[]).some(function(it){ return myIds[String(it.id)]; });
+  });
+  document.getElementById("statOrders").textContent = related.length;
+  var sales = 0;
+  related.forEach(function(o){
+    (o.items||[]).forEach(function(it){
+      if(myIds[String(it.id)]) sales += (Number(it.price)||0) * (Number(it.quantity)||1);
+    });
+  });
+  var comm = { rate: 10, status: "active" };
+  try { comm = Object.assign(comm, JSON.parse(localStorage.getItem("seiMartCommission") || "{}")); } catch(e) {}
+  var rate = (comm.status === "disabled") ? 0 : (Number(comm.rate) || 0);
+  var fee = Math.round(sales * rate / 100);
+  document.getElementById("statSales").textContent = "৳" + sales.toLocaleString("en-BD");
+  var earnEl = document.getElementById("statEarnings");
+  if (earnEl) earnEl.textContent = "৳" + Math.max(0, sales - fee).toLocaleString("en-BD");
+  var feeEl = document.getElementById("statFee");
+  if (feeEl) feeEl.textContent = rate + "%";
+}
+
+function renderProducts(){
+  var list = myProducts();
+  var el = document.getElementById("myProducts");
+  if(!list.length){ el.innerHTML = "<p style='color:#999;'>No products yet. Use Add Product.</p>"; return; }
+  el.innerHTML = '<table><thead><tr><th>Name</th><th>Price</th><th>Stock</th><th>Category</th><th></th></tr></thead><tbody>'+
+    list.map(function(p){
+      return '<tr><td><strong>'+esc(p.name)+'</strong></td><td>৳'+Number(p.price||0).toLocaleString("en-BD")+'</td><td>'+esc(p.stock)+'</td><td>'+esc(p.category)+'</td><td>'+
+        '<button type="button" class="btn btn-muted" style="padding:6px 10px;font-size:12px;" onclick="editProduct(\''+esc(p.id)+'\')">Edit</button> '+
+        '<button type="button" class="btn btn-danger" style="padding:6px 10px;font-size:12px;" onclick="deleteProduct(\''+esc(p.id)+'\')">Delete</button></td></tr>';
+    }).join("")+"</tbody></table>";
+}
+
+function resetForm(){
+  document.getElementById("editId").value = "";
+  document.getElementById("pName").value = "";
+  document.getElementById("pPrice").value = "";
+  document.getElementById("pStock").value = "10";
+  document.getElementById("pDesc").value = "";
+  document.getElementById("pImage").value = "";
+  document.getElementById("addTitle").textContent = "Add Product";
+}
+
+function saveProduct(){
+  var name = document.getElementById("pName").value.trim();
+  var price = Number(document.getElementById("pPrice").value)||0;
+  var stock = Number(document.getElementById("pStock").value)||0;
+  var cat = document.getElementById("pCat").value;
+  var desc = document.getElementById("pDesc").value.trim();
+  var img = document.getElementById("pImage").value.trim() || "image/products/product-1.png";
+  var editId = document.getElementById("editId").value;
+  if(!name){ alert("Product name required"); return; }
+  var products = (typeof getProducts === "function") ? getProducts() : [];
+  if(editId){
+    products = products.map(function(p){
+      if(String(p.id) !== String(editId)) return p;
+      if(String(p.sellerId) !== String(session.id)) return p;
+      return Object.assign({}, p, { name:name, price:price, stock:stock, category:cat, description:desc, image:img, images:[img] });
+    });
+  } else {
+    var id = "S" + Date.now();
+    products.push({
+      id: id,
+      name: name,
+      price: price,
+      stock: stock,
+      category: cat,
+      description: desc,
+      image: img,
+      images: [img],
+      rating: 0,
+      reviews: 0,
+      sellerId: session.id,
+      sellerName: session.name,
+      sellerShop: session.shop,
+      sellerUsername: session.username,
+      approvalStatus: "pending",
+      submittedAt: new Date().toISOString()
+    });
+  }
+  if(typeof saveProducts === "function") saveProducts(products);
+  else localStorage.setItem("seiMartProducts", JSON.stringify(products));
+  var msg = document.getElementById("saveMsg");
+  msg.style.display = "block";
+  setTimeout(function(){ msg.style.display = "none"; }, 2000);
+  resetForm();
+  showTab("products");
+}
+
+function editProduct(id){
+  var p = myProducts().find(function(x){ return String(x.id)===String(id); });
+  if(!p) return;
+  document.getElementById("editId").value = p.id;
+  document.getElementById("pName").value = p.name || "";
+  document.getElementById("pPrice").value = p.price || 0;
+  document.getElementById("pStock").value = p.stock != null ? p.stock : 0;
+  document.getElementById("pCat").value = p.category || "other";
+  document.getElementById("pDesc").value = p.description || "";
+  document.getElementById("pImage").value = p.image || "";
+  showTab("add");
+  document.getElementById("addTitle").textContent = "Edit Product";
+}
+
+function deleteProduct(id){
+  if(!confirm("Delete this product?")) return;
+  var products = (typeof getProducts === "function") ? getProducts() : [];
+  products = products.filter(function(p){
+    if(String(p.id) !== String(id)) return true;
+    return String(p.sellerId) !== String(session.id); // only delete own
+  });
+  // actually we want to remove own product
+  products = ((typeof getProducts === "function") ? getProducts() : []).filter(function(p){
+    return !(String(p.id)===String(id) && String(p.sellerId)===String(session.id));
+  });
+  if(typeof saveProducts === "function") saveProducts(products);
+  else localStorage.setItem("seiMartProducts", JSON.stringify(products));
+  renderProducts();
+  refreshDash();
+}
+
+function renderOrders(){
+  var prods = myProducts();
+  var myIds = {};
+  prods.forEach(function(p){ myIds[String(p.id)] = p; });
+  var orders = [];
+  try { orders = JSON.parse(localStorage.getItem("seiMartOrders")||"[]"); } catch(e) {}
+  var related = orders.filter(function(o){
+    return (o.items||[]).some(function(it){ return myIds[String(it.id)]; });
+  });
+  var el = document.getElementById("myOrders");
+  if(!related.length){ el.innerHTML = "<p style='color:#999;'>No orders for your products yet.</p>"; return; }
+  el.innerHTML = '<table><thead><tr><th>Order</th><th>Date</th><th>Customer</th><th>Your items</th><th>Status</th><th>Tracking</th></tr></thead><tbody>'+
+    related.map(function(o){
+      var items = (o.items||[]).filter(function(it){ return myIds[String(it.id)]; });
+      var lines = items.map(function(it){ return esc(it.name)+" ×"+(it.quantity||1); }).join("<br>");
+      var c = o.customer || {};
+      return '<tr><td><strong>'+esc(o.orderId)+'</strong></td><td>'+esc(o.date||"-")+'</td><td>'+esc(c.name||"-")+'</td><td>'+lines+'</td><td>'+esc(o.status||"-")+'</td><td>'+esc(o.trackingId||o.courier||"-")+'</td></tr>';
+    }).join("")+"</tbody></table>";
+}
+
+function loadProfile(){
+  var sellers = getSellers();
+  var s = sellers.find(function(x){ return String(x.id)===String(session.id); }) || session;
+  document.getElementById("profShop").value = s.shop || "";
+  document.getElementById("profName").value = s.name || "";
+  document.getElementById("profPhone").value = s.phone || "";
+  document.getElementById("profEmail").value = s.email || "";
+  document.getElementById("profAbout").value = s.about || "";
+}
+
+function saveProfile(){
+  var sellers = getSellers();
+  sellers = sellers.map(function(s){
+    if(String(s.id) !== String(session.id)) return s;
+    return Object.assign({}, s, {
+      shop: document.getElementById("profShop").value.trim(),
+      name: document.getElementById("profName").value.trim(),
+      phone: document.getElementById("profPhone").value.trim(),
+      email: document.getElementById("profEmail").value.trim(),
+      about: document.getElementById("profAbout").value.trim()
+    });
+  });
+  saveSellers(sellers);
+  var s = sellers.find(function(x){ return String(x.id)===String(session.id); });
+  if(s){
+    session = Object.assign({}, session, { shop:s.shop, name:s.name, phone:s.phone, email:s.email });
+    localStorage.setItem("seiMartSellerSession", JSON.stringify(session));
+    document.getElementById("sideShop").textContent = s.shop || s.username;
+  }
+  var msg = document.getElementById("profMsg");
+  msg.style.display = "block";
+  setTimeout(function(){ msg.style.display = "none"; }, 2000);
+}
+
+
+function renderPayments(){
+  var list = [];
+  try { list = JSON.parse(localStorage.getItem("seiMartSellerPayments") || "[]"); } catch(e) {}
+  list = list.filter(function(r){ return String(r.sellerId) === String(session.id); });
+  var open = list.filter(function(r){ return r.status==="Open"; });
+  var cleared = list.filter(function(r){ return r.status==="Cleared"; });
+  var paid = list.filter(function(r){ return r.status==="Paid"; });
+  var due = open.concat(cleared).reduce(function(s,r){ return s+(Number(r.net)||0); },0);
+  var paidSum = paid.reduce(function(s,r){ return s+(Number(r.net)||0); },0);
+  var stats = document.getElementById("payStats");
+  if (stats) {
+    stats.innerHTML =
+      '<div class="card"><div class="n">৳'+due.toLocaleString("en-BD")+'</div><div class="l">Pending clearance</div></div>'+
+      '<div class="card"><div class="n">৳'+paidSum.toLocaleString("en-BD")+'</div><div class="l">Paid to you</div></div>'+
+      '<div class="card"><div class="n">'+open.length+'</div><div class="l">Open weeks</div></div>'+
+      '<div class="card"><div class="n">'+paid.length+'</div><div class="l">Paid weeks</div></div>';
+  }
+  var el = document.getElementById("payList");
+  if (!el) return;
+  if (!list.length) {
+    el.innerHTML = '<p style="color:#999;">No clearance rows yet. After customers buy your products, admin rebuilds weekly payments. Check back later.</p>';
+    return;
+  }
+  el.innerHTML = '<table><thead><tr><th>Week</th><th>Gross</th><th>Fee</th><th>Net</th><th>Status</th></tr></thead><tbody>'+
+    list.map(function(r){
+      return '<tr><td>'+esc(r.weekStart)+' → '+esc(r.weekEnd)+'<br><small>'+esc(r.orders)+' orders</small></td>'+
+        '<td>৳'+Number(r.gross||0).toLocaleString("en-BD")+'</td>'+
+        '<td>৳'+Number(r.commission||0).toLocaleString("en-BD")+'</td>'+
+        '<td><strong>৳'+Number(r.net||0).toLocaleString("en-BD")+'</strong></td>'+
+        '<td>'+esc(r.status||"Open")+'</td></tr>';
+    }).join("") + "</tbody></table>";
+}
+
+function logout(){
+  localStorage.removeItem("seiMartSellerSession");
+  window.location.href = "seller-login.html";
+}
+
+// init
+document.getElementById("sideShop").textContent = session.shop || session.username || "Seller";
+var _ps = document.getElementById("publicShopLink");
+if (_ps) _ps.href = "shop.html?id=" + encodeURIComponent(session.id || "") + "&u=" + encodeURIComponent(session.username || "");
+document.getElementById("pageSub").textContent = "Welcome, " + (session.name || session.username);
+refreshDash();
+</script>
+</body>
+</html>

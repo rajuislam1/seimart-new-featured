@@ -1,0 +1,858 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>My Wishlist | Sei Mart</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css">
+
+    <style>
+
+        .wishlist-page {
+            min-height: 70vh;
+            background: #f8f8f8;
+            padding: 50px 20px 70px;
+        }
+
+        .wishlist-container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .wishlist-heading {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .wishlist-heading h1 {
+            margin: 0 0 8px;
+            font-size: 36px;
+            color: #111111;
+        }
+
+        .wishlist-heading p {
+            margin: 0;
+            color: #777777;
+        }
+
+        .wishlist-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 22px;
+        }
+
+        .wishlist-card {
+            background: #ffffff;
+            border: 1px solid #e3e3e3;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.25s ease;
+        }
+
+        .wishlist-card:hover {
+            transform: translateY(-5px);
+            box-shadow:
+                0 10px 25px rgba(0,0,0,0.10);
+        }
+
+        .wishlist-image-box {
+            height: 230px;
+            background: #f5f5f5;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .wishlist-image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.25s ease;
+        }
+
+        .wishlist-card:hover
+        .wishlist-image-box img {
+            transform: scale(1.05);
+        }
+
+        .wishlist-remove {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 38px;
+            height: 38px;
+            border: none;
+            border-radius: 50%;
+            background: #C9A227;
+            color: #ffffff;
+            font-size: 19px;
+            cursor: pointer;
+            z-index: 5;
+        }
+
+        .wishlist-remove:hover {
+            background: #A88418;
+        }
+
+        .wishlist-info {
+            padding: 18px;
+        }
+
+        .wishlist-category {
+            color: #C9A227;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 7px;
+        }
+
+        .wishlist-name {
+            margin: 0 0 12px;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        .wishlist-name:hover {
+            color: #A88418;
+        }
+
+        .wishlist-price {
+            font-size: 19px;
+            font-weight: 800;
+            color: #111111;
+            margin-bottom: 13px;
+        }
+
+        .wishlist-cart-btn {
+            width: 100%;
+            border: none;
+            background: #3f6f5a;
+            color: #ffffff;
+            padding: 11px;
+            border-radius: 7px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .wishlist-cart-btn:hover {
+            background: #315744;
+        }
+
+        .wishlist-empty {
+            max-width: 600px;
+            margin: 40px auto;
+            background: #ffffff;
+            border: 1px solid #e5e5e5;
+            border-radius: 14px;
+            text-align: center;
+            padding: 65px 25px;
+        }
+
+        .wishlist-empty-icon {
+            font-size: 65px;
+            color: #C9A227;
+            margin-bottom: 15px;
+        }
+
+        .wishlist-empty h2 {
+            margin: 0 0 10px;
+        }
+
+        .wishlist-empty p {
+            color: #777777;
+            margin-bottom: 25px;
+        }
+
+        .wishlist-browse-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #3f6f5a;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+        }
+
+        .wishlist-browse-btn:hover {
+            background: #315744;
+        }
+
+        @media (max-width: 1000px) {
+
+            .wishlist-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+        }
+
+        @media (max-width: 700px) {
+
+            .wishlist-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 14px;
+            }
+
+            .wishlist-image-box {
+                height: 190px;
+            }
+
+            .wishlist-info {
+                padding: 13px;
+            }
+
+            .wishlist-name {
+                font-size: 15px;
+            }
+
+        }
+
+        @media (max-width: 450px) {
+
+            .wishlist-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header>
+
+    <div class="container">
+
+        <div class="header-top">
+
+            <a
+                href="index.html"
+                class="logo">
+
+                <svg
+                    class="navbar-logo-icon"
+                    viewBox="0 0 100 100"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true">
+
+                    <path
+                        d="M18 22h10l7 40h40l10-29H34"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="7"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"/>
+
+                    <path
+                        d="M42 44h27"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="7"
+                        stroke-linecap="round"/>
+
+                    <circle
+                        cx="40"
+                        cy="76"
+                        r="5"
+                        fill="currentColor"/>
+
+                    <circle
+                        cx="72"
+                        cy="76"
+                        r="5"
+                        fill="currentColor"/>
+
+                    <path
+                        d="M12 35h13M8 45h15"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="5"
+                        stroke-linecap="round"/>
+
+                </svg>
+
+                <span class="navbar-logo-text">
+                    Sei <strong>Mart</strong>
+                </span>
+
+            </a>
+
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search products...">
+
+                <button
+                    type="button">
+
+                    🔍
+
+                </button>
+
+            </div>
+
+
+            <div class="header-actions">
+
+                <div
+                    id="accountArea"
+                    class="account-link">
+
+                    👤
+
+                    <a href="login.html">
+                        Sign In
+                    </a>
+
+                </div>
+
+
+                <a
+                    href="wishlist.html"
+                    class="wishlist-link">
+
+                    ❤️ Wishlist
+
+                </a>
+
+
+                <a
+                    href="cart.html"
+                    class="cart-link">
+
+                    🛒 Cart
+
+                    <span
+                        id="cartCount"
+                        class="cart-count">
+
+                        0
+
+                    </span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <nav class="navbar">
+
+        <div class="container">
+
+            <ul class="nav-menu">
+
+                <li class="category-menu">
+
+                    <button
+                        type="button"
+                        class="category-dropdown">
+
+                        ☰ All Categories
+
+                    </button>
+
+
+                    <div class="category-list">
+
+                        <a href="products.html?category=electronics">
+                            Electronics
+                        </a>
+
+                        <a href="products.html?category=mobile">
+                            Mobile Accessories
+                        </a>
+
+                        <a href="products.html?category=fashion">
+                            Fashion
+                        </a>
+
+                        <a href="products.html?category=shoes">
+                            Shoes
+                        </a>
+
+                        <a href="products.html?category=cosmetics">
+                            Cosmetics
+                        </a>
+
+                        <a href="products.html?category=perfume">
+                            Perfume
+                        </a>
+
+                        <a href="products.html?category=watches">
+                            Watches
+                        </a>
+
+                        <a href="products.html?category=home">
+                            Home & Living
+                        </a>
+
+                        <a href="products.html?category=jewellery">
+                            Jewellery
+                        </a>
+
+                        <a href="products.html?category=beauty">
+                            Beauty & Personal Care
+                        </a>
+
+                    </div>
+
+                </li>
+
+
+                <li>
+                    <a href="index.html">
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a href="products.html">
+                        Products
+                    </a>
+                </li>
+
+                <li>
+                    <a href="products.html?filter=deals">
+                        Today's Deals
+                    </a>
+                </li>
+
+                <li>
+                    <a href="products.html?filter=new">
+                        New Arrivals
+                    </a>
+                </li>
+
+                <li>
+                    <a href="order-tracking.html">
+                        Order Tracking
+                    </a>
+                </li>
+
+                <li>
+                    <a href="help.html">
+                        Help & Support
+                    </a>
+                </li>
+
+                <li>
+                    <a href="contact.html">
+                        Contact
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </nav>
+
+</header>
+
+
+<main class="wishlist-page">
+
+    <div class="wishlist-container">
+
+        <div class="wishlist-heading">
+
+            <h1>
+                My Wishlist
+            </h1>
+
+            <p>
+                Products you saved for later
+            </p>
+
+        </div>
+
+
+        <div
+            id="wishlistActions" style="margin-bottom:12px;"></div>
+<div id="wishlistContainer"
+            class="wishlist-grid">
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<script src="script.js"></script>
+<script>
+wishlistProducts = getWishlistProductsMap();
+if (typeof renderWishlist === "function") renderWishlist();
+</script>
+
+
+<script>
+
+/* =========================================
+   LOGIN PROTECTION
+========================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        if (typeof getWishlistProductsMap === "function") {
+            wishlistProducts = getWishlistProductsMap();
+        }
+        renderWishlist();
+
+    }
+);
+
+
+/* =========================================
+   WISHLIST PRODUCT DATA
+========================================= */
+
+// Use central product data
+function getWishlistProductsMap() {
+    const map = {};
+    const list = (typeof getProducts === "function") ? getProducts() : [];
+    list.forEach(function(p) {
+        map[p.id] = {
+            name: p.name,
+            price: p.price,
+            category: p.category,
+            image: p.image
+        };
+    });
+    return map;
+}
+let wishlistProducts = {};
+
+
+
+
+/* =========================================
+   RENDER WISHLIST
+========================================= */
+
+function renderWishlist() {
+    var actions = document.getElementById("wishlistActions");
+    if (actions) {
+        actions.innerHTML = '<button type="button" onclick="(typeof addAllWishlistToCart===\'function\'?addAllWishlistToCart():alert(\'Not ready\'))" style="background:#3f6f5a;color:#fff;border:none;padding:10px 16px;border-radius:8px;font-weight:700;cursor:pointer;">🛒 Add All to Cart</button>';
+    }
+
+
+    const container =
+        document.getElementById(
+            "wishlistContainer"
+        );
+
+    // rebuild map every time
+    if (typeof getWishlistProductsMap === "function") {
+        wishlistProducts = getWishlistProductsMap();
+    }
+
+    var wishlist = [];
+    try {
+        var raw = localStorage.getItem("seiMartWishlist");
+        wishlist = raw ? JSON.parse(raw) : [];
+        if (!Array.isArray(wishlist)) wishlist = [];
+        wishlist = wishlist.map(String);
+    } catch (e) { wishlist = []; }
+
+    if (wishlist.length === 0) {
+
+        container.innerHTML = `
+
+            <div class="wishlist-empty">
+
+                <div class="wishlist-empty-icon">
+                    ♡
+                </div>
+
+                <h2>
+                    Your Wishlist is Empty
+                </h2>
+
+                <p>
+                    Save products you love and find them here.
+                </p>
+
+                <a
+                    href="products.html"
+                    class="wishlist-browse-btn">
+
+                    Browse Products
+
+                </a>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    container.innerHTML = "";
+
+
+    wishlist.forEach(
+        function(productId) {
+
+            productId = String(productId);
+            var product = wishlistProducts[productId];
+
+            if (!product && typeof getProducts === "function") {
+                var found = getProducts().find(function (p) {
+                    return String(p.id) === productId;
+                });
+                if (found) {
+                    product = {
+                        name: found.name,
+                        price: found.price,
+                        category: found.category,
+                        image: found.image
+                    };
+                }
+            }
+
+            if (!product) {
+                return;
+            }
+
+
+            const card =
+                document.createElement("div");
+
+
+            card.className =
+                "wishlist-card";
+
+
+            card.innerHTML = `
+
+                <div
+                    class="wishlist-image-box"
+                    onclick="openWishlistProduct('${productId}')">
+
+                    <button
+                        type="button"
+                        class="wishlist-remove"
+                        onclick="event.stopPropagation(); removeWishlistProduct('${productId}')">
+
+                        ♥
+
+                    </button>
+
+
+                    <img
+                        src="${product.image}"
+                        alt="${product.name}">
+
+                </div>
+
+
+                <div class="wishlist-info">
+
+                    <div class="wishlist-category">
+                        ${product.category}
+                    </div>
+
+
+                    <h3
+                        class="wishlist-name"
+                        onclick="openWishlistProduct('${productId}')">
+
+                        ${product.name}
+
+                    </h3>
+
+
+                    <div class="wishlist-price">
+
+                        ৳${product.price.toLocaleString()}
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="wishlist-cart-btn"
+                        onclick="addWishlistToCart('${productId}')">
+
+                        Add to Cart
+
+                    </button>
+
+                </div>
+
+            `;
+
+
+            container.appendChild(card);
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   REMOVE WISHLIST
+========================================= */
+
+function removeWishlistProduct(productId) {
+
+    let wishlist =
+        JSON.parse(
+            localStorage.getItem(
+                "seiMartWishlist"
+            )
+        ) || [];
+
+
+    wishlist =
+        wishlist.filter(
+            function(id) {
+
+                return String(id) !== String(productId);
+
+            }
+        );
+
+
+    localStorage.setItem(
+        "seiMartWishlist",
+        JSON.stringify(wishlist)
+    );
+
+
+    renderWishlist();
+
+}
+
+
+/* =========================================
+   OPEN PRODUCT
+========================================= */
+
+function openWishlistProduct(productId) {
+
+    window.location.href =
+        "product-details.html?id=" +
+        encodeURIComponent(productId);
+
+}
+
+
+/* =========================================
+   ADD TO CART
+========================================= */
+
+function addWishlistToCart(productId) {
+
+    const product =
+        wishlistProducts[productId];
+
+
+    if (!product) {
+        return;
+    }
+
+
+    if (
+        localStorage.getItem(
+            "seiMartLoggedIn"
+        ) !== "true"
+    ) {
+
+        window.location.href =
+            "login.html";
+
+        return;
+
+    }
+
+
+    let cart =
+        JSON.parse(
+            localStorage.getItem("cart")
+        ) || [];
+
+
+    const existing =
+        cart.find(
+            function(item) {
+
+                return item.name === product.name;
+
+            }
+        );
+
+
+    if (existing) {
+
+        existing.quantity =
+            (Number(existing.quantity) || 1) + 1;
+
+    }
+
+    else {
+
+        cart.push({
+
+            name: product.name,
+
+            price: product.price,
+
+            image: product.image,
+
+            quantity: 1
+
+        });
+
+    }
+
+
+    localStorage.setItem(
+        "cart",
+        JSON.stringify(cart)
+    );
+    try { sessionStorage.setItem("seiMartCartAddedByCustomer", "1"); } catch(e) {}
+
+
+    if (
+        typeof updateCartCount === "function"
+    ) {
+
+        updateCartCount();
+
+    }
+
+}
+
+</script>
+
+<script src="js/pro-enhancements.js"></script>
+</body>
+
+</html>

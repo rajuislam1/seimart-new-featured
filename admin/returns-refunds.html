@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Returns & Refunds | Sei Mart Admin</title>
+<script src="js/admin-auth.js"></script>
+<style>
+body{margin:0;font-family:system-ui,sans-serif;background:#f3f6f4;color:#17231d;}
+.top{background:#17231d;color:#fff;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+.top a{color:#e8c65a;text-decoration:none;font-weight:600;}
+.wrap{max-width:1100px;margin:20px auto;padding:0 14px 40px;}
+.card{background:#fff;border:1px solid #e3e9e4;border-radius:14px;padding:16px;margin-bottom:12px;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+th,td{padding:10px 8px;border-bottom:1px solid #eee;text-align:left;vertical-align:top;}
+th{background:#f5f7f5;}
+.btn{border:none;padding:7px 10px;border-radius:8px;font-weight:700;cursor:pointer;font-size:12px;margin:2px;}
+.ok{background:#3f6f5a;color:#fff;}
+.warn{background:#e8c65a;color:#17231d;}
+.no{background:#d9534f;color:#fff;}
+select{padding:6px 8px;border-radius:6px;border:1px solid #ccc;max-width:160px;}
+.badge{display:inline-block;padding:3px 8px;border-radius:10px;font-size:11px;font-weight:700;background:#eaf2ed;}
+@media(max-width:700px){table{display:block;overflow-x:auto;}.btn,.top a{min-height:40px;display:inline-flex;align-items:center;}select{max-width:100%;width:100%;margin-top:6px;}}
+</style>
+</head>
+<body>
+<div class="top">
+  <strong>↩️ Returns & Refunds</strong>
+  <a href="../admin.html">← Admin</a>
+</div>
+<div class="wrap">
+  <div class="card">
+    <p style="margin:0;color:#7b877f;font-size:14px;">Customer return requests. Update status through inspection → refund paid. Customer sees progress on return tracking.</p>
+  </div>
+  <div class="card" id="list"></div>
+</div>
+<script>
+var STATUSES = ["Requested","Approved","Pickup Scheduled","Received","Inspecting","Refund Approved","Refunded","Rejected"];
+function getReturns(){ try{return JSON.parse(localStorage.getItem("seiMartReturns")||"[]");}catch(e){return[];} }
+function saveReturns(list){ localStorage.setItem("seiMartReturns", JSON.stringify(list||[])); }
+function esc(v){ return String(v==null?"":v).replace(/&/g,"&amp;").replace(/</g,"&lt;"); }
+
+function setStatus(id, status){
+  var list = getReturns();
+  var r = list.find(function(x){ return x.id === id; });
+  if (!r) return;
+  r.status = status;
+  if (!Array.isArray(r.history)) r.history = [];
+  r.history.push({
+    status: status,
+    at: new Date().toISOString(),
+    label: new Date().toLocaleString("en-BD"),
+    note: "Updated by admin"
+  });
+  saveReturns(list);
+  render();
+}
+
+function render(){
+  var list = getReturns();
+  var el = document.getElementById("list");
+  if (!list.length) {
+    el.innerHTML = "<p style='color:#999;'>No return requests yet.</p>";
+    return;
+  }
+  el.innerHTML = '<div style="overflow-x:auto;"><table><thead><tr><th>Return</th><th>Customer</th><th>Order / Items</th><th>Reason</th><th>Status</th><th>Update</th></tr></thead><tbody>'+
+    list.map(function(r){
+      var c = r.customer||{};
+      var items = (r.items||[]).map(function(i){ return esc(i.name)+" ×"+(i.quantity||1); }).join("<br>") || "—";
+      var opts = STATUSES.map(function(s){
+        return '<option value="'+s+'" '+(r.status===s?"selected":"")+'>'+s+'</option>';
+      }).join("");
+      return '<tr>'+
+        '<td><strong>'+esc(r.id)+'</strong><br><small>'+esc(r.createdAt||"").slice(0,10)+'</small></td>'+
+        '<td>'+esc(c.name)+'<br><small>'+esc(c.phone)+'<br>'+esc(c.email)+'</small></td>'+
+        '<td><strong>'+esc(r.orderId)+'</strong><br>'+items+'<br><small>৳'+Number(r.total||0).toLocaleString("en-BD")+'</small></td>'+
+        '<td>'+esc(r.reason)+'<br><small>'+esc(r.details||"")+'</small><br><small>'+esc(r.method||"")+'</small></td>'+
+        '<td><span class="badge">'+esc(r.status)+'</span></td>'+
+        '<td><select id="st_'+esc(r.id)+'">'+opts+'</select><br>'+
+        '<button class="btn ok" onclick="setStatus(\''+esc(r.id)+'\', document.getElementById(\'st_'+esc(r.id)+'\').value)">Save</button></td>'+
+        '</tr>';
+    }).join("") + "</tbody></table></div>";
+}
+render();
+</script>
+</body>
+</html>

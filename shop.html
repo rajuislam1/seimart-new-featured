@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seller Shop | Sei Mart</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.shop-hero{background:linear-gradient(135deg,#17231d,#3f6f5a);color:#fff;padding:40px 20px;}
+.shop-hero-inner{max-width:1100px;margin:0 auto;display:flex;gap:20px;align-items:center;flex-wrap:wrap;}
+.shop-logo{width:72px;height:72px;border-radius:16px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:#3f6f5a;}
+.shop-meta h1{margin:0 0 6px;font-size:28px;}
+.shop-meta p{margin:0;opacity:.9;font-size:14px;line-height:1.5;}
+.shop-wrap{max-width:1100px;margin:24px auto 60px;padding:0 16px;}
+.shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;}
+.shop-card{background:#fff;border:1px solid #e3e9e4;border-radius:12px;overflow:hidden;transition:transform .2s,box-shadow .2s;}
+.shop-card:hover{transform:translateY(-4px);box-shadow:0 10px 24px rgba(0,0,0,.08);}
+.shop-card img{width:100%;height:180px;object-fit:cover;background:#f5f7f5;}
+.shop-card .body{padding:12px;}
+.shop-card h3{margin:0 0 6px;font-size:15px;}
+.shop-card .price{color:#3f6f5a;font-weight:800;}
+.shop-empty{text-align:center;padding:48px 20px;color:#7b877f;}
+.badge{display:inline-block;background:#e8c65a;color:#17231d;font-size:11px;font-weight:800;padding:3px 8px;border-radius:8px;margin-bottom:8px;}
+</style>
+</head>
+<body>
+<header style="background:#fff;border-bottom:1px solid #e3e9e4;padding:12px 0;">
+  <div style="width:90%;max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;">
+    <a href="index.html" style="color:#3f6f5a;font-weight:800;text-decoration:none;">← Sei Mart</a>
+    <a href="products.html" style="color:#333;text-decoration:none;font-weight:600;">All Products</a>
+  </div>
+</header>
+
+<section class="shop-hero">
+  <div class="shop-hero-inner">
+    <div class="shop-logo" id="shopLogo">S</div>
+    <div class="shop-meta">
+      <div class="badge">Official Seller</div>
+      <h1 id="shopName">Seller Shop</h1>
+      <p id="shopAbout">Loading…</p>
+      <p id="shopContact" style="margin-top:8px;font-size:13px;opacity:.85;"></p>
+    </div>
+  </div>
+</section>
+
+<main class="shop-wrap">
+  <h2 style="margin:0 0 16px;font-size:20px;">Products from this shop</h2>
+  <div class="shop-grid" id="shopGrid"></div>
+  <div class="shop-empty" id="shopEmpty" style="display:none;">This seller has no products yet.</div>
+</main>
+
+<script src="script.js"></script>
+<script>
+(function(){
+  var params = new URLSearchParams(location.search);
+  var id = params.get("id") || params.get("seller") || "";
+  var username = (params.get("u") || params.get("shop") || "").toLowerCase();
+
+  var sellers = [];
+  try { sellers = JSON.parse(localStorage.getItem("seiMartSellers") || "[]"); } catch(e) {}
+
+  var seller = null;
+  if (id) seller = sellers.find(function(s){ return String(s.id) === String(id); });
+  if (!seller && username) seller = sellers.find(function(s){ return String(s.username||"").toLowerCase() === username; });
+
+  if (!seller) {
+    document.getElementById("shopName").textContent = "Shop not found";
+    document.getElementById("shopAbout").textContent = "Invalid seller link. Browse all products instead.";
+    document.getElementById("shopEmpty").style.display = "block";
+    return;
+  }
+  if (seller.status && seller.status !== "Active") {
+    document.getElementById("shopName").textContent = seller.shop || "Shop";
+    document.getElementById("shopAbout").textContent = "This seller is currently unavailable.";
+    document.getElementById("shopEmpty").style.display = "block";
+    return;
+  }
+
+  document.title = (seller.shop || "Shop") + " | Sei Mart";
+  document.getElementById("shopLogo").textContent = (seller.shop || "S").charAt(0).toUpperCase();
+  document.getElementById("shopName").textContent = seller.shop || seller.username || "Shop";
+  document.getElementById("shopAbout").textContent = seller.about || ("Products from " + (seller.name || "this seller"));
+  document.getElementById("shopContact").textContent = [seller.category, seller.name].filter(Boolean).join(" · ");
+
+  var products = (typeof getProducts === "function" ? getProducts() : []).filter(function(p){
+    return String(p.sellerId) === String(seller.id);
+  });
+
+  var grid = document.getElementById("shopGrid");
+  if (!products.length) {
+    document.getElementById("shopEmpty").style.display = "block";
+    return;
+  }
+  grid.innerHTML = products.map(function(p){
+    var href = "product-details.html?id=" + encodeURIComponent(p.id);
+    return '<a class="shop-card" href="'+href+'" style="text-decoration:none;color:inherit;">'+
+      '<img src="'+(p.image||"image/products/product-1.png")+'" alt="">'+
+      '<div class="body"><h3>'+String(p.name||"").replace(/</g,"")+'</h3>'+
+      '<div class="price">৳'+Number(p.price||0).toLocaleString("en-BD")+'</div></div></a>';
+  }).join("");
+})();
+</script>
+</body>
+</html>

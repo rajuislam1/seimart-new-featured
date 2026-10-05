@@ -1,0 +1,203 @@
+/* =====================================================
+   SEI MART
+   ORDER DETAILS PAGE
+===================================================== */
+
+.admin-detail-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin-top: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+
+/* =====================================================
+   CARD HEADER
+===================================================== */
+
+.admin-detail-card-header {
+    padding: 18px 22px;
+    border-bottom: 1px solid var(--border);
+    background: #fafcfb;
+}
+
+.admin-detail-card-header h3 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--dark);
+}
+
+
+/* =====================================================
+   DETAIL GRID
+===================================================== */
+
+.admin-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(
+        2,
+        minmax(0, 1fr)
+    );
+    gap: 0;
+}
+
+
+/* =====================================================
+   DETAIL ROW
+===================================================== */
+
+.admin-detail-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 18px 22px;
+    border-bottom: 1px solid var(--border);
+}
+
+.admin-detail-row:nth-child(odd) {
+    border-right: 1px solid var(--border);
+}
+
+.admin-detail-row span {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.admin-detail-row strong {
+    font-size: 14px;
+    color: var(--text);
+    word-break: break-word;
+}
+
+
+/* =====================================================
+   PRODUCT
+===================================================== */
+
+.admin-order-product {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.admin-order-product strong {
+    color: var(--text);
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   TABLE
+===================================================== */
+
+.admin-orders-module
+.orders-table-wrapper {
+    overflow-x: auto;
+}
+
+
+/* =====================================================
+   ORDER SUMMARY
+===================================================== */
+
+.admin-order-summary {
+    padding: 20px 22px;
+}
+
+.admin-order-summary > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.admin-order-summary > div:last-child {
+    border-bottom: none;
+}
+
+.admin-order-summary span {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.admin-order-summary strong {
+    color: var(--text);
+    font-size: 15px;
+}
+
+
+/* =====================================================
+   TOTAL
+===================================================== */
+
+.admin-order-summary-total {
+    margin-top: 5px;
+    padding-top: 18px !important;
+}
+
+.admin-order-summary-total span {
+    color: var(--dark);
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.admin-order-summary-total strong {
+    color: var(--primary);
+    font-size: 20px;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 768px) {
+
+    .admin-detail-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-detail-row:nth-child(odd) {
+        border-right: none;
+    }
+
+    .admin-detail-row {
+        padding: 16px 18px;
+    }
+
+    .admin-detail-card-header {
+        padding: 16px 18px;
+    }
+
+    .admin-order-summary {
+        padding: 18px;
+    }
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media (max-width: 480px) {
+
+    .admin-detail-card {
+        border-radius: 10px;
+    }
+
+    .admin-detail-row strong {
+        font-size: 13px;
+    }
+
+    .admin-order-summary-total strong {
+        font-size: 18px;
+    }
+}

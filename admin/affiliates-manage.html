@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Affiliates | Sei Mart Admin</title>
+<style>
+body{margin:0;font-family:system-ui,sans-serif;background:#f3f6f4;color:#17231d;}
+.top{background:#17231d;color:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+.top a{color:#e8c65a;text-decoration:none;font-weight:600;}
+.wrap{max-width:1100px;margin:24px auto;padding:0 16px 40px;}
+.card{background:#fff;border:1px solid #e3e9e4;border-radius:14px;padding:20px;}
+table{width:100%;border-collapse:collapse;font-size:14px;}
+th,td{padding:10px;border-bottom:1px solid #eee;text-align:left;}
+th{background:#f5f7f5;}
+.btn{border:none;padding:8px 12px;border-radius:8px;font-weight:600;cursor:pointer;margin:2px;}
+.ok{background:#3f6f5a;color:#fff;}
+.no{background:#d9534f;color:#fff;}
+</style>
+    <script src="js/admin-auth.js"></script>
+</head>
+<body>
+<div class="top">
+  <strong>🤝 Affiliates</strong>
+  <div><a href="../admin.html">← Back to Admin</a> · <a href="../affiliate.html" target="_blank">Public affiliate page</a></div>
+</div>
+<div class="wrap">
+  <div class="card">
+    <h2 style="margin-top:0;">Affiliate Accounts</h2>
+    <p style="color:#7b877f;">Partners who registered on affiliate.html</p>
+    <div id="list"></div>
+  </div>
+</div>
+<script>
+function getList(){ try{return JSON.parse(localStorage.getItem("seiMartAffiliates")||"[]");}catch(e){return[];} }
+function saveList(l){ localStorage.setItem("seiMartAffiliates", JSON.stringify(l||[])); }
+function esc(v){ return String(v==null?"":v).replace(/&/g,"&amp;").replace(/</g,"&lt;"); }
+function render(){
+  var list=getList();
+  var el=document.getElementById("list");
+  if(!list.length){ el.innerHTML="<p style='color:#999;'>No affiliates yet. Register at affiliate.html</p>"; return; }
+  el.innerHTML='<table><thead><tr><th>Name</th><th>Username</th><th>Email</th><th>Phone</th><th>Code</th><th>Status</th><th>Action</th></tr></thead><tbody>'+
+    list.map(function(a,i){
+      return '<tr><td><strong>'+esc(a.name)+'</strong></td><td>'+esc(a.username)+'</td><td>'+esc(a.email)+'</td><td>'+esc(a.phone)+'</td><td><code>'+esc(a.code)+'</code></td><td>'+esc(a.status||"Active")+'</td><td><button class="btn ok" onclick="toggle('+i+')">'+(a.status==="Disabled"?"Enable":"Disable")+'</button><button class="btn no" onclick="del('+i+')">Delete</button></td></tr>';
+    }).join("")+"</tbody></table>";
+}
+function toggle(i){ var l=getList(); if(!l[i])return; l[i].status=l[i].status==="Disabled"?"Active":"Disabled"; saveList(l); render(); }
+function del(i){ if(!confirm("Delete?"))return; var l=getList(); l.splice(i,1); saveList(l); render(); }
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,2054 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Checkout | Sei Mart</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        .checkout-page {
+            min-height: 80vh;
+            padding: 45px 20px;
+            background: #f8f8f8;
+        }
+
+        .checkout-container {
+            max-width: 1000px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 25px;
+        }
+
+        .checkout-card {
+            background: #ffffff;
+            border: 1px solid #e2e2e2;
+            border-radius: 10px;
+            padding: 25px;
+        }
+
+        .checkout-card h2 {
+            margin-bottom: 22px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 7px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            border: 1px solid #dddddd;
+            border-radius: 7px;
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+        }
+
+        .form-group textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #C9A227;
+        }
+
+        .order-summary {
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 12px 0;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .summary-row:last-child {
+            border-bottom: none;
+        }
+
+        .summary-product {
+            font-size: 14px;
+        }
+
+        .summary-row #deliveryCampaignNote{font-weight:700}.summary-total {
+            font-size: 19px;
+            font-weight: 700;
+            margin-top: 10px;
+        }
+
+        .place-order-btn {
+            width: 100%;
+            margin-top: 20px;
+            padding: 14px;
+            border: none;
+            border-radius: 7px;
+            background: #C9A227;
+            color: #111111;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .place-order-btn:hover {
+            background: #A88418;
+            color: #ffffff;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 30px 10px;
+            color: #777777;
+        }
+
+        .success-box {
+            max-width: 650px;
+            margin: 50px auto;
+            background: #ffffff;
+            border: 1px solid #e2e2e2;
+            border-radius: 10px;
+            padding: 45px 30px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+        }
+
+        .success-icon {
+            font-size: 55px;
+            margin-bottom: 15px;
+        }
+
+        .success-box h1 {
+            margin-bottom: 10px;
+        }
+
+        .order-id {
+            display: inline-block;
+            margin: 20px 0;
+            padding: 12px 20px;
+            background: #f8f8f8;
+            border: 1px solid #dddddd;
+            border-radius: 7px;
+            font-weight: 700;
+        }
+
+        .success-message {
+            color: #666666;
+            margin-bottom: 25px;
+        }
+
+        .success-btn {
+            display: inline-block;
+            padding: 12px 22px;
+            background: #C9A227;
+            color: #111111;
+            text-decoration: none;
+            border-radius: 7px;
+            font-weight: 700;
+        }
+
+        .success-btn:hover {
+            background: #A88418;
+            color: #ffffff;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+
+        /* =========================
+           COUPON
+        ========================= */
+
+        .coupon-section {
+            margin: 20px 0;
+            padding: 18px;
+            background: #f8f7ef;
+            border: 1px solid #e5dfc8;
+            border-radius: 10px;
+        }
+
+        .coupon-section h3 {
+            margin: 0 0 12px;
+            font-size: 16px;
+            color: #3f6f5a;
+        }
+
+        .coupon-box {
+            display: flex;
+            gap: 8px;
+        }
+
+        .coupon-box input {
+            flex: 1;
+            min-width: 0;
+            padding: 11px 12px;
+            border: 1px solid #d8d8d8;
+            border-radius: 7px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .coupon-box input:focus {
+            border-color: #3f6f5a;
+        }
+
+        .coupon-box button {
+            padding: 0 18px;
+            border: none;
+            border-radius: 7px;
+            background: #3f6f5a;
+            color: #ffffff;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .coupon-box button:hover {
+            background: #315744;
+        }
+
+        .coupon-message {
+            margin-top: 9px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .coupon-success {
+            color: #3f6f5a;
+        }
+
+        .coupon-error {
+            color: #c0392b;
+        }
+
+
+        /* =========================================
+           PAYMENT METHOD
+        ========================================= */
+
+        .payment-section {
+            margin-top: 25px;
+        }
+
+        .payment-section h3 {
+            margin: 0 0 14px;
+            color: #3f6f5a;
+            font-size: 18px;
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .payment-option {
+            position: relative;
+        }
+
+        .payment-option label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-height: 70px;
+            padding: 14px 16px;
+            background: #ffffff;
+            border: 1.5px solid #dddddd;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-weight: 700;
+            color: #333333;
+            box-sizing: border-box;
+        }
+
+        .payment-option label:hover {
+            border-color: #3f6f5a;
+            background: #f8fbf9;
+            transform: translateY(-1px);
+        }
+
+        .payment-option input[type="radio"] {
+            width: 19px;
+            height: 19px;
+            accent-color: #3f6f5a;
+            flex-shrink: 0;
+        }
+
+        .payment-option:has(input[type="radio"]:checked) label {
+            border-color: #3f6f5a;
+            background: #f4f9f6;
+            box-shadow: 0 0 0 2px rgba(63, 111, 90, 0.08);
+        }
+
+        .payment-icon {
+            font-size: 27px;
+            width: 38px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .payment-info {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .payment-name {
+            font-size: 15px;
+            font-weight: 800;
+        }
+
+        .payment-note {
+            font-size: 12px;
+            color: #777777;
+            font-weight: 500;
+        }
+
+        .payment-discount {
+            color: #3f6f5a;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+
+        @media (max-width: 750px) {
+
+            .checkout-container {
+                grid-template-columns: 1fr;
+            }
+
+            .order-summary {
+                position: static;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .payment-methods {
+                grid-template-columns: 1fr;
+            }
+
+            .payment-option label {
+                min-height: 65px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         COMMON HEADER
+    ========================= -->
+
+    <header>
+
+        <div class="container">
+
+            <div class="header-top">
+
+                <a href="index.html" class="logo">
+
+                    <svg
+                        class="navbar-logo-icon"
+                        viewBox="0 0 100 100"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true">
+
+                        <path
+                            d="M18 22h10l7 40h40l10-29H34"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="7"
+                            stroke-linecap="round"
+                            stroke-linejoin="round" />
+
+                        <path
+                            d="M42 44h27"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="7"
+                            stroke-linecap="round" />
+
+                        <circle
+                            cx="40"
+                            cy="76"
+                            r="5"
+                            fill="currentColor" />
+
+                        <circle
+                            cx="72"
+                            cy="76"
+                            r="5"
+                            fill="currentColor" />
+
+                        <path
+                            d="M12 35h13M8 45h15"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="5"
+                            stroke-linecap="round" />
+
+                    </svg>
+
+                    <span class="navbar-logo-text">
+                        Sei <strong>Mart</strong>
+                    </span>
+
+                </a>
+
+
+                <div class="search-box">
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search products...">
+
+                    <button type="button">
+                        🔍
+                    </button>
+
+                </div>
+
+
+                <div class="header-actions">
+
+                    <div
+                        id="accountArea"
+                        class="account-link">
+
+                        👤
+
+                        <a href="login.html">
+                            Sign In
+                        </a>
+
+                    </div>
+
+
+                    <a
+                        href="cart.html"
+                        class="cart-link">
+
+                        🛒 Cart
+
+                        <span
+                            id="cartCount"
+                            class="cart-count">
+                            0
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- NAVBAR -->
+
+        <nav class="navbar">
+
+            <div class="container">
+
+                <ul class="nav-menu">
+
+                    <li class="category-menu">
+
+                        <button
+                            type="button"
+                            class="category-dropdown">
+
+                            ☰ All Categories
+
+                        </button>
+
+                        <div class="category-list">
+
+                            <a href="products.html?category=electronics">
+                                Electronics
+                            </a>
+
+                            <a href="products.html?category=mobile">
+                                Mobile Accessories
+                            </a>
+
+                            <a href="products.html?category=fashion">
+                                Fashion
+                            </a>
+
+                            <a href="products.html?category=shoes">
+                                Shoes
+                            </a>
+
+                            <a href="products.html?category=cosmetics">
+                                Cosmetics
+                            </a>
+
+                            <a href="products.html?category=perfume">
+                                Perfume
+                            </a>
+
+                            <a href="products.html?category=watches">
+                                Watches
+                            </a>
+
+                            <a href="products.html?category=home">
+                                Home & Living
+                            </a>
+
+                            <a href="products.html?category=jewellery">
+                                Jewellery
+                            </a>
+
+                            <a href="products.html?category=beauty">
+                                Beauty & Personal Care
+                            </a>
+
+                        </div>
+
+                    </li>
+
+
+                    <li>
+                        <a href="index.html">
+                            Home
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="products.html">
+                            Products
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="order-tracking.html">
+                            Order Tracking
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="products.html?filter=deals">
+                            Today's Deals
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="products.html?filter=new">
+                            New Arrivals
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="index.html#help">
+                            Help & Support
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="index.html#contact">
+                            Contact
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+<div class="checkout-steps" style="max-width:900px;margin:20px auto 10px;padding:0 16px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
+  <span style="padding:6px 12px;border-radius:20px;background:#3f6f5a;color:#fff;font-size:12px;font-weight:600;">1. Cart</span>
+  <span style="padding:6px 12px;border-radius:20px;background:#3f6f5a;color:#fff;font-size:12px;font-weight:600;">2. Details</span>
+  <span style="padding:6px 12px;border-radius:20px;background:#eaf2ed;color:#3f6f5a;font-size:12px;font-weight:600;">3. Payment</span>
+  <span style="padding:6px 12px;border-radius:20px;background:#f0f0f0;color:#999;font-size:12px;font-weight:600;">4. Done</span>
+</div>
+
+
+
+
+    <!-- =========================
+         CHECKOUT SECTION
+    ========================= -->
+
+    <div
+        id="checkoutSection"
+        class="checkout-page">
+
+        <div class="checkout-container">
+
+
+            <!-- CUSTOMER INFORMATION -->
+
+            <div class="checkout-card">
+
+                <h2>
+                    Checkout
+                </h2>
+
+
+                <form id="checkoutForm">
+
+                    <div class="form-grid">
+
+
+                        <div class="form-group">
+
+                            <label for="customerName">
+                                Full Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="customerName"
+                                required>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="customerPhone">
+                                Phone Number
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="customerPhone"
+                                placeholder="01XXXXXXXXX"
+                                required>
+
+                        </div>
+
+
+                        <div class="form-group full">
+
+                            <label for="customerEmail">
+                                Email
+                            </label>
+
+                            <input
+                                type="email"
+                                id="customerEmail"
+                                required>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="customerDistrict">
+                                District
+                            </label>
+
+                            <input
+                                type="text"
+                                id="customerDistrict"
+                                required>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="customerArea">
+                                Area / Upazila
+                            </label>
+
+                            <input
+                                type="text"
+                                id="customerArea"
+                                required>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="customerPostCode">
+                                Postal Code
+                            </label>
+
+                            <input
+                                type="text"
+                                id="customerPostCode">
+
+                        </div>
+
+
+                        <div class="form-group full">
+
+                            <label for="customerAddress">
+                                Full Shipping Address
+                            </label>
+
+                            <textarea
+                                id="customerAddress"
+                                placeholder="House, Road, Village, Market, etc."
+                                required></textarea>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PAYMENT -->
+
+                    <h2 style="margin-top:30px;">
+                        Payment Method
+                    </h2>
+
+
+                    <div class="payment-section">
+
+                        <h3>
+                            💳 Payment Method
+                        </h3>
+
+
+                        <div class="payment-methods">
+
+
+                            <!-- CASH ON DELIVERY -->
+
+                            <div class="payment-option">
+
+                                <label>
+
+                                    <input
+                                        type="radio"
+                                        name="paymentMethod"
+                                        value="Cash on Delivery (Steadfast)"
+                                        checked>
+
+                                    <div class="payment-icon">
+                                        💵
+                                    </div>
+
+                                    <div class="payment-info">
+
+                                        <div class="payment-name">
+                                            Cash on Delivery (Steadfast)
+                                        </div>
+
+                                        <div class="payment-note">
+                                            Pay cash to Steadfast courier when your parcel arrives
+                                        </div>
+                                        <div style="margin-top:6px;font-size:12px;color:#3f6f5a;font-weight:600;">
+                                            🚚 Delivered by Steadfast Courier · Nationwide COD
+                                        </div>
+
+                                    </div>
+
+                                </label>
+
+                            </div>
+
+
+                            <!-- BKASH -->
+
+                            <div class="payment-option">
+
+                                <label>
+
+                                    <input
+                                        type="radio"
+                                        name="paymentMethod"
+                                        value="bKash">
+
+                                    <div class="payment-icon">
+                                        💳
+                                    </div>
+
+                                    <div class="payment-info">
+
+                                        <div class="payment-name">
+                                            bKash
+                                        </div>
+
+                                        <div class="payment-discount">
+                                            Get 7% OFF
+                                        </div>
+
+                                        <div class="payment-note">
+                                            Discount applied at payment
+                                        </div>
+
+                                    </div>
+
+                                </label>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="place-order-btn">
+
+                        Place Order
+
+                    </button>
+
+                </form>
+
+            </div>
+
+
+
+            <!-- ORDER SUMMARY -->
+
+            <div class="checkout-card order-summary">
+
+                <h2>
+                    Order Summary
+                </h2>
+
+
+                <div id="orderItems">
+
+                    <div class="empty-cart">
+                        Loading cart...
+                    </div>
+
+                </div>
+
+
+                <!-- COUPON -->
+
+                <div class="coupon-section">
+
+                    <h3>
+                        Have a Coupon?
+                    </h3>
+
+
+                    <div class="coupon-box">
+
+                        <input
+                            type="text"
+                            id="couponCode"
+                            placeholder="Enter coupon code">
+
+
+                        <button
+                            type="button"
+                            onclick="applyCoupon()">
+
+                            Apply
+
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        id="couponMessage"
+                        class="coupon-message">
+                    </div>
+
+                </div>
+
+
+                <!-- SUBTOTAL -->
+
+                <div class="summary-row">
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <strong id="subtotal">
+                        ৳0
+                    </strong>
+
+                </div>
+
+
+                <!-- DELIVERY -->
+
+                <div class="summary-row" id="deliveryRow">
+                    <span>Delivery <small id="deliveryCampaignNote" style="display:block;color:#a88418;font-size:11px;margin-top:2px;"></small></span>
+                    <strong id="deliveryFee">৳120</strong>
+                </div>
+
+
+                <!-- DISCOUNT -->
+
+                <div
+                    class="summary-row"
+                    id="couponDiscountRow"
+                    style="display:none;">
+
+                    <span id="discountLabel">
+                        Discount
+                    </span>
+
+                    <strong id="couponDiscountAmount">
+                        -৳0
+                    </strong>
+
+                </div>
+
+
+                <!-- TOTAL -->
+
+                <div class="summary-row summary-total">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <strong id="total">
+                        ৳0
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         SUCCESS SECTION
+    ========================= -->
+
+    <div
+        id="successSection"
+        class="checkout-page hidden">
+
+        <div class="success-box">
+
+            <div class="success-icon">
+                ✅
+            </div>
+
+
+            <h1>
+                Order Placed Successfully!
+            </h1>
+
+
+            <div class="order-id">
+
+                Order ID:
+
+                <span id="successOrderId">
+                    -
+                </span>
+
+            </div>
+
+
+            <p class="success-message">
+
+                Thank you for shopping with Sei Mart.
+                We will contact you shortly to confirm
+                your order.
+
+            </p>
+
+
+            <a
+                href="index.html"
+                class="success-btn">
+
+                Continue Shopping
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         CHECKOUT JAVASCRIPT
+    ========================= -->
+
+    <script>
+
+
+        // =========================================
+        // LOGIN CHECK
+        // =========================================
+
+        const loggedIn =
+            localStorage.getItem(
+                "seiMartLoggedIn"
+            );
+
+
+        const userData =
+            localStorage.getItem(
+                "seiMartUser"
+            );
+
+
+        if (
+            loggedIn !== "true" ||
+            !userData
+        ) {
+
+            window.location.href =
+                "login.html";
+
+        }
+
+
+        const user =
+            JSON.parse(userData);
+
+
+
+        // =========================================
+        // USER INFORMATION
+        // =========================================
+
+        document.getElementById(
+            "customerName"
+        ).value =
+            user.name || "";
+
+
+        document.getElementById(
+            "customerEmail"
+        ).value =
+            user.email || "";
+
+
+
+        // =========================================
+        // LOAD SAVED ADDRESS
+        // =========================================
+
+        const savedAddress =
+            localStorage.getItem(
+                "seiMartShippingAddress"
+            );
+
+
+        if (savedAddress) {
+
+            const address =
+                JSON.parse(
+                    savedAddress
+                );
+
+
+            document.getElementById(
+                "customerPhone"
+            ).value =
+                address.phone || "";
+
+
+            document.getElementById(
+                "customerDistrict"
+            ).value =
+                address.district || "";
+
+
+            document.getElementById(
+                "customerArea"
+            ).value =
+                address.area || "";
+
+
+            document.getElementById(
+                "customerPostCode"
+            ).value =
+                address.postCode || "";
+
+
+            document.getElementById(
+                "customerAddress"
+            ).value =
+                address.address || "";
+
+        }
+
+
+
+        // =========================================
+        // LOAD CART
+        // =========================================
+
+        const cart =
+            JSON.parse(
+                localStorage.getItem(
+                    "cart"
+                )
+            ) || [];
+
+
+        const orderItems =
+            document.getElementById(
+                "orderItems"
+            );
+
+
+        let subtotal = 0;
+
+
+
+        // =========================================
+        // COUPON VARIABLES
+        // =========================================
+
+        let appliedCoupon = "";
+
+        let couponDiscount = 0;
+
+        let selectedPaymentMethod =
+            "Cash on Delivery";
+
+
+
+        // =========================================
+        // PAYMENT METHOD CHANGE
+        // =========================================
+
+        document.querySelectorAll(
+            'input[name="paymentMethod"]'
+        ).forEach(function (radio) {
+
+            radio.addEventListener(
+                "change",
+                function () {
+
+                    selectedPaymentMethod =
+                        this.value;
+
+
+                    if (
+                        selectedPaymentMethod ===
+                        "bKash"
+                    ) {
+
+                        appliedCoupon = "";
+
+                        couponDiscount = 0;
+
+
+                        const couponMessage =
+                            document.getElementById(
+                                "couponMessage"
+                            );
+
+
+                        if (
+                            couponMessage
+                        ) {
+
+                            couponMessage.textContent =
+                                "bKash payment includes 7% OFF.";
+
+                            couponMessage.className =
+                                "coupon-message coupon-success";
+
+                        }
+
+                    }
+
+
+                    else {
+
+                        couponDiscount = 0;
+
+
+                        const couponMessage =
+                            document.getElementById(
+                                "couponMessage"
+                            );
+
+
+                        if (
+                            couponMessage
+                        ) {
+
+                            couponMessage.textContent =
+                                "";
+
+                            couponMessage.className =
+                                "coupon-message";
+
+                        }
+
+                    }
+
+
+                    updateCheckoutTotal();
+
+                }
+            );
+
+        });
+
+
+
+        // =========================================
+        // APPLY COUPON
+        // =========================================
+
+        function applyCoupon() {
+
+            const couponInput =
+                document.getElementById(
+                    "couponCode"
+                );
+
+
+            const couponMessage =
+                document.getElementById(
+                    "couponMessage"
+                );
+
+
+            const code =
+                couponInput.value
+                    .trim()
+                    .toUpperCase();
+
+
+
+            if (!code) {
+
+                couponMessage.textContent =
+                    "Please enter a coupon code.";
+
+                couponMessage.className =
+                    "coupon-message coupon-error";
+
+                return;
+
+            }
+
+
+
+            if (
+                selectedPaymentMethod ===
+                "bKash"
+            ) {
+
+                couponMessage.textContent =
+                    "bKash already includes 7% OFF. Coupon is not required.";
+
+                couponMessage.className =
+                    "coupon-message coupon-error";
+
+                return;
+
+            }
+
+            var userKey = "";
+            try {
+                var u = JSON.parse(localStorage.getItem("seiMartUser") || "null");
+                if (u) userKey = u.email || u.phone || u.name || "";
+            } catch (e) {}
+
+            if (typeof validateCouponForCheckout === "function") {
+                var result = validateCouponForCheckout(code, subtotal, userKey);
+                if (!result.ok) {
+                    appliedCoupon = "";
+                    couponDiscount = 0;
+                    couponMessage.textContent = result.message;
+                    couponMessage.className = "coupon-message coupon-error";
+                    updateCheckoutTotal();
+                    return;
+                }
+                appliedCoupon = result.code;
+                couponDiscount = result.discount;
+                couponMessage.textContent = "✓ Coupon applied! You saved ৳" + couponDiscount.toLocaleString();
+                couponMessage.className = "coupon-message coupon-success";
+                updateCheckoutTotal();
+                return;
+            }
+
+            // Fallback SEI7
+            if (code === "SEI7") {
+                appliedCoupon = "SEI7";
+                couponDiscount = Math.round(subtotal * 0.07);
+                couponMessage.textContent = "✓ Coupon applied! You saved ৳" + couponDiscount.toLocaleString();
+                couponMessage.className = "coupon-message coupon-success";
+                updateCheckoutTotal();
+                return;
+            }
+
+            appliedCoupon = "";
+            couponDiscount = 0;
+            couponMessage.textContent = "Invalid coupon code.";
+            couponMessage.className = "coupon-message coupon-error";
+            updateCheckoutTotal();
+
+        }
+
+
+
+        // =========================================
+        // DELIVERY + UPDATE TOTAL
+        // =========================================
+        let deliveryFee = 120;
+        let deliveryCampaign = null;
+
+        function updateDeliveryCharge() {
+            if (typeof calculateDeliveryCharge === "function") {
+                const result = calculateDeliveryCharge(cart, subtotal);
+                deliveryFee = Number(result.fee) || 0;
+                deliveryCampaign = result.campaign || null;
+            } else {
+                deliveryFee = 120;
+                deliveryCampaign = null;
+            }
+            const feeEl = document.getElementById("deliveryFee");
+            const noteEl = document.getElementById("deliveryCampaignNote");
+            if (feeEl) feeEl.textContent = "৳" + deliveryFee.toLocaleString("en-BD");
+            if (noteEl) {
+                if (deliveryCampaign && deliveryFee === 0) {
+                    noteEl.textContent = "FREE delivery: " + String(deliveryCampaign.name || "Campaign");
+                } else {
+                    noteEl.textContent = "";
+                }
+            }
+        }
+
+        function updateCheckoutTotal() {
+            updateDeliveryCharge();
+
+            const finalTotal =
+                Math.max(
+                    0,
+                    subtotal - couponDiscount + deliveryFee
+                );
+
+
+            const discountRow =
+                document.getElementById(
+                    "couponDiscountRow"
+                );
+
+
+            const discountAmount =
+                document.getElementById(
+                    "couponDiscountAmount"
+                );
+
+
+            const discountLabel =
+                document.getElementById(
+                    "discountLabel"
+                );
+
+
+            if (
+                couponDiscount > 0
+            ) {
+
+                discountLabel.textContent =
+                    "Coupon Discount";
+
+
+                discountRow.style.display =
+                    "flex";
+
+
+                discountAmount.textContent =
+                    "-৳" +
+                    couponDiscount.toLocaleString();
+
+            }
+
+            else {
+
+                discountRow.style.display =
+                    "none";
+
+
+                discountAmount.textContent =
+                    "-৳0";
+
+            }
+
+
+            document.getElementById(
+                "total"
+            ).textContent =
+                "৳" +
+                finalTotal.toLocaleString();
+
+        }
+
+
+
+        // =========================================
+        // SHOW CART ITEMS
+        // =========================================
+
+        if (
+            cart.length === 0
+        ) {
+
+            orderItems.innerHTML = `
+
+                <div class="empty-cart">
+
+                    Your cart is empty.
+
+                </div>
+
+            `;
+
+        }
+
+        else {
+
+            orderItems.innerHTML = "";
+
+
+            cart.forEach(
+                function (item) {
+
+                    const price =
+                        Number(
+                            item.price
+                        ) || 0;
+
+
+                    const quantity =
+                        Number(
+                            item.quantity
+                        ) || 1;
+
+
+                    const itemTotal =
+                        price * quantity;
+
+
+                    subtotal +=
+                        itemTotal;
+
+
+                    const itemElement =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    itemElement.className =
+                        "summary-row";
+
+
+                    itemElement.innerHTML = `
+
+                        <div class="summary-product">
+
+                            ${item.name || "Product"}
+
+                            <br>
+
+                            <small>
+                                Qty: ${quantity}
+                            </small>
+
+                        </div>
+
+                        <strong>
+                            ৳${itemTotal.toLocaleString()}
+                        </strong>
+
+                    `;
+
+
+                    orderItems.appendChild(
+                        itemElement
+                    );
+
+                }
+            );
+
+        }
+
+
+
+        // =========================================
+        // SHOW INITIAL TOTAL
+        // =========================================
+
+        document.getElementById(
+            "subtotal"
+        ).textContent =
+            "৳" +
+            subtotal.toLocaleString();
+
+
+        updateDeliveryCharge();
+        updateCheckoutTotal();
+
+
+
+        // =========================================
+        // BKASH ORDER CONFIRMATION
+        // =========================================
+
+        const checkoutParams =
+            new URLSearchParams(
+                window.location.search
+            );
+
+
+        if (
+            checkoutParams.get(
+                "orderConfirmed"
+            ) === "true"
+        ) {
+
+            const lastOrder =
+                JSON.parse(
+                    sessionStorage.getItem(
+                        "seiMartLastOrder"
+                    )
+                );
+
+
+            if (lastOrder) {
+
+                document
+                    .getElementById(
+                        "checkoutSection"
+                    )
+                    .classList
+                    .add(
+                        "hidden"
+                    );
+
+
+                document
+                    .getElementById(
+                        "successSection"
+                    )
+                    .classList
+                    .remove(
+                        "hidden"
+                    );
+
+
+                document
+                    .getElementById(
+                        "successOrderId"
+                    )
+                    .textContent =
+                        lastOrder.orderId || "-";
+
+            }
+
+        }
+
+
+
+        // =========================================
+        // PLACE ORDER
+        // =========================================
+
+        document
+            .getElementById(
+                "checkoutForm"
+            )
+            .addEventListener(
+                "submit",
+                function (event) {
+
+                    event.preventDefault();
+
+
+
+                    // =================================
+                    // EMPTY CART CHECK
+                    // =================================
+
+                    if (
+                        cart.length === 0
+                    ) {
+
+                        alert(
+                            "Your cart is empty."
+                        );
+
+                        return;
+
+                    }
+
+
+
+                    // =================================
+                    // ORDER ID
+                    // =================================
+
+                    const orderId =
+                        "SM" +
+                        Date.now()
+                            .toString()
+                            .slice(-8);
+
+
+
+                    // =================================
+                    // PAYMENT METHOD
+                    // =================================
+
+                    const checkedPayment = document.querySelector('input[name="paymentMethod"]:checked');
+                    const checkoutSettings = (function(){ try{return Object.assign({enableCOD:true,enableBkash:true},JSON.parse(localStorage.getItem("seiMartSettings")||"{}"));}catch(e){return {enableCOD:true,enableBkash:true};} })();
+                    if (!checkedPayment) { alert("Please select an available payment method."); return; }
+                    if (checkedPayment.value === "Cash on Delivery (Steadfast)" && checkoutSettings.enableCOD === false) { alert("Cash on Delivery is currently unavailable."); return; }
+                    if (checkedPayment.value === "bKash" && checkoutSettings.enableBkash === false) { alert("bKash payment is currently unavailable."); return; }
+                    const paymentMethod = checkedPayment.value;
+
+
+
+                    // =================================
+                    // CUSTOMER INFORMATION
+                    // =================================
+
+                    const customer = {
+
+                        name:
+                            document
+                                .getElementById(
+                                    "customerName"
+                                )
+                                .value
+                                .trim(),
+
+
+                        email:
+                            document
+                                .getElementById(
+                                    "customerEmail"
+                                )
+                                .value
+                                .trim(),
+
+
+                        phone:
+                            document
+                                .getElementById(
+                                    "customerPhone"
+                                )
+                                .value
+                                .trim(),
+
+
+                        district:
+                            document
+                                .getElementById(
+                                    "customerDistrict"
+                                )
+                                .value
+                                .trim(),
+
+
+                        area:
+                            document
+                                .getElementById(
+                                    "customerArea"
+                                )
+                                .value
+                                .trim(),
+
+
+                        postCode:
+                            document
+                                .getElementById(
+                                    "customerPostCode"
+                                )
+                                .value
+                                .trim(),
+
+
+                        address:
+                            document
+                                .getElementById(
+                                    "customerAddress"
+                                )
+                                .value
+                                .trim()
+
+                    };
+
+
+
+                    // =================================
+                    // BKASH FLOW
+                    // =================================
+
+                    if (
+                        paymentMethod ===
+                        "bKash"
+                    ) {
+
+                        const bkashDiscount =
+                            Math.round(
+                                subtotal * 0.07
+                            );
+
+
+                        const bkashTotal =
+                            Math.max(
+                                0,
+                                subtotal -
+                                bkashDiscount +
+                                deliveryFee
+                            );
+
+
+                        const bkashPaymentData = {
+
+                            orderId:
+                                orderId,
+
+                            customer:
+                                customer,
+
+                            items:
+                                cart,
+
+                            subtotal:
+                                subtotal,
+
+                            couponCode:
+                                "",
+
+                            couponDiscount:
+                                bkashDiscount,
+
+                            deliveryFee:
+                                deliveryFee,
+
+                            deliveryCampaign:
+                                deliveryCampaign ? deliveryCampaign.name : "",
+
+                            amount:
+                                bkashTotal,
+
+                            paymentMethod:
+                                "bKash"
+
+                        };
+
+
+                        sessionStorage.setItem(
+                            "seiMartBkashPayment",
+                            JSON.stringify(
+                                bkashPaymentData
+                            )
+                        );
+
+
+                        window.location.href =
+                            "bkash-payment.html";
+
+
+                        return;
+
+                    }
+
+
+
+                    // =================================
+                    // COD FINAL TOTAL
+                    // =================================
+
+                    const finalTotal =
+                        Math.max(
+                            0,
+                            subtotal -
+                            couponDiscount +
+                            deliveryFee
+                        );
+
+
+
+                    // =================================
+                    // CASH ON DELIVERY ORDER
+                    // =================================
+
+                    const order = {
+
+                        orderId:
+                            orderId,
+
+                        customer:
+                            customer,
+
+                        items:
+                            cart,
+
+                        subtotal:
+                            subtotal,
+
+                        couponCode:
+                            appliedCoupon,
+
+                        couponDiscount:
+                            couponDiscount,
+
+                        deliveryFee:
+                            deliveryFee,
+
+                        deliveryCampaign:
+                            deliveryCampaign ? deliveryCampaign.name : "",
+
+                        total:
+                            finalTotal,
+
+                        status:
+                            "Order Placed",
+
+                        paymentMethod:
+                            paymentMethod || "Cash on Delivery (Steadfast)",
+
+                        paymentStatus:
+                            "Pending",
+
+                        transactionId:
+                            "",
+
+                        courier:
+                            /steadfast|cash on delivery/i.test(paymentMethod || "") ? "Steadfast" : "",
+
+                        trackingId:
+                            "",
+
+                        consignmentId:
+                            "",
+
+                        date:
+                            new Date()
+                                .toLocaleString(),
+
+                        createdAt:
+                            new Date()
+                                .toISOString(),
+
+                        statusHistory: [{
+                            status: "Order Placed",
+                            at: new Date().toISOString(),
+                            label: new Date().toLocaleString("en-BD"),
+                            note: "Order placed by customer"
+                        }]
+
+                    };
+
+
+
+                    // =================================
+                    // LOAD OLD ORDERS
+                    // =================================
+
+                    let orders =
+                        JSON.parse(
+                            localStorage.getItem(
+                                "seiMartOrders"
+                            )
+                        ) || [];
+
+
+
+                    // =================================
+                    // SAVE COD ORDER
+                    // =================================
+
+                    orders.push(
+                        order
+                    );
+
+
+                    localStorage.setItem(
+                        "seiMartOrders",
+                        JSON.stringify(
+                            orders
+                        )
+                    );
+
+                    // Stock auto-deduct + coupon usage
+                    if (typeof deductStockForOrder === "function") {
+                        deductStockForOrder(order);
+                    }
+                    if (appliedCoupon && typeof recordCouponUsage === "function") {
+                        var uk = "";
+                        try {
+                            var uu = JSON.parse(localStorage.getItem("seiMartUser") || "null");
+                            if (uu) uk = uu.email || uu.phone || "";
+                        } catch (e) {}
+                        recordCouponUsage(appliedCoupon, uk);
+                    // go to success page
+                    setTimeout(function(){
+                        window.location.href = "order-success.html?order=" + encodeURIComponent(orderId);
+                    }, 300);
+
+                    }
+
+                    // =================================
+                    // SAVE LATEST ORDER
+                    // =================================
+
+                    localStorage.setItem(
+                        "seiMartLatestOrder",
+                        JSON.stringify(
+                            order
+                        )
+                    );
+
+
+
+                    // =================================
+                    // SAVE LAST ORDER
+                    // =================================
+
+                    sessionStorage.setItem(
+                        "seiMartLastOrder",
+                        JSON.stringify(
+                            order
+                        )
+                    );
+
+
+
+                    // =================================
+                    // CLEAR CART
+                    // =================================
+
+                    localStorage.removeItem(
+                        "cart"
+                    );
+
+
+
+                    // =================================
+                    // SHOW SUCCESS
+                    // =================================
+
+                    document
+                        .getElementById(
+                            "checkoutSection"
+                        )
+                        .classList
+                        .add(
+                            "hidden"
+                        );
+
+
+                    document
+                        .getElementById(
+                            "successSection"
+                        )
+                        .classList
+                        .remove(
+                            "hidden"
+                        );
+
+
+                    document
+                        .getElementById(
+                            "successOrderId"
+                        )
+                        .textContent =
+                            orderId;
+
+                }
+            );
+
+    </script>
+
+
+    <!-- MAIN JAVASCRIPT -->
+
+    <script src="script.js"></script>
+
+
+<script src="js/pro-enhancements.js"></script>
+<script>
+(function(){
+  function applyCheckoutSettings(){
+    var settings={shippingFee:120,enableCOD:true,enableBkash:true};
+    try{settings=Object.assign(settings,JSON.parse(localStorage.getItem("seiMartSettings")||"{}"));}catch(e){}
+    var cod=document.querySelector('input[name="paymentMethod"][value="Cash on Delivery (Steadfast)"]');
+    var bk=document.querySelector('input[name="paymentMethod"][value="bKash"]');
+    if(cod){var wrap=cod.closest('.payment-option');if(wrap)wrap.style.display=settings.enableCOD===false?'none':'';if(settings.enableCOD===false&&cod.checked){cod.checked=false;if(bk&&settings.enableBkash!==false)bk.checked=true;}}
+    if(bk){var wrap2=bk.closest('.payment-option');if(wrap2)wrap2.style.display=settings.enableBkash===false?'none':'';if(settings.enableBkash===false&&bk.checked){bk.checked=false;if(cod&&settings.enableCOD!==false)cod.checked=true;}}
+    var fee=Number(settings.shippingFee);if(!isFinite(fee)||fee<0)fee=120;window.seiMartDefaultShippingFee=fee;
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',applyCheckoutSettings);else applyCheckoutSettings();
+  window.addEventListener('storage',applyCheckoutSettings);
+})();
+</script>
+</body>
+
+</html>

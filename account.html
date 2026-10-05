@@ -1,0 +1,1675 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>My Account | Sei Mart</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css">
+
+
+    <style>
+
+        /* =========================
+           ACCOUNT PAGE
+        ========================= */
+
+        .account-page {
+            min-height: 80vh;
+            padding: 50px 20px;
+            background: #f8f8f8;
+        }
+
+
+        .account-box {
+            max-width: 900px;
+            margin: auto;
+            background: #ffffff;
+            border: 1px solid #e2e2e2;
+            border-radius: 10px;
+            padding: 35px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+        }
+
+
+        .account-title {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+
+        .account-title h1 {
+            margin-bottom: 8px;
+        }
+
+
+        .account-title p {
+            color: #777777;
+        }
+
+
+        /* =========================
+           PROFILE
+        ========================= */
+
+        .profile-card {
+            border: 1px solid #e2e2e2;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+
+        .profile-card h2 {
+            margin-bottom: 20px;
+        }
+
+
+        .profile-top {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 20px;
+        }
+
+
+        .profile-avatar {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            background: #C9A227;
+            color: #111111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+
+        .profile-welcome {
+            margin: 0;
+            font-size: 21px;
+            font-weight: 700;
+            color: #222222;
+        }
+
+
+        .profile-view,
+        .profile-edit {
+            border-top: 1px solid #eeeeee;
+            padding-top: 15px;
+        }
+
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 13px 0;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+
+        .info-label {
+            font-weight: 700;
+            color: #555555;
+        }
+
+
+        .info-value {
+            color: #222222;
+            text-align: right;
+            word-break: break-word;
+        }
+
+
+        /* =========================
+           FORMS
+        ========================= */
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 5px;
+        }
+
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+
+        .form-group label {
+            margin-bottom: 7px;
+            font-weight: 600;
+            color: #444444;
+        }
+
+
+        .form-group input,
+        .form-group textarea {
+
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px 13px;
+            border: 1px solid #dddddd;
+            border-radius: 7px;
+            font-size: 14px;
+            outline: none;
+            font-family: inherit;
+
+        }
+
+
+        .form-group textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #C9A227;
+        }
+
+
+        .form-group input:disabled,
+        .form-group textarea:disabled {
+            background: #f5f5f5;
+            color: #555555;
+            cursor: not-allowed;
+        }
+
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        .btn {
+            border: none;
+            border-radius: 7px;
+            padding: 11px 18px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+
+        .btn-gold {
+            background: #C9A227;
+            color: #111111;
+        }
+
+
+        .btn-gold:hover {
+            background: #A88418;
+            color: #ffffff;
+        }
+
+
+        .btn-light {
+            background: #eeeeee;
+            color: #222222;
+        }
+
+
+        .btn-light:hover {
+            background: #dddddd;
+        }
+
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+
+        .message {
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+
+        /* =========================
+           ORDER HISTORY
+        ========================= */
+
+        .orders-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+
+        .order-card {
+            border: 1px solid #e2e2e2;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #ffffff;
+        }
+
+
+        .order-summary {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 15px;
+            cursor: pointer;
+            background: #fafafa;
+            transition: 0.2s;
+        }
+
+
+        .order-summary:hover {
+            background: #f3f3f3;
+        }
+
+
+        .order-main {
+            min-width: 0;
+        }
+
+
+        .order-id {
+            font-size: 13px;
+            color: #777777;
+            margin-bottom: 5px;
+        }
+
+
+        .order-item-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: #222222;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+
+        .order-toggle {
+            font-size: 20px;
+            color: #777777;
+            flex-shrink: 0;
+            transition: transform 0.2s;
+        }
+
+
+        .order-card.active .order-toggle {
+            transform: rotate(180deg);
+        }
+
+
+        .order-details {
+            display: none;
+            padding: 16px;
+            border-top: 1px solid #e5e5e5;
+        }
+
+
+        .order-card.active .order-details {
+            display: block;
+        }
+
+
+        .order-detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 20px;
+        }
+
+
+        .detail-row {
+            padding: 8px 0;
+            border-bottom: 1px solid #eeeeee;
+            font-size: 14px;
+            word-break: break-word;
+        }
+
+
+        .detail-row strong {
+            color: #555555;
+        }
+
+
+        /* =========================
+           PAYMENT STATUS
+        ========================= */
+
+        .payment-status {
+            display: inline-block;
+            padding: 4px 9px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+
+        .payment-status.pending {
+            background: #fff4d6;
+            color: #9a6b00;
+        }
+
+
+        .payment-status.submitted {
+            background: #e9f7ef;
+            color: #26734d;
+        }
+
+
+        .payment-status.paid {
+            background: #e9f7ef;
+            color: #26734d;
+        }
+
+
+        .payment-status.failed {
+            background: #fff0f0;
+            color: #c62828;
+        }
+
+
+        /* =========================
+           ORDER STATUS
+        ========================= */
+
+        .order-status {
+            display: inline-block;
+            padding: 4px 9px;
+            border-radius: 20px;
+            background: #f5f0df;
+            color: #6f5a13;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+
+        /* =========================
+           PRODUCTS
+        ========================= */
+
+        .order-products {
+            margin-top: 14px;
+            border-top: 1px solid #eeeeee;
+            padding-top: 12px;
+        }
+
+
+        .order-product {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid #eeeeee;
+            font-size: 14px;
+        }
+
+
+        .order-product:last-child {
+            border-bottom: none;
+        }
+
+
+        .order-product-info {
+            min-width: 0;
+        }
+
+
+        .order-product-name {
+            font-weight: 700;
+            color: #222222;
+        }
+
+
+        .order-product-meta {
+            margin-top: 4px;
+            color: #777777;
+            font-size: 12px;
+        }
+
+
+        .order-product-price {
+            flex-shrink: 0;
+            font-weight: 700;
+            color: #333333;
+        }
+
+
+        /* =========================
+           ORDER FINANCIAL SUMMARY
+        ========================= */
+
+        .order-financial {
+            margin-top: 15px;
+            padding-top: 12px;
+            border-top: 1px solid #eeeeee;
+        }
+
+
+        .financial-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 6px 0;
+            font-size: 14px;
+        }
+
+
+        .financial-row span:first-child {
+            color: #666666;
+        }
+
+
+        .financial-row.discount span:last-child {
+            color: #c62828;
+            font-weight: 700;
+        }
+
+
+        .financial-total {
+            margin-top: 8px;
+            padding-top: 12px;
+            border-top: 2px solid #dddddd;
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            font-size: 17px;
+            font-weight: 800;
+        }
+
+
+        .financial-total span:last-child {
+            color: #3f6f5a;
+        }
+
+
+        /* =========================
+           EMPTY ORDERS
+        ========================= */
+
+        .empty-orders {
+            text-align: center;
+            padding: 25px 10px;
+            color: #777777;
+        }
+
+
+        .empty-orders a {
+            color: #C9A227;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+
+        /* =========================
+           LOGOUT
+        ========================= */
+
+        .logout-section {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+
+        .logout-btn {
+            background: #111111;
+            color: #ffffff;
+            border: none;
+            padding: 11px 28px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+
+        .logout-btn:hover {
+            background: #333333;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 650px) {
+
+            .account-page {
+                padding: 30px 12px;
+            }
+
+
+            .account-box {
+                padding: 22px 16px;
+            }
+
+
+            .form-grid,
+            .order-detail-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            .form-group.full {
+                grid-column: auto;
+            }
+
+
+            .info-row {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+
+            .info-value {
+                text-align: left;
+            }
+
+
+            .profile-top {
+                align-items: flex-start;
+            }
+
+
+            .profile-avatar {
+                width: 65px;
+                height: 65px;
+                font-size: 28px;
+            }
+
+
+            .profile-welcome {
+                font-size: 18px;
+            }
+
+
+            .order-item-name {
+                max-width: 230px;
+            }
+
+
+            .order-product {
+                align-items: flex-start;
+            }
+
+
+            .financial-row,
+            .financial-total {
+                gap: 10px;
+            }
+
+        }
+
+    
+/* ===== Sei Mart Professional Account v4 ===== */
+.account-page{background:linear-gradient(180deg,#f7f6f2 0%,#f3f4f2 100%);padding:42px 18px 70px}
+.account-box{max-width:1180px;border:0;border-radius:20px;padding:0;background:transparent;box-shadow:none}
+.account-title{text-align:left;margin:0 0 22px;padding:28px 30px;background:#111;color:#fff;border-radius:18px;position:relative;overflow:hidden}
+.account-title:after{content:"";position:absolute;width:260px;height:260px;border-radius:50%;right:-100px;top:-140px;border:45px solid rgba(201,162,39,.16)}
+.account-title h1{font-size:30px;margin:0 0 6px;position:relative;z-index:1}.account-title p{color:#cfcfcf;margin:0;position:relative;z-index:1}
+.profile-card{background:#fff;border:1px solid #e7e3d8;border-radius:16px;padding:24px;margin-bottom:18px;box-shadow:0 8px 25px rgba(17,17,17,.045)}
+.section-title{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px}.section-title h2{margin:0;font-size:19px;color:#171717}
+.profile-top{padding:20px;background:#faf9f5;border:1px solid #eee9db;border-radius:14px;margin-bottom:18px}.profile-avatar{position:relative;width:88px;height:88px;border:4px solid #fff;box-shadow:0 5px 18px rgba(0,0,0,.12);background:#111;color:#d4a017;overflow:hidden}.profile-avatar img{width:100%;height:100%;object-fit:cover}.avatar-upload{font-size:12px;color:#a88418;font-weight:700;cursor:pointer;margin-top:7px}.profile-welcome{font-size:22px}.profile-sub{font-size:13px;color:#777;margin-top:4px}
+.account-quick{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0 0 18px}.account-stat{background:#fff;border:1px solid #e7e3d8;border-radius:14px;padding:16px;box-shadow:0 6px 18px rgba(17,17,17,.04)}.account-stat span{font-size:12px;color:#777}.account-stat strong{display:block;font-size:23px;margin-top:5px}.account-stat.gold strong{color:#a88418}.address-book{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.address-card{border:1px solid #e7e3d8;border-radius:13px;padding:18px;position:relative;background:#fff}.address-card.default{border-color:#d4a017;box-shadow:0 0 0 2px rgba(212,160,23,.09)}.address-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-weight:800}.address-badge{font-size:10px;padding:4px 8px;border-radius:999px;background:#f5e8bd;color:#765b00}.address-card p{margin:5px 0;color:#666;font-size:13px;line-height:1.5}.address-actions{display:flex;gap:8px;margin-top:12px}.address-actions button{border:1px solid #ddd;background:#fff;border-radius:7px;padding:7px 10px;font-weight:700;cursor:pointer}.address-actions button:hover{border-color:#c9a227;color:#9a7610}.order-toolbar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:16px}.order-search{display:flex;gap:8px;flex:1;min-width:240px}.order-search input{flex:1;border:1px solid #ddd;border-radius:9px;padding:11px 13px}.order-search button{border:0;background:#111;color:#fff;border-radius:9px;padding:0 16px;font-weight:700;cursor:pointer}.order-tabs{display:flex;gap:7px;flex-wrap:wrap}.order-tab{border:1px solid #ddd;background:#fff;border-radius:999px;padding:8px 12px;font-size:12px;font-weight:700;cursor:pointer}.order-tab.active{background:#111;color:#fff;border-color:#111}.order-tab b{margin-left:4px;color:#a88418}.order-card{border:1px solid #e7e3d8;border-radius:14px;margin-bottom:13px;background:#fff;overflow:hidden;box-shadow:0 5px 15px rgba(0,0,0,.035)}.order-summary{padding:17px 18px;cursor:default;background:#fff}.order-card.active .order-summary{background:#fff}.order-toggle{display:none}.order-details{display:block!important;padding:0 18px 18px;border-top:1px solid #eee}.order-status{display:inline-flex!important;align-items:center;padding:5px 10px;border-radius:999px;background:#eef6ee;color:#2d7134;font-size:11px;font-weight:800}.order-status:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;margin-right:6px}.order-progress{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0 18px}.progress-step{position:relative;text-align:center;font-size:10px;color:#999}.progress-step:before{content:"";display:block;width:20px;height:20px;margin:0 auto 6px;border-radius:50%;border:2px solid #ddd;background:#fff}.progress-step.done{color:#a88418;font-weight:800}.progress-step.done:before{background:#d4a017;border-color:#d4a017;box-shadow:inset 0 0 0 4px #fff}.order-product{padding:10px 0}.order-product-name{font-size:13px}.orders-empty{padding:35px;text-align:center;color:#777;background:#fafafa;border-radius:12px}.account-toast{position:fixed;right:22px;bottom:22px;background:#111;color:#fff;padding:12px 16px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.2);z-index:9999;opacity:0;transform:translateY(12px);transition:.25s}.account-toast.show{opacity:1;transform:none}
+@media(max-width:800px){.account-quick{grid-template-columns:repeat(2,1fr)}.address-book{grid-template-columns:1fr}.order-toolbar{align-items:stretch}.order-search{min-width:100%}.account-title{padding:23px}.account-title h1{font-size:25px}}
+@media(max-width:560px){.account-page{padding:22px 10px 55px}.profile-card{padding:16px}.order-detail-grid{grid-template-columns:1fr!important}.order-progress{grid-template-columns:repeat(4,1fr);gap:3px}.progress-step{font-size:8px}.order-summary{padding:14px}.order-item-name{max-width:180px}}
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         SEI MART NAVBAR
+         ===================================================== -->
+
+    <header>
+
+        <div class="container">
+
+            <div class="header-top">
+
+
+                <a href="index.html" class="logo">
+
+                    <svg
+                        class="navbar-logo-icon"
+                        viewBox="0 0 100 100"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true">
+
+                        <path
+                            d="M18 22h10l7 40h40l10-29H34"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="7"
+                            stroke-linecap="round"
+                            stroke-linejoin="round" />
+
+                        <path
+                            d="M42 44h27"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="7"
+                            stroke-linecap="round" />
+
+                        <circle
+                            cx="40"
+                            cy="76"
+                            r="5"
+                            fill="currentColor" />
+
+                        <circle
+                            cx="72"
+                            cy="76"
+                            r="5"
+                            fill="currentColor" />
+
+                        <path
+                            d="M12 35h13M8 45h15"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="5"
+                            stroke-linecap="round" />
+
+                    </svg>
+
+
+                    <span class="navbar-logo-text">
+                        Sei <strong>Mart</strong>
+                    </span>
+
+                </a>
+
+
+                <div class="search-box">
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search products...">
+
+                    <button type="button">
+                        🔍
+                    </button>
+
+                </div>
+
+
+                <div class="header-actions">
+
+                    <div
+                        id="accountArea"
+                        class="account-link">
+
+                        👤
+
+                        <a href="login.html">
+                            Sign In
+                        </a>
+
+                    </div>
+
+
+                    <a
+                        href="wishlist.html"
+                        class="wishlist-link">
+
+                        ❤️ Wishlist
+
+                    </a>
+
+
+                    <a
+                        href="cart.html"
+                        class="cart-link">
+
+                        🛒 Cart
+
+                        <span
+                            id="cartCount"
+                            class="cart-count">
+
+                            0
+
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="navbar">
+
+            <div class="container">
+
+                <ul class="nav-menu">
+
+
+                    <li class="category-menu">
+
+                        <button
+                            type="button"
+                            class="category-dropdown">
+
+                            ☰ All Categories
+
+                        </button>
+
+
+                        <div class="category-list">
+
+                            <a href="products.html?category=electronics">
+                                Electronics
+                            </a>
+
+                            <a href="products.html?category=mobile">
+                                Mobile Accessories
+                            </a>
+
+                            <a href="products.html?category=fashion">
+                                Fashion
+                            </a>
+
+                            <a href="products.html?category=shoes">
+                                Shoes
+                            </a>
+
+                            <a href="products.html?category=cosmetics">
+                                Cosmetics
+                            </a>
+
+                            <a href="products.html?category=perfume">
+                                Perfume
+                            </a>
+
+                            <a href="products.html?category=watches">
+                                Watches
+                            </a>
+
+                            <a href="products.html?category=home">
+                                Home & Living
+                            </a>
+
+                            <a href="products.html?category=jewellery">
+                                Jewellery
+                            </a>
+
+                            <a href="products.html?category=beauty">
+                                Beauty & Personal Care
+                            </a>
+
+                        </div>
+
+                    </li>
+
+
+                    <li>
+                        <a href="index.html">
+                            Home
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="products.html">
+                            Products
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="products.html?filter=deals">
+                            Today's Deals
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="products.html?filter=new">
+                            New Arrivals
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="order-tracking.html">
+                            Order Tracking
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="help.html">
+                            Help & Support
+                        </a>
+                    </li>
+
+
+                    <li>
+                        <a href="contact.html">
+                            Contact
+                        </a>
+                    </li>
+
+
+                </ul>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         ACCOUNT PAGE
+         ===================================================== -->
+
+    <div class="account-page">
+
+
+        <div class="account-box">
+
+
+            <!-- PAGE TITLE -->
+
+            <div class="account-title">
+
+                <h1>
+                    My Account
+                </h1>
+
+                <p>
+                    Manage your profile, address and orders
+                </p>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 PROFILE
+                 ================================================= -->
+
+            <div class="profile-card">
+
+
+                <div class="section-title">
+
+                    <h2>
+                        Profile Information
+                    </h2>
+
+
+                    <button
+                        type="button"
+                        class="btn btn-gold"
+                        id="editProfileBtn">
+
+                        ✏️ Edit Profile
+
+                    </button>
+
+                </div>
+
+
+                <div class="profile-top">
+
+                    <div><div class="profile-avatar" id="profileAvatar">R</div><label class="avatar-upload" for="avatarInput">Change photo</label><input id="avatarInput" type="file" accept="image/*" style="display:none"></div>
+
+
+                    <p
+                        class="profile-welcome"
+                        id="profileWelcome">
+
+                        Welcome to Sei Mart
+
+                    </p>
+
+                </div>
+
+
+                <!-- PROFILE VIEW -->
+
+                <div
+                    class="profile-view"
+                    id="profileView">
+
+                    <div class="info-row">
+
+                        <span class="info-label">
+                            Name
+                        </span>
+
+                        <span
+                            class="info-value"
+                            id="accountName">
+
+                            -
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span class="info-label">
+                            Email
+                        </span>
+
+                        <span
+                            class="info-value"
+                            id="accountEmail">
+
+                            -
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PROFILE EDIT -->
+
+                <div
+                    class="profile-edit"
+                    id="profileEdit"
+                    style="display:none;">
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label>
+                                Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="editProfileName">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Email
+                            </label>
+
+                            <input
+                                type="email"
+                                id="editProfileEmail">
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="action-buttons">
+
+                        <button
+                            type="button"
+                            class="btn btn-gold"
+                            id="saveProfileBtn">
+
+                            Save Changes
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="btn btn-light"
+                            id="cancelProfileBtn">
+
+                            Cancel
+
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        class="message"
+                        id="profileMessage">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ADDRESS BOOK -->
+            <div class="profile-card">
+                <div class="section-title"><h2>Address Book</h2><button type="button" class="btn btn-gold" id="addAddressBtn">＋ Add Address</button></div>
+                <div class="address-book" id="addressBook"></div>
+                <div id="addressEditor" style="display:none;margin-top:16px;border-top:1px solid #eee;padding-top:18px;">
+                    <div class="form-grid">
+                        <div class="form-group"><label>Address Label</label><input id="addrLabel" placeholder="Home / Office"></div>
+                        <div class="form-group"><label>Phone Number</label><input id="addrPhone"></div>
+                        <div class="form-group"><label>District</label><input id="addrDistrict"></div>
+                        <div class="form-group"><label>Area / Upazila</label><input id="addrArea"></div>
+                        <div class="form-group"><label>Post Code</label><input id="addrPostCode"></div>
+                        <div class="form-group full"><label>Full Address</label><textarea id="addrFull"></textarea></div>
+                    </div>
+                    <div class="action-buttons"><button type="button" class="btn btn-gold" id="saveAddressBtn">Save Address</button><button type="button" class="btn btn-light" id="cancelAddressBookBtn">Cancel</button></div>
+                </div>
+            </div>
+
+            <!-- ORDER HISTORY -->
+            <div class="profile-card">
+                <div class="section-title"><div><h2>My Orders</h2><small style="color:#777">Track every order from purchase to delivery</small></div></div>
+                <div class="account-quick" id="orderStats">
+                    <div class="account-stat gold"><span>Ordered</span><strong id="statOrdered">0</strong></div><div class="account-stat"><span>Shipped</span><strong id="statShipped">0</strong></div><div class="account-stat"><span>Delivered</span><strong id="statDelivered">0</strong></div><div class="account-stat"><span>Cancelled</span><strong id="statCancelled">0</strong></div>
+                </div>
+                <div class="order-toolbar">
+                    <div class="order-search"><input id="orderSearchInput" type="search" placeholder="Search by order ID or product name..."><button type="button" id="orderSearchBtn">Search</button></div>
+                    <div class="order-tabs" id="orderTabs"><button class="order-tab active" data-status="all">All <b>0</b></button><button class="order-tab" data-status="ordered">Ordered <b>0</b></button><button class="order-tab" data-status="shipped">Shipped <b>0</b></button><button class="order-tab" data-status="delivered">Delivered <b>0</b></button><button class="order-tab" data-status="cancelled">Cancelled <b>0</b></button></div>
+                </div>
+                <div class="orders-list" id="ordersList"></div>
+            </div>
+
+            <!-- =================================================
+                 LOGOUT
+                 ================================================= -->
+
+            <div class="logout-section">
+
+                <button
+                    type="button"
+                    class="logout-btn"
+                    id="logoutBtn">
+
+                    Logout
+
+                </button>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         SCRIPT.JS
+         ===================================================== -->
+
+    <script src="script.js">
+function requestReturn(orderId) {
+    window.location.href = "return-request.html?order=" + encodeURIComponent(orderId);
+}
+</script>
+
+
+    <script>
+
+        /* =====================================================
+           LOGIN CHECK
+           ===================================================== */
+
+        const loggedIn =
+            localStorage.getItem(
+                "seiMartLoggedIn"
+            );
+
+
+        const userData =
+            localStorage.getItem(
+                "seiMartUser"
+            );
+
+
+        if (
+            loggedIn !== "true" ||
+            !userData
+        ) {
+
+            window.location.href =
+                "login.html";
+
+        }
+
+
+        let user = null;
+
+
+        try {
+
+            user =
+                JSON.parse(
+                    userData
+                );
+
+        } catch (error) {
+
+            user = null;
+
+        }
+
+
+        if (!user) {
+
+            localStorage.removeItem(
+                "seiMartLoggedIn"
+            );
+
+            localStorage.removeItem(
+                "seiMartUser"
+            );
+
+            window.location.href =
+                "login.html";
+
+        }
+
+
+
+        /* =====================================================
+           PROFILE
+           ===================================================== */
+
+        const accountName =
+            document.getElementById(
+                "accountName"
+            );
+
+
+        const accountEmail =
+            document.getElementById(
+                "accountEmail"
+            );
+
+
+        const profileAvatar =
+            document.getElementById(
+                "profileAvatar"
+            );
+
+
+        const profileWelcome =
+            document.getElementById(
+                "profileWelcome"
+            );
+
+
+        const profileView =
+            document.getElementById(
+                "profileView"
+            );
+
+
+        const profileEdit =
+            document.getElementById(
+                "profileEdit"
+            );
+
+
+        const editProfileBtn =
+            document.getElementById(
+                "editProfileBtn"
+            );
+
+
+        const saveProfileBtn =
+            document.getElementById(
+                "saveProfileBtn"
+            );
+
+
+        const cancelProfileBtn =
+            document.getElementById(
+                "cancelProfileBtn"
+            );
+
+
+        const editProfileName =
+            document.getElementById(
+                "editProfileName"
+            );
+
+
+        const editProfileEmail =
+            document.getElementById(
+                "editProfileEmail"
+            );
+
+
+        const profileMessage =
+            document.getElementById(
+                "profileMessage"
+            );
+
+
+        function loadProfile() {
+
+            accountName.textContent =
+                user.name ||
+                "Customer";
+
+
+            accountEmail.textContent =
+                user.email ||
+                "";
+
+
+            profileWelcome.textContent =
+                "Welcome, " +
+                (
+                    user.name ||
+                    "Customer"
+                ) +
+                "!";
+
+
+            const firstLetter =
+                (
+                    user.name ||
+                    "C"
+                )
+                .trim()
+                .charAt(0)
+                .toUpperCase();
+
+
+            if(user.avatar){ profileAvatar.innerHTML = '<img src="'+user.avatar.replace(/"/g,'&quot;')+'" alt="Profile photo">'; } else { profileAvatar.textContent = firstLetter; }
+
+        }
+
+
+        loadProfile();
+
+
+
+        /* EDIT PROFILE */
+
+        editProfileBtn.addEventListener(
+            "click",
+            function () {
+
+                editProfileName.value =
+                    user.name ||
+                    "";
+
+
+                editProfileEmail.value =
+                    user.email ||
+                    "";
+
+
+                profileMessage.textContent =
+                    "";
+
+
+                profileView.style.display =
+                    "none";
+
+
+                profileEdit.style.display =
+                    "block";
+
+
+                editProfileBtn.style.display =
+                    "none";
+
+            }
+        );
+
+
+
+        /* CANCEL PROFILE EDIT */
+
+        cancelProfileBtn.addEventListener(
+            "click",
+            function () {
+
+                profileView.style.display =
+                    "block";
+
+
+                profileEdit.style.display =
+                    "none";
+
+
+                editProfileBtn.style.display =
+                    "inline-block";
+
+
+                profileMessage.textContent =
+                    "";
+
+            }
+        );
+
+
+
+        /* SAVE PROFILE */
+
+        saveProfileBtn.addEventListener(
+            "click",
+            function () {
+
+                const newName =
+                    editProfileName.value.trim();
+
+
+                const newEmail =
+                    editProfileEmail.value.trim();
+
+
+                if (!newName) {
+
+                    profileMessage.textContent =
+                        "Please enter your name.";
+
+                    return;
+
+                }
+
+
+                if (!newEmail) {
+
+                    profileMessage.textContent =
+                        "Please enter your email.";
+
+                    return;
+
+                }
+
+
+                user.name =
+                    newName;
+
+
+                user.email =
+                    newEmail;
+
+
+                localStorage.setItem(
+                    "seiMartUser",
+                    JSON.stringify(user)
+                );
+
+
+                loadProfile();
+
+
+                profileView.style.display =
+                    "block";
+
+
+                profileEdit.style.display =
+                    "none";
+
+
+                editProfileBtn.style.display =
+                    "inline-block";
+
+
+                profileMessage.textContent =
+                    "Profile updated successfully.";
+
+            }
+        );
+
+
+
+        /* ================= ADDRESS BOOK + AVATAR ================= */
+        const addressBookEl=document.getElementById('addressBook'), addressEditor=document.getElementById('addressEditor');
+        let editingAddressIndex=-1;
+        function getAddresses(){let a=[];try{a=JSON.parse(localStorage.getItem('seiMartAddressBook')||'[]')}catch(e){} if(!a.length){const old=localStorage.getItem('seiMartShippingAddress');if(old){try{const x=JSON.parse(old);a=[{label:'Home',...x,default:true}]}catch(e){}}} return Array.isArray(a)?a:[]}
+        function saveAddresses(a){localStorage.setItem('seiMartAddressBook',JSON.stringify(a));}
+        function renderAddressBook(){const a=getAddresses();addressBookEl.innerHTML=a.map((x,i)=>`<div class="address-card ${x.default||i===0?'default':''}"><div class="address-label"><span>📍 ${escapeHtml(x.label||'Address '+(i+1))}</span>${x.default||i===0?'<span class="address-badge">DEFAULT</span>':''}</div><p><strong>${escapeHtml(user.name||'Customer')}</strong> · ${escapeHtml(x.phone||'')}</p><p>${escapeHtml(x.address||'')}, ${escapeHtml(x.area||'')}, ${escapeHtml(x.district||'')} ${escapeHtml(x.postCode||'')}</p><div class="address-actions"><button type="button" onclick="editAddressBook(${i})">Edit</button><button type="button" onclick="setDefaultAddress(${i})">Set Default</button>${a.length>1?`<button type="button" onclick="deleteAddressBook(${i})">Delete</button>`:''}</div></div>`).join('')||'<div class="orders-empty" style="grid-column:1/-1">No saved addresses. Add your first delivery address.</div>';}
+        function clearAddressEditor(){['addrLabel','addrPhone','addrDistrict','addrArea','addrPostCode','addrFull'].forEach(id=>document.getElementById(id).value='');editingAddressIndex=-1;addressEditor.style.display='none';}
+        document.getElementById('addAddressBtn').addEventListener('click',()=>{clearAddressEditor();addressEditor.style.display='block';});
+        document.getElementById('cancelAddressBookBtn').addEventListener('click',clearAddressEditor);
+        document.getElementById('saveAddressBtn').addEventListener('click',()=>{const a=getAddresses();const x={label:document.getElementById('addrLabel').value.trim()||'Home',phone:document.getElementById('addrPhone').value.trim(),district:document.getElementById('addrDistrict').value.trim(),area:document.getElementById('addrArea').value.trim(),postCode:document.getElementById('addrPostCode').value.trim(),address:document.getElementById('addrFull').value.trim(),default:a.length===0};if(!x.phone||!x.address||!x.district){alert('Please complete phone, district and full address.');return}if(editingAddressIndex>=0)a[editingAddressIndex]={...a[editingAddressIndex],...x};else a.push(x);saveAddresses(a);renderAddressBook();clearAddressEditor();localStorage.setItem('seiMartShippingAddress',JSON.stringify(x));});
+        window.editAddressBook=function(i){const x=getAddresses()[i];if(!x)return;editingAddressIndex=i;[['addrLabel',x.label],['addrPhone',x.phone],['addrDistrict',x.district],['addrArea',x.area],['addrPostCode',x.postCode],['addrFull',x.address]].forEach(([id,v])=>document.getElementById(id).value=v||'');addressEditor.style.display='block';};
+        window.setDefaultAddress=function(i){const a=getAddresses().map((x,n)=>({...x,default:n===i}));saveAddresses(a);localStorage.setItem('seiMartShippingAddress',JSON.stringify(a[i]));renderAddressBook();};
+        window.deleteAddressBook=function(i){const a=getAddresses();a.splice(i,1);if(a.length&&!a.some(x=>x.default))a[0].default=true;saveAddresses(a);renderAddressBook();}; renderAddressBook();
+        const avatarInput=document.getElementById('avatarInput'); avatarInput.addEventListener('change',()=>{const f=avatarInput.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{user.avatar=r.result;localStorage.setItem('seiMartUser',JSON.stringify(user));loadProfile();};r.readAsDataURL(f);});
+        const oldAvatar=user.avatar;if(oldAvatar){profileAvatar.innerHTML=`<img src="${oldAvatar}" alt="Profile photo">`;}
+
+        /* =====================================================
+           ORDER HISTORY
+           ===================================================== */
+
+        const ordersList =
+            document.getElementById(
+                "ordersList"
+            );
+
+
+
+        /* =====================================================
+           PAYMENT STATUS CLASS
+           ===================================================== */
+
+        function getPaymentStatusClass(
+            paymentStatus
+        ) {
+
+            const value =
+                String(
+                    paymentStatus ||
+                    ""
+                )
+                .toLowerCase();
+
+
+            if (
+                value.includes("submitted") ||
+                value.includes("paid") ||
+                value.includes("success")
+            ) {
+
+                return "submitted";
+
+            }
+
+
+            if (
+                value.includes("failed") ||
+                value.includes("cancel")
+            ) {
+
+                return "failed";
+
+            }
+
+
+            return "pending";
+
+        }
+
+
+
+        /* =====================================================
+           LOAD ORDERS
+           ===================================================== */
+
+        let allAccountOrders = [];
+        let activeOrderFilter = "all";
+        function normalizeOrderStatus(status){
+            const v=String(status||"processing").toLowerCase();
+            if(v.includes("cancel")) return "cancelled";
+            if(v.includes("deliver")) return "delivered";
+            if(v.includes("ship")) return "shipped";
+            return "ordered";
+        }
+        function escapeHtml(v){return String(v==null?"":v).replace(/[&<>'"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[m]));}
+        function buildProgress(status){
+            const s=normalizeOrderStatus(status); const steps=["Ordered","Shipped","Delivered","Completed"];
+            let idx=s==='ordered'?0:s==='shipped'?1:s==='delivered'?2:3;
+            if(s==='cancelled') return '<div style="margin:14px 0;color:#c0392b;font-weight:700">● Order Cancelled</div>';
+            return '<div class="order-progress">'+steps.map((x,i)=>`<div class="progress-step ${i<=idx?'done':''}">${x}</div>`).join('')+'</div>';
+        }
+        function renderOrders(){
+            const q=(document.getElementById('orderSearchInput').value||'').trim().toLowerCase();
+            const list=document.getElementById('ordersList'); list.innerHTML='';
+            const filtered=allAccountOrders.filter(o=>{
+                const status=normalizeOrderStatus(o.status); const items=o.items||o.cart||[];
+                const hay=[o.orderId,o.id,o.status,...items.map(x=>x.name)].join(' ').toLowerCase();
+                return (activeOrderFilter==='all'||status===activeOrderFilter)&&(!q||hay.includes(q));
+            });
+            if(!filtered.length){list.innerHTML='<div class="orders-empty"><div style="font-size:30px">🛍️</div><p>No matching orders found.</p><a href="products.html">Continue Shopping →</a></div>';return;}
+            filtered.forEach(order=>{
+                const items=order.items||order.cart||[]; const id=order.orderId||order.id||'N/A'; const status=order.status||'Processing';
+                const date=order.date||order.orderDate||order.createdAt||'N/A'; const total=Number(order.total||order.grandTotal||order.totalAmount||0);
+                const payment=order.paymentMethod||'Cash on Delivery'; const pstatus=order.paymentStatus||(payment==='Cash on Delivery'?'Pending':'Payment Submitted');
+                const card=document.createElement('div'); card.className='order-card active'; card.setAttribute('data-order-id', id);
+                const products=Array.isArray(items)&&items.length?items.map(item=>`<div class="order-product"><div class="order-product-info"><div class="order-product-name">${escapeHtml(item.name||'Product')}</div><div class="order-product-meta">Qty: ${Number(item.quantity||item.qty||1)}</div></div><div class="order-product-price">৳${(Number(item.price||0)*Number(item.quantity||item.qty||1)).toFixed(2)}</div></div>`).join(''):'<div class="orders-empty">No item details available.</div>';
+                card.innerHTML=`<div class="order-summary"><div class="order-main"><div class="order-id">Order ID: <strong>${escapeHtml(id)}</strong></div><div class="order-item-name">${items.length?escapeHtml(items[0].name||'Order')+(items.length>1?' +'+(items.length-1)+' more':''):'Order'}</div></div><div style="text-align:right"><strong>৳${total.toFixed(2)}</strong><div style="font-size:11px;color:#777;margin-top:4px">${escapeHtml(date)}</div></div></div><div class="order-details"><div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap"><span class="order-status">${escapeHtml(status)}</span><span style="font-size:12px;color:#777">${escapeHtml(payment)} · ${escapeHtml(pstatus)}</span></div>${buildProgress(status)}<div class="order-detail-grid"><div class="detail-row"><strong>Order ID:</strong> ${escapeHtml(id)}</div><div class="detail-row"><strong>Date:</strong> ${escapeHtml(date)}</div><div class="detail-row"><strong>Payment:</strong> ${escapeHtml(payment)}</div><div class="detail-row"><strong>Payment Status:</strong> ${escapeHtml(pstatus)}</div><div class="detail-row" style="grid-column:1/-1"><strong>Delivery Address:</strong> ${escapeHtml(order.address||order.shippingAddress||'Address saved with order')}</div></div><div class="order-products">${products}</div><div class="financial-total"><span>Total Amount</span><span>৳${total.toFixed(2)}</span></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px"><a class="btn btn-gold" href="order-tracking.html?id=${encodeURIComponent(id)}">Track Order</a></div></div>`;
+                list.appendChild(card);
+            });
+            if (typeof window.refreshReturnButtons === "function") setTimeout(window.refreshReturnButtons, 0);
+        }
+        function loadOrders(){
+            let orders=[]; try{orders=JSON.parse(localStorage.getItem('seiMartOrders')||'[]')}catch(e){orders=[]}
+            allAccountOrders=Array.isArray(orders)?orders.slice().reverse():[]; window.allAccountOrders=allAccountOrders;
+            const counts={all:allAccountOrders.length,ordered:0,shipped:0,delivered:0,cancelled:0}; allAccountOrders.forEach(o=>counts[normalizeOrderStatus(o.status)]++);
+            document.getElementById('statOrdered').textContent=counts.ordered; document.getElementById('statShipped').textContent=counts.shipped; document.getElementById('statDelivered').textContent=counts.delivered; document.getElementById('statCancelled').textContent=counts.cancelled;
+            document.querySelectorAll('#orderTabs .order-tab').forEach(btn=>{const st=btn.dataset.status; btn.querySelector('b').textContent=counts[st]||0;}); renderOrders();
+        }
+        document.querySelectorAll('#orderTabs .order-tab').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('#orderTabs .order-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');activeOrderFilter=btn.dataset.status;renderOrders();}));
+        document.getElementById('orderSearchBtn').addEventListener('click',renderOrders); document.getElementById('orderSearchInput').addEventListener('input',renderOrders); loadOrders();
+
+
+
+        /* =====================================================
+           LOGOUT
+           ===================================================== */
+
+        document
+            .getElementById(
+                "logoutBtn"
+            )
+            .addEventListener(
+                "click",
+                function () {
+
+                    localStorage.removeItem(
+                        "seiMartLoggedIn"
+                    );
+
+
+                    localStorage.removeItem(
+                        "seiMartUser"
+                    );
+
+
+                    window.location.href =
+                        "index.html";
+
+                }
+            );
+
+    </script>
+
+
+<script src="js/pro-enhancements.js"></script>
+
+<script>
+/* Return / Refund: show only after Delivered, with a 7-day window. */
+(function(){
+  function getReturns(){try{return JSON.parse(localStorage.getItem("seiMartReturns")||"[]");}catch(e){return[];}}
+  function statusIsDelivered(order){
+    var v=String(order&&order.status||"").trim().toLowerCase();
+    return v === "delivered" || v.includes("delivered");
+  }
+  function getDeliveredAt(order){
+    if(!order) return "";
+    if(order.deliveredAt) return order.deliveredAt;
+    if(Array.isArray(order.statusHistory)){
+      var h=order.statusHistory.slice().reverse().find(function(x){return String(x&&x.status||"").trim().toLowerCase().includes("delivered");});
+      if(h) return h.at || h.date || "";
+    }
+    return order.statusUpdatedAt || order.updatedAt || "";
+  }
+  function eligible(order){
+    if(!statusIsDelivered(order)) return false;
+    var at=getDeliveredAt(order);
+    /* Older locally stored delivered orders may not have deliveredAt. During migration,
+       treat an already-delivered order as delivered now so the feature is testable. */
+    if(!at){
+      at=new Date().toISOString();
+      try{
+        var orders=JSON.parse(localStorage.getItem("seiMartOrders")||"[]");
+        var i=orders.findIndex(function(x){return String(x.orderId||x.id)===String(order.orderId||order.id);});
+        if(i>=0){orders[i].deliveredAt=at;orders[i].statusUpdatedAt=at;localStorage.setItem("seiMartOrders",JSON.stringify(orders));order.deliveredAt=at;}
+      }catch(e){}
+    }
+    var t=new Date(at).getTime();
+    if(!Number.isFinite(t)) return false;
+    return Date.now()>=t && (Date.now()-t)<=7*24*60*60*1000;
+  }
+  function addButtons(){
+    document.querySelectorAll(".order-card[data-order-id]").forEach(function(card){
+      var old=card.querySelector(".sei-return-actions"); if(old) old.remove();
+      var oid=card.getAttribute("data-order-id"); if(!oid) return;
+      var order=(window.allAccountOrders||[]).find(function(o){return String(o.orderId||o.id)===String(oid);});
+      if(!order || !eligible(order) || String(order.status||"").toLowerCase().includes("cancel")) return;
+      var existing=getReturns().find(function(r){return String(r.orderId)===String(oid)&&!['Rejected','Refunded'].includes(String(r.status));});
+      var wrap=document.createElement("div");
+      wrap.className="sei-return-actions";
+      wrap.style.cssText="margin-top:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;";
+      var a=document.createElement("a");
+      a.href=existing?"return-tracking.html?id="+encodeURIComponent(existing.id):"return-request.html?order="+encodeURIComponent(oid);
+      a.textContent=existing?"Track Return / Refund":"Return / Refund";
+      a.style.cssText="display:inline-flex;align-items:center;background:#3f6f5a;color:#fff;font-weight:700;font-size:12px;padding:9px 14px;border-radius:8px;text-decoration:none;";
+      wrap.appendChild(a);
+      var details=card.querySelector(".order-details"); (details||card).appendChild(wrap);
+    });
+  }
+  window.refreshReturnButtons=addButtons;
+  document.addEventListener("DOMContentLoaded",function(){setTimeout(addButtons,200);});
+  setTimeout(addButtons,500);
+})();
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Order Details | Sei Mart</title>
+<link rel="stylesheet" href="css/delivery.css">
+</head>
+<body data-delivery-page="details">
+<div class="delivery-layout">
+  <aside class="delivery-sidebar">
+    <div class="side-brand">Sei <span>Mart</span><small>Delivery Portal</small></div>
+    <nav><a href="dashboard.html">▣ Dashboard</a><a class="active" href="orders.html">📦 Assigned Orders</a></nav>
+    <button class="logout-btn" onclick="deliveryLogout()">↪ Logout</button>
+  </aside>
+  <main class="delivery-main">
+    <header class="delivery-header"><div><h1>Order Details</h1><p id="detailSubtitle">Assigned delivery order</p></div><div class="staff-chip" id="staffChip"></div></header>
+    <div id="orderDetails"></div>
+  </main>
+</div>
+<script src="js/delivery-common.js"></script><script src="js/delivery-order-details.js"></script>
+</body>
+</html>

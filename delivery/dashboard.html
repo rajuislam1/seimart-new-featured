@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Delivery Dashboard | Sei Mart</title>
+<link rel="stylesheet" href="css/delivery.css">
+</head>
+<body data-delivery-page="dashboard">
+<div class="delivery-layout">
+  <aside class="delivery-sidebar">
+    <div class="side-brand">Sei <span>Mart</span><small>Delivery Portal</small></div>
+    <nav>
+      <a class="active" href="dashboard.html">▣ Dashboard</a>
+      <a href="orders.html">📦 Assigned Orders</a>
+    </nav>
+    <button class="logout-btn" onclick="deliveryLogout()">↪ Logout</button>
+  </aside>
+  <main class="delivery-main">
+    <header class="delivery-header"><div><h1>Delivery Dashboard</h1><p id="welcomeText">Welcome</p></div><div class="staff-chip" id="staffChip"></div></header>
+    <section class="stats-grid">
+      <div class="stat-card"><span>Assigned</span><strong id="assignedCount">0</strong></div>
+      <div class="stat-card"><span>Processing</span><strong id="processingCount">0</strong></div>
+      <div class="stat-card"><span>Out for Delivery</span><strong id="outCount">0</strong></div>
+      <div class="stat-card"><span>Delivered</span><strong id="deliveredCount">0</strong></div>
+    </section>
+    <section class="panel"><div class="panel-head"><div><h2>My Assigned Orders</h2><p>Only orders assigned to your account are shown.</p></div><a class="small-btn" href="orders.html">View All</a></div><div id="recentOrders" class="order-list"></div></section>
+  </main>
+</div>
+<script src="js/delivery-common.js"></script><script src="js/delivery-dashboard.js"></script>
+</body>
+</html>

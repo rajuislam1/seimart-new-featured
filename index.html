@@ -1,0 +1,2078 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sei Mart - Shop Smart</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* =================================
+           SPECIAL HERO
+        ================================= */
+
+        .special-hero {
+            background: linear-gradient(135deg, #3f6f5a, #315744);
+            color: white;
+            min-height: 520px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+        }
+        .special-hero.has-image::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(63,111,90,0.92), rgba(49,87,68,0.88));
+            z-index: 0;
+        }
+        .special-hero .hero-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-wrapper {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .hero-text small {
+            color: #e8c65a;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .hero-text h1 {
+            font-size: 52px;
+            line-height: 1.1;
+            margin: 12px 0;
+        }
+
+        .hero-text h1 span {
+            color: #e8c65a;
+        }
+
+        .hero-text h2 {
+            font-size: 24px;
+            font-weight: 400;
+            margin-bottom: 12px;
+        }
+
+        .hero-text p {
+            max-width: 540px;
+            color: #edf4f0;
+            font-size: 16px;
+            margin-bottom: 25px;
+        }
+
+        .hero-shop-btn {
+            display: inline-block;
+            background: #d4a017;
+            color: white;
+            padding: 13px 28px;
+            border-radius: 6px;
+            font-weight: 700;
+            transition: .3s;
+        }
+
+        .hero-shop-btn:hover {
+            background: white;
+            color: #3f6f5a;
+        }
+
+        /* Hero Product Area */
+
+        .hero-products {
+            position: relative;
+            min-height: 390px;
+        }
+
+        .hero-logo {
+            position: absolute;
+            top: 5px;
+            right: 25px;
+            width: 125px;
+            height: 125px;
+            border-radius: 50%;
+            background: white;
+            border: 5px solid #d4a017;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #3f6f5a;
+            font-size: 19px;
+            font-weight: 900;
+            line-height: 1.1;
+            box-shadow: 0 10px 30px rgba(0,0,0,.18);
+            z-index: 5;
+        }
+
+        .hero-product {
+            position: absolute;
+            background: white;
+            color: #3f6f5a;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,.20);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: .3s;
+        }
+
+        .hero-product:hover {
+            transform: translateY(-8px) rotate(0deg) !important;
+        }
+
+        .hero-product .product-icon {
+            font-size: 55px;
+            margin-bottom: 7px;
+        }
+
+        .hero-product strong {
+            font-size: 14px;
+        }
+
+        .hero-product small {
+            color: #6b756f;
+            font-size: 11px;
+        }
+
+        .product-one {
+            width: 180px;
+            height: 190px;
+            top: 65px;
+            left: 15px;
+            transform: rotate(-7deg);
+        }
+
+        .product-two {
+            width: 175px;
+            height: 185px;
+            top: 175px;
+            left: 175px;
+            transform: rotate(5deg);
+        }
+
+        .product-three {
+            width: 175px;
+            height: 185px;
+            bottom: 5px;
+            right: 10px;
+            transform: rotate(-5deg);
+        }
+
+        .product-four {
+            width: 150px;
+            height: 155px;
+            top: 225px;
+            right: 150px;
+            transform: rotate(8deg);
+        }
+
+        /* =================================
+           CATEGORY SECTION
+        ================================= */
+
+        .home-categories {
+            padding: 65px 0;
+            background: #f7f9f8;
+        }
+
+        .home-section-title {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .home-section-title h2 {
+            color: #3f6f5a;
+            font-size: 30px;
+            margin-bottom: 7px;
+        }
+
+        .home-section-title p {
+            color: #6b756f;
+        }
+
+        .home-category-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .home-category-card {
+            background: white;
+            border: 1px solid #d9e3de;
+            border-radius: 10px;
+            padding: 25px 15px;
+            text-align: center;
+            transition: .3s;
+        }
+
+        .home-category-card:hover {
+            transform: translateY(-6px);
+            border-color: #3f6f5a;
+            box-shadow: 0 8px 20px rgba(63,111,90,.12);
+        }
+
+        .home-category-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .home-category-card h3 {
+            color: #3f6f5a;
+            font-size: 17px;
+        }
+
+        /* =================================
+           FEATURED PRODUCTS
+        ================================= */
+
+        .featured-section {
+            padding: 65px 0;
+            background: white;
+        }
+
+        #featuredProducts {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 22px;
+        }
+
+        /* =================================
+           WHY SEI MART
+        ================================= */
+
+        .why-section {
+            padding: 65px 0;
+            background: #f7f9f8;
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .why-card {
+            background: white;
+            border: 1px solid #d9e3de;
+            border-radius: 10px;
+            padding: 25px 15px;
+            text-align: center;
+        }
+
+        .why-card .icon {
+            font-size: 35px;
+            margin-bottom: 10px;
+        }
+
+        .why-card h3 {
+            color: #3f6f5a;
+            margin-bottom: 5px;
+        }
+
+        .why-card p {
+            color: #6b756f;
+            font-size: 13px;
+        }
+
+        /* =================================
+           RESPONSIVE HERO
+        ================================= */
+
+        @media (max-width: 900px) {
+
+            .hero-wrapper {
+                grid-template-columns: 1fr;
+                padding: 60px 0;
+            }
+
+            .hero-text {
+                text-align: center;
+            }
+
+            .hero-text p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-products {
+                max-width: 600px;
+                width: 100%;
+                margin: auto;
+            }
+
+            .home-category-grid,
+            #featuredProducts,
+            .why-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .special-hero {
+                min-height: auto;
+            }
+
+            .hero-text h1 {
+                font-size: 38px;
+            }
+
+            .hero-text h2 {
+                font-size: 20px;
+            }
+
+            .hero-products {
+                transform: scale(.82);
+                margin-top: -25px;
+                margin-bottom: -30px;
+            }
+
+            .home-category-grid,
+            #featuredProducts,
+            .why-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+<!-- =================================
+     HEADER
+================================= -->
+
+
+<header>
+
+    <div class="container">
+
+        <div class="header-top">
+
+            <!-- LOGO -->
+           <a href="index.html" class="logo">
+
+    <svg
+        class="navbar-logo-icon"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+    >
+        <path
+            d="M18 22h10l7 40h40l10-29H34"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="7"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        />
+
+        <path
+            d="M42 44h27"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="7"
+            stroke-linecap="round"
+        />
+
+        <circle
+            cx="40"
+            cy="76"
+            r="5"
+            fill="currentColor"
+        />
+
+        <circle
+            cx="72"
+            cy="76"
+            r="5"
+            fill="currentColor"
+        />
+
+        <path
+            d="M12 35h13M8 45h15"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="5"
+            stroke-linecap="round"
+        />
+    </svg>
+
+    <span class="navbar-logo-text">
+        Sei <strong>Mart</strong>
+    </span>
+
+</a>
+
+            <!-- SEARCH -->
+           <form
+    class="search-box"
+    onsubmit="return homeSearch(event)"
+>
+
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="Search products..."
+    >
+
+    <button type="submit">
+        🔍
+    </button>
+
+</form>
+
+<script>
+function homeSearch(event) {
+
+    event.preventDefault();
+
+    const searchInput =
+        document.getElementById("searchInput");
+
+    const searchText =
+        searchInput.value.trim();
+
+    if (!searchText) {
+        return false;
+    }
+
+    window.location.href =
+        "products.html?search=" +
+        encodeURIComponent(searchText);
+
+    return false;
+}
+</script>
+
+
+            <!-- ACCOUNT + CART -->
+            <div class="header-actions">
+
+                <div class="header-actions">
+
+    <div id="accountArea" class="account-link">
+
+        👤
+        <a href="login.html">
+            Sign In
+        </a>
+
+    </div>
+
+    <a
+        href="wishlist.html"
+        class="wishlist-link">
+
+        ❤️ Wishlist
+
+    </a>
+
+    <a
+        href="cart.html"
+        class="cart-link">
+
+        🛒 Cart
+
+        <span
+            id="cartCount"
+            class="cart-count">
+            0
+        </span>
+
+    </a>
+
+</div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- NAVIGATION -->
+    <nav class="navbar">
+
+        <div class="container">
+
+            <ul class="nav-menu">
+
+
+                <!-- ALL CATEGORIES -->
+                <li class="category-menu">
+
+                    <button
+                        type="button"
+                        class="category-dropdown">
+
+                        ☰ All Categories
+
+                    </button>
+
+
+                    <div class="category-list">
+
+                        <a href="products.html?category=electronics">
+                            Electronics
+                        </a>
+
+                        <a href="products.html?category=mobile">
+                            Mobile Accessories
+                        </a>
+
+                        <a href="products.html?category=fashion">
+                            Fashion
+                        </a>
+
+                        <a href="products.html?category=shoes">
+                            Shoes
+                        </a>
+
+                        <a href="products.html?category=cosmetics">
+                            Cosmetics
+                        </a>
+
+                        <a href="products.html?category=perfume">
+                            Perfume
+                        </a>
+
+                        <a href="products.html?category=watches">
+                            Watches
+                        </a>
+
+                        <a href="products.html?category=home">
+                            Home & Living
+                        </a>
+
+                        <a href="products.html?category=jewellery">
+                            Jewellery
+                        </a>
+
+                        <a href="products.html?category=beauty">
+                            Beauty & Personal Care
+                        </a>
+
+                    </div>
+
+                </li>
+
+
+                <!-- HOME -->
+                <li>
+                    <a href="index.html">
+                        Home
+                    </a>
+                </li>
+
+
+                <!-- PRODUCTS -->
+                <li>
+                    <a href="products.html">
+                        Products
+                    </a>
+                </li>
+
+
+                <!-- DEALS -->
+                <li>
+                    <a href="products.html?filter=deals">
+                        Today's Deals
+                    </a>
+                </li>
+
+
+                <!-- NEW ARRIVALS -->
+                <li>
+                    <a href="products.html?filter=new">
+                        New Arrivals
+                    </a>
+                </li>
+
+
+                <!-- HELP -->
+                <li>
+                    <a href="order-tracking.html">
+                        Order Tracking
+                    </a>
+                </li>
+
+                <li>
+                    <a href="help.html">
+                        Help & Support
+                    </a>
+                </li>
+
+
+                <!-- CONTACT -->
+                <li>
+                    <a href="contact.html">
+                        Contact
+                    </a>
+                </li>
+
+
+            </ul>
+
+        </div>
+
+    </nav>
+
+</header>
+
+
+
+
+<!-- =================================
+     SPECIAL HERO
+================================= -->
+
+<section class="special-hero sei-hero-pro" id="heroSliderSection">
+  <div class="hero-slider" id="heroSlider">
+    <article class="hero-slide active hero-slide-1" data-slide="0">
+      <div class="hero-pro-inner"><div class="hero-pro-copy"><span class="hero-kicker">SEI MART · PREMIUM SHOPPING</span><h1>Everything you want.<br><em>One smart place.</em></h1><p>Discover trending electronics, fashion, beauty and everyday essentials—carefully selected for you.</p><div class="hero-actions"><a href="products.html" class="hero-shop-btn">Shop Collection <span>→</span></a><a href="products.html?filter=new" class="hero-secondary-btn">New Arrivals</a></div><div class="hero-mini-proof"><span>★ 4.8/5</span><span>•</span><span>Quality picks</span><span>•</span><span>Nationwide delivery</span></div></div><div class="hero-visual"><div class="hero-glow"></div><div class="hero-orbit orbit-a"></div><div class="hero-orbit orbit-b"></div><div class="hero-product-frame"><img src="image/products/product-1.png" alt="Featured product"></div><div class="hero-float-card top"><b>NEW</b><span>Trending picks</span></div><div class="hero-float-card bottom"><strong>৳1,590</strong><span>Best value today</span></div></div></div>
+    </article>
+    <article class="hero-slide hero-slide-2" data-slide="1">
+      <div class="hero-pro-inner"><div class="hero-pro-copy"><span class="hero-kicker">WEEKLY DEALS · UP TO 30% OFF</span><h1>Smart deals.<br><em>Better everyday.</em></h1><p>Save on selected products across electronics, accessories, fashion and beauty. Limited-time offers.</p><div class="hero-actions"><a href="products.html?filter=deals" class="hero-shop-btn">Explore Deals <span>→</span></a><a href="products.html" class="hero-secondary-btn">Shop All</a></div><div class="hero-mini-proof"><span>🔥 Hot offers</span><span>•</span><span>Easy checkout</span><span>•</span><span>COD available</span></div></div><div class="hero-visual"><div class="deal-burst">SAVE<br><strong>30%</strong></div><div class="hero-product-frame hero-product-frame-2"><img src="image/products/product-2.png" alt="Special deal"></div><div class="hero-float-card top"><b>FLASH SALE</b><span>Limited stock</span></div><div class="hero-float-card bottom"><strong>SEI7</strong><span>Eligible offer</span></div></div></div>
+    </article>
+    <article class="hero-slide hero-slide-3" data-slide="2">
+      <div class="hero-pro-inner"><div class="hero-pro-copy"><span class="hero-kicker">BEAUTY · STYLE · LIFESTYLE</span><h1>Find your next<br><em>favorite.</em></h1><p>Fresh arrivals and everyday essentials designed to make online shopping simpler, faster and more enjoyable.</p><div class="hero-actions"><a href="products.html?filter=new" class="hero-shop-btn">Discover New <span>→</span></a><a href="sell-with-seimart.html" class="hero-secondary-btn">Sell with Sei Mart</a></div><div class="hero-mini-proof"><span>♡ Wishlist</span><span>•</span><span>Easy returns</span><span>•</span><span>Customer support</span></div></div><div class="hero-visual"><div class="hero-spark spark-1">✦</div><div class="hero-spark spark-2">✦</div><div class="hero-product-frame hero-product-frame-3"><img src="image/products/product-5.png" alt="New collection"></div><div class="hero-float-card top"><b>JUST IN</b><span>Fresh collection</span></div><div class="hero-float-card bottom"><strong>♡ SAVE</strong><span>Add to wishlist</span></div></div></div>
+    </article>
+  </div>
+  <div class="hero-bottom"><div class="hero-dots" id="heroDots"><button type="button" class="hero-dot active" data-i="0" aria-label="Slide 1"></button><button type="button" class="hero-dot" data-i="1" aria-label="Slide 2"></button><button type="button" class="hero-dot" data-i="2" aria-label="Slide 3"></button></div><div class="hero-progress"><span id="heroProgress"></span></div><div class="hero-counter"><b id="heroCurrent">01</b><span>/ 03</span></div></div>
+</section>
+<style>
+.sei-hero-pro{position:relative;overflow:hidden;background:#111;color:#fff;min-height:480px}.sei-hero-pro:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 78% 45%,rgba(201,162,39,.20),transparent 30%),linear-gradient(115deg,#101010,#171711 58%,#25200d);z-index:0}.hero-slider{position:relative;min-height:480px}.hero-slide{position:absolute;inset:0;opacity:0;visibility:hidden;transform:translateX(5%) scale(.985);transition:opacity .7s ease,transform .9s cubic-bezier(.2,.8,.2,1),visibility .7s}.hero-slide.active{position:relative;opacity:1;visibility:visible;transform:none}.hero-pro-inner{width:90%;max-width:1240px;min-height:480px;margin:auto;display:grid;grid-template-columns:1.02fr .98fr;align-items:center;gap:20px;position:relative;z-index:1}.hero-pro-copy{padding:45px 0 58px;max-width:650px}.hero-kicker{font-size:11px;letter-spacing:2.2px;color:#e4c65a;font-weight:800}.hero-pro-copy h1{font-size:clamp(38px,5vw,68px);line-height:1.02;margin:16px 0;color:#fff;letter-spacing:-2px}.hero-pro-copy h1 em{font-style:normal;color:#d4a017}.hero-pro-copy p{max-width:560px;color:#d5d5d5;font-size:16px;line-height:1.7;margin:0 0 25px}.hero-actions{display:flex;gap:11px;flex-wrap:wrap}.hero-shop-btn,.hero-secondary-btn{display:inline-flex;align-items:center;gap:12px;text-decoration:none;border-radius:9px;padding:13px 20px;font-weight:800}.hero-shop-btn{background:#d4a017;color:#111}.hero-shop-btn:hover{background:#e4bd42}.hero-secondary-btn{border:1px solid rgba(255,255,255,.25);color:#fff;background:rgba(255,255,255,.05)}.hero-mini-proof{display:flex;gap:9px;align-items:center;margin-top:22px;color:#aaa;font-size:12px}.hero-mini-proof span:first-child{color:#f0d26a;font-weight:800}.hero-visual{height:390px;position:relative;display:flex;align-items:center;justify-content:center}.hero-product-frame{width:310px;height:310px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#f8f1d6,#d6b43f);box-shadow:0 30px 70px rgba(0,0,0,.35),0 0 0 18px rgba(212,160,23,.07);animation:heroFloat 4s ease-in-out infinite}.hero-product-frame img{max-width:78%;max-height:78%;object-fit:contain;filter:drop-shadow(0 18px 18px rgba(0,0,0,.28))}.hero-product-frame-2{background:linear-gradient(145deg,#fff,#e8e0c9);animation-delay:.3s}.hero-product-frame-3{background:linear-gradient(145deg,#f7ead0,#c9a227);animation-delay:.6s}.hero-glow{position:absolute;width:330px;height:330px;border-radius:50%;background:rgba(212,160,23,.2);filter:blur(45px);animation:heroPulse 3s ease-in-out infinite}.hero-orbit{position:absolute;border:1px solid rgba(212,160,23,.3);border-radius:50%;width:390px;height:220px;transform:rotate(-25deg);animation:orbit 10s linear infinite}.orbit-b{width:250px;height:380px;transform:rotate(25deg);animation-direction:reverse}.hero-float-card{position:absolute;background:rgba(255,255,255,.94);color:#111;border-radius:11px;padding:11px 14px;box-shadow:0 14px 35px rgba(0,0,0,.25);display:flex;flex-direction:column;gap:2px;min-width:130px;animation:cardFloat 3.5s ease-in-out infinite}.hero-float-card b{font-size:10px;color:#a88418;letter-spacing:1px}.hero-float-card strong{font-size:17px}.hero-float-card span{font-size:10px;color:#777}.hero-float-card.top{right:2%;top:18%;transform:rotate(3deg)}.hero-float-card.bottom{left:2%;bottom:15%;transform:rotate(-3deg);animation-delay:1s}.deal-burst{position:absolute;right:4%;top:7%;width:82px;height:82px;border-radius:50%;background:#d4a017;color:#111;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.05;font-size:10px;font-weight:800;z-index:2;animation:burst 2.2s ease-in-out infinite}.deal-burst strong{font-size:22px}.hero-spark{position:absolute;color:#e7c95c;font-size:30px;animation:spark 2s ease-in-out infinite}.spark-1{left:8%;top:12%}.spark-2{right:10%;bottom:12%;animation-delay:.8s}.hero-bottom{position:absolute;left:5%;right:5%;bottom:18px;display:flex;align-items:center;gap:18px;z-index:4}.hero-dots{display:flex;gap:8px}.hero-dot{width:30px;height:4px;border:0;border-radius:99px;background:rgba(255,255,255,.3);padding:0;cursor:pointer;transition:.3s}.hero-dot.active{background:#d4a017;width:55px}.hero-progress{height:2px;background:rgba(255,255,255,.2);flex:1;overflow:hidden}.hero-progress span{display:block;width:0;height:100%;background:#d4a017}.hero-counter{font-size:11px;color:#aaa}.hero-counter b{color:#fff;font-size:15px}@keyframes heroFloat{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-12px) rotate(2deg)}}@keyframes heroPulse{0%,100%{opacity:.45;transform:scale(.92)}50%{opacity:.8;transform:scale(1.05)}}@keyframes orbit{to{transform:rotate(335deg)}}@keyframes cardFloat{0%,100%{margin-top:0}50%{margin-top:-10px}}@keyframes burst{0%,100%{transform:scale(1) rotate(3deg)}50%{transform:scale(1.08) rotate(-4deg)}}@keyframes spark{0%,100%{transform:scale(.8) rotate(0);opacity:.4}50%{transform:scale(1.3) rotate(25deg);opacity:1}}
+.hero-slide.active .hero-pro-copy>*{animation:copyIn .7s both}.hero-slide.active .hero-pro-copy h1{animation-delay:.08s}.hero-slide.active .hero-pro-copy p{animation-delay:.16s}.hero-slide.active .hero-actions{animation-delay:.24s}.hero-slide.active .hero-mini-proof{animation-delay:.32s}@keyframes copyIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@media(max-width:800px){.hero-slider,.sei-hero-pro{min-height:650px}.hero-pro-inner{grid-template-columns:1fr;min-height:650px;padding-top:20px}.hero-pro-copy{text-align:center;padding:32px 0 0;max-width:none}.hero-pro-copy h1{font-size:42px}.hero-pro-copy p{font-size:14px}.hero-actions,.hero-mini-proof{justify-content:center}.hero-visual{height:300px;margin-top:-10px}.hero-product-frame{width:230px;height:230px}.hero-orbit{width:290px;height:170px}.orbit-b{width:190px;height:280px}.hero-float-card.top{right:0}.hero-float-card.bottom{left:0}.hero-bottom{bottom:12px}}
+@media(max-width:480px){.hero-pro-copy h1{font-size:34px;letter-spacing:-1px}.hero-visual{height:260px}.hero-product-frame{width:195px;height:195px}.hero-float-card{min-width:105px;padding:8px 10px}.hero-mini-proof{font-size:10px;gap:5px}.hero-bottom{gap:9px}.hero-dot{width:18px}.hero-dot.active{width:35px}}
+</style>
+
+<!-- Trust bar -->
+<section class="trust-bar" style="background:#fff;border-bottom:1px solid #e3e9e4;padding:18px 0;">
+  <div style="width:90%;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;text-align:center;">
+    <div style="padding:8px;"><div style="font-size:22px;">🚚</div><strong style="display:block;font-size:13px;color:#17231d;margin-top:4px;">Fast Delivery</strong><small style="color:#7b877f;">Across Bangladesh</small></div>
+    <div style="padding:8px;"><div style="font-size:22px;">💳</div><strong style="display:block;font-size:13px;color:#17231d;margin-top:4px;">Secure Payment</strong><small style="color:#7b877f;">bKash · COD</small></div>
+    <div style="padding:8px;"><div style="font-size:22px;">✅</div><strong style="display:block;font-size:13px;color:#17231d;margin-top:4px;">Genuine Products</strong><small style="color:#7b877f;">Quality checked</small></div>
+    <div style="padding:8px;"><div style="font-size:22px;">💬</div><strong style="display:block;font-size:13px;color:#17231d;margin-top:4px;">Live Support</strong><small style="color:#7b877f;">We are here to help</small></div>
+  </div>
+</section>
+
+<!-- Today's Deals -->
+<section id="homeDealsSection" class="home-deals-section sei-legacy-deals" style="display:none;padding:48px 0;background:#f5f7f5;">
+    <div style="width:90%;max-width:1200px;margin:0 auto;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
+            <div>
+                <small style="color:#d4a017;font-weight:700;letter-spacing:2px;">HOT OFFERS</small>
+                <h2 style="margin:6px 0 0;color:#17231d;font-size:28px;">Today's Deals</h2>
+            </div>
+            <a href="products.html?filter=deals" style="color:#3f6f5a;font-weight:600;text-decoration:none;">View all deals →</a>
+        </div>
+        <div id="homeDealsGridLegacy" class="home-deals-grid"></div>
+    </div>
+</section>
+
+<!-- New Arrivals -->
+<section id="homeNewArrivalsSection" style="padding:48px 0;background:#fff;">
+  <div style="width:90%;max-width:1200px;margin:0 auto;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
+      <div>
+        <small style="color:#d4a017;font-weight:700;letter-spacing:2px;">JUST IN</small>
+        <h2 style="margin:6px 0 0;color:#17231d;font-size:28px;">New Arrivals</h2>
+      </div>
+      <a href="products.html?filter=new" style="color:#3f6f5a;font-weight:600;text-decoration:none;">View all →</a>
+    </div>
+    <div id="homeNewArrivalsGrid" class="home-deals-grid"></div>
+  </div>
+</section>
+<section id="homeRecentSection" style="display:none;padding:40px 0;background:#fafbfa;">
+  <div style="width:90%;max-width:1200px;margin:0 auto;">
+    <h2 style="margin:0 0 18px;color:#17231d;font-size:24px;">Recently Viewed</h2>
+    <div id="homeRecentGrid" class="home-deals-grid"></div>
+  </div>
+</section>
+
+
+<style>
+.home-deals-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:18px;}
+.home-deal-card{background:#fff;border:1px solid #e3e9e4;border-radius:12px;overflow:hidden;text-decoration:none;color:inherit;position:relative;transition:transform .2s,box-shadow .2s;}
+.home-deal-card:hover{transform:translateY(-4px);box-shadow:0 10px 28px rgba(31,52,41,.1);}
+.home-deal-img{aspect-ratio:1;background:#f0f3f1;overflow:hidden;}
+.home-deal-img img{width:100%;height:100%;object-fit:cover;}
+.home-deal-badge{position:absolute;top:10px;left:10px;background:#d4a017;color:#fff;font-size:12px;font-weight:700;padding:4px 8px;border-radius:6px;}
+.home-deal-info{padding:12px 14px;}
+.home-deal-info strong{display:block;font-size:14px;color:#17231d;margin-bottom:6px;line-height:1.3;}
+.home-deal-price{color:#3f6f5a;font-weight:700;font-size:15px;}
+@media(max-width:700px){
+  .trust-bar > div{grid-template-columns:repeat(2,1fr)!important;}
+  .home-deals-grid{grid-template-columns:repeat(2,1fr);gap:12px;}
+}
+</style>
+
+
+<!-- Professional ecommerce home sections -->
+<section class="sei-flash" id="seiFlashSale">
+  <div class="container sei-home-wrap">
+    <div class="sei-section-head"><div><span>LIMITED TIME</span><h2>🔥 Flash Sale</h2><p>Grab selected deals before the timer ends.</p></div><div class="sei-countdown" id="seiDealTimer">36 : 00 : 00</div></div>
+    <div id="homeDealsGrid" class="sei-product-grid"></div>
+  </div>
+</section>
+<section class="sei-best-section">
+  <div class="container sei-home-wrap">
+    <div class="sei-section-head"><div><span>SHOP SMART</span><h2>⭐ Best Sellers</h2><p>Popular picks customers love.</p></div><a class="sei-view-all" href="products.html">View all →</a></div>
+    <div id="seiBestSellersGrid" class="sei-product-grid"></div>
+  </div>
+</section>
+<section class="sei-promo-band">
+  <div class="container sei-promo-inner"><div><span>SEI MART SPECIAL</span><h2>Save more on your next order</h2><p>Use <b>SEI7</b> at checkout and enjoy your eligible offer.</p></div><a href="products.html?filter=deals">Shop Deals</a></div>
+</section>
+<section class="sei-trending-section">
+  <div class="container sei-home-wrap">
+    <div class="sei-section-head"><div><span>JUST IN</span><h2>✨ New & Trending</h2><p>Fresh products worth discovering.</p></div><a class="sei-view-all" href="products.html?filter=new">View all →</a></div>
+    <div id="seiTrendingGrid" class="sei-product-grid"></div>
+  </div>
+</section>
+<section class="sei-reviews-section">
+  <div class="container sei-home-wrap"><div class="sei-section-head centered"><div><span>REAL CUSTOMERS</span><h2>What shoppers say</h2><p>Simple, reliable and convenient shopping.</p></div></div>
+    <div class="sei-review-grid">
+      <article><div>★★★★★</div><p>“The shopping experience is clean and easy. I found what I needed quickly.”</p><strong>Verified Shopper</strong><small>Sei Mart customer</small></article>
+      <article><div>★★★★★</div><p>“Product information, pricing and checkout are easy to understand.”</p><strong>Happy Customer</strong><small>Sei Mart customer</small></article>
+      <article><div>★★★★★</div><p>“A simple place to discover products without unnecessary steps.”</p><strong>Regular Shopper</strong><small>Sei Mart customer</small></article>
+    </div>
+  </div>
+</section>
+<section class="sei-newsletter">
+  <div class="container sei-news-inner"><div><span>STAY UPDATED</span><h2>Get offers & new arrivals</h2><p>Be the first to know about new products and special deals.</p></div><form id="seiNewsletterForm"><input type="email" required placeholder="Enter your email address" aria-label="Email address"><button type="submit">Subscribe</button></form></div>
+</section>
+
+<!-- =================================
+     CATEGORIES
+================================= -->
+
+<section class="home-categories">
+
+    <div class="container">
+
+        <div class="home-section-title">
+
+            <h2>
+                Shop by Category
+            </h2>
+
+            <p>
+                Explore our popular product categories
+            </p>
+
+        </div>
+
+
+        <div class="home-category-grid">
+
+
+            <a
+                href="products.html?category=electronics"
+                class="home-category-card"
+            >
+
+                <div class="home-category-icon">
+                    🎧
+                </div>
+
+                <h3>
+                    Electronics
+                </h3>
+
+            </a>
+
+
+            <a
+                href="products.html?category=mobile"
+                class="home-category-card"
+            >
+
+                <div class="home-category-icon">
+                    📱
+                </div>
+
+                <h3>
+                    Mobile Accessories
+                </h3>
+
+            </a>
+
+
+            <a
+                href="products.html?category=fashion"
+                class="home-category-card"
+            >
+
+                <div class="home-category-icon">
+                    👕
+                </div>
+
+                <h3>
+                    Fashion
+                </h3>
+
+            </a>
+
+
+            <a
+                href="products.html?category=shoes"
+                class="home-category-card"
+            >
+
+                <div class="home-category-icon">
+                    👟
+                </div>
+
+                <h3>
+                    Shoes
+                </h3>
+
+            </a>
+
+
+            <a
+                href="products.html?category=cosmetics"
+                class="home-category-card"
+            >
+
+                <div class="home-category-icon">
+                    💄
+                </div>
+
+                <h3>
+                    Cosmetics
+                </h3>
+
+            </a>
+
+
+            <a
+                href="products.html?category=perfume"
+                class="home-category-card"
+            >
+
+                <div class="home-category-icon">
+                    🌸
+                </div>
+
+                <h3>
+                    Perfume
+                </h3>
+
+            </a>
+
+
+            <a
+                href="products.html?category=watches"
+                class="home-category-card"
+            >
+
+                <div class="home-category-icon">
+                    ⌚
+                </div>
+
+                <h3>
+                    Watches
+                </h3>
+
+            </a>
+
+
+            <a
+                href="products.html?category=home"
+                class="home-category-card"
+            >
+
+                <div class="home-category-icon">
+                    🏠
+                </div>
+
+                <h3>
+                    Home & Living
+                </h3>
+
+            </a>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =================================
+     FEATURED PRODUCTS
+================================= -->
+
+<section class="featured-section">
+
+    <div class="container">
+
+        <div class="home-section-title">
+
+            <h2>
+                Featured Products
+            </h2>
+
+            <p>
+                Check out some of our popular products
+            </p>
+
+        </div>
+
+
+        <div id="featuredProducts">
+
+            <!-- Products will load from script.js -->
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =================================
+     WHY SEI MART
+================================= -->
+
+<section class="why-section" id="help">
+
+    <div class="container">
+
+        <div class="home-section-title">
+
+            <h2>
+                Why Choose Sei Mart?
+            </h2>
+
+            <p>
+                Shopping made simple, safe and convenient
+            </p>
+
+        </div>
+
+
+        <div class="why-grid">
+
+
+            <div class="why-card">
+
+                <div class="icon">
+                    🚚
+                </div>
+
+                <h3>
+                    Fast Delivery
+                </h3>
+
+                <p>
+                    Quick and reliable delivery service.
+                </p>
+
+            </div>
+
+
+            <div class="why-card">
+
+                <div class="icon">
+                    🔒
+                </div>
+
+                <h3>
+                    Secure Shopping
+                </h3>
+
+                <p>
+                    Your shopping experience is safe with us.
+                </p>
+
+            </div>
+
+
+            <div class="why-card">
+
+                <div class="icon">
+                    💵
+                </div>
+
+                <h3>
+                    Cash on Delivery
+                </h3>
+
+                <p>
+                    Pay conveniently when your order arrives.
+                </p>
+
+            </div>
+
+
+            <div class="why-card">
+
+                <div class="icon">
+                    📞
+                </div>
+
+                <h3>
+                    Customer Support
+                </h3>
+
+                <p>
+                    We are here to help whenever you need.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+
+<!-- =================================
+     SEI MART PREMIUM FOOTER
+================================= -->
+
+
+
+
+<!-- =================================
+     FOOTER CSS
+================================= -->
+
+<style>
+
+.site-footer {
+    background:
+        linear-gradient(
+            135deg,
+            #0f3025 0%,
+            #123d2d 55%,
+            #0b281e 100%
+        );
+
+    color: #dcebe4;
+    margin-top: 70px;
+    position: relative;
+    overflow: hidden;
+}
+
+
+.site-footer::before {
+    content: "";
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    background: rgba(212, 160, 23, 0.06);
+    top: -220px;
+    right: -120px;
+}
+
+
+.footer-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    position: relative;
+    z-index: 2;
+}
+
+
+.footer-grid {
+    display: grid;
+    grid-template-columns:
+        1.45fr
+        1fr
+        1.15fr
+        1.25fr;
+
+    gap: 45px;
+
+    padding:
+        60px 0
+        48px;
+}
+
+
+.footer-column h3 {
+    color: #ffffff;
+    font-size: 18px;
+    margin:
+        0 0 22px;
+
+    position: relative;
+}
+
+
+.footer-column h3::after {
+    content: "";
+    display: block;
+
+    width: 32px;
+    height: 3px;
+
+    background: #d4a017;
+
+    border-radius: 10px;
+
+    margin-top: 9px;
+}
+
+
+/* =================================
+   LOGO
+================================= */
+
+.footer-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    text-decoration: none;
+
+    color: #ffffff;
+}
+
+
+.footer-logo-icon {
+    width: 54px;
+    height: 54px;
+
+    color: #d4a017;
+
+    flex-shrink: 0;
+}
+
+
+.footer-logo-text {
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+
+.footer-logo-text strong {
+    color: #d4a017;
+}
+
+
+.footer-tagline {
+    margin:
+        3px 0 14px 64px;
+
+    font-size: 10px;
+
+    letter-spacing: 5px;
+
+    color: #d4a017;
+
+    font-weight: 700;
+}
+
+
+.footer-description {
+    color: #a9c0b6;
+
+    font-size: 14px;
+
+    line-height: 1.75;
+
+    max-width: 310px;
+
+    margin:
+        0 0 8px;
+}
+
+
+/* =================================
+   SOCIAL ICONS
+================================= */
+
+.footer-social {
+    display: flex;
+
+    gap: 11px;
+
+    margin-top: 22px;
+}
+
+
+.footer-social a {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    background: #183e30;
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        background .25s ease;
+}
+
+
+.footer-social svg {
+    width: 20px;
+    height: 20px;
+}
+
+
+.footer-social a:hover {
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 8px 20px
+        rgba(0,0,0,.25);
+}
+
+
+.social-facebook:hover {
+    background: #1877f2;
+}
+
+
+.social-instagram:hover {
+    background:
+        linear-gradient(
+            135deg,
+            #833ab4,
+            #fd1d1d,
+            #fcb045
+        );
+}
+
+
+.social-whatsapp:hover {
+    background: #25d366;
+}
+
+
+.social-youtube:hover {
+    background: #ff0000;
+}
+
+
+/* =================================
+   LINKS
+================================= */
+
+.footer-links {
+    list-style: none;
+
+    margin: 0;
+    padding: 0;
+}
+
+
+.footer-links li {
+    margin-bottom: 13px;
+}
+
+
+.footer-links a {
+    color: #a9c0b6;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    display: inline-block;
+
+    transition:
+        color .25s ease,
+        transform .25s ease;
+}
+
+
+.footer-links a::before {
+    content: "›";
+
+    color: #d4a017;
+
+    margin-right: 8px;
+
+    font-weight: 700;
+}
+
+
+.footer-links a:hover {
+    color: #ffffff;
+
+    transform: translateX(5px);
+}
+
+
+/* =================================
+   CONTACT
+================================= */
+
+.footer-contact {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+}
+
+
+.footer-contact-item {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    color: #a9c0b6;
+
+    text-decoration: none;
+
+    transition: .25s ease;
+}
+
+
+.footer-contact-item:hover {
+    color: #ffffff;
+
+    transform: translateX(3px);
+}
+
+
+.contact-icon {
+    width: 30px;
+    height: 30px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: rgba(212,160,23,.12);
+
+    color: #d4a017;
+
+    font-size: 16px;
+}
+
+
+.footer-contact-item strong {
+    display: block;
+
+    color: #ffffff;
+
+    font-size: 13px;
+
+    margin-bottom: 2px;
+}
+
+
+.footer-contact-item small {
+    display: block;
+
+    font-size: 13px;
+
+    color: #9fb8ad;
+}
+
+
+/* =================================
+   FOLLOW
+================================= */
+
+.footer-follow {
+    border-top:
+        1px solid
+        rgba(255,255,255,.10);
+
+    margin-top: 22px;
+
+    padding-top: 18px;
+}
+
+
+.footer-follow-title {
+    color: #ffffff;
+
+    font-size: 15px;
+
+    font-weight: 700;
+}
+
+
+.footer-follow p {
+    color: #9fb8ad;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+    margin:
+        6px 0 0;
+}
+
+
+/* =================================
+   BOTTOM
+================================= */
+
+.footer-bottom {
+    border-top:
+        1px solid
+        rgba(255,255,255,.12);
+
+    background:
+        rgba(0,0,0,.12);
+}
+
+
+.footer-bottom-inner {
+    width: 90%;
+    max-width: 1200px;
+
+    margin: auto;
+
+    min-height: 70px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+
+.footer-bottom-inner p {
+    margin: 0;
+
+    color: #9fb8ad;
+
+    font-size: 13px;
+}
+
+
+.footer-bottom-features {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    color: #b8cec5;
+
+    font-size: 13px;
+}
+
+
+.footer-divider {
+    color: #55756a;
+}
+
+
+/* =================================
+   TABLET
+================================= */
+
+@media (max-width: 950px) {
+
+    .footer-grid {
+        grid-template-columns:
+            1.4fr 1fr 1fr;
+
+        gap: 35px;
+    }
+
+    .footer-brand {
+        grid-column: span 3;
+    }
+
+    .footer-description {
+        max-width: 500px;
+    }
+
+}
+
+
+/* =================================
+   MOBILE
+================================= */
+
+@media (max-width: 650px) {
+
+    .site-footer {
+        margin-top: 45px;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+
+        gap: 32px;
+
+        padding:
+            45px 0
+            35px;
+    }
+
+    .footer-brand {
+        grid-column: auto;
+    }
+
+    .footer-logo-text {
+        font-size: 27px;
+    }
+
+    .footer-logo-icon {
+        width: 48px;
+        height: 48px;
+    }
+
+    .footer-tagline {
+        margin-left: 58px;
+    }
+
+    .footer-bottom-inner {
+        flex-direction: column;
+
+        justify-content: center;
+
+        text-align: center;
+
+        padding: 18px 0;
+    }
+
+    .footer-bottom-features {
+        flex-wrap: wrap;
+
+        justify-content: center;
+
+        line-height: 1.8;
+    }
+
+}
+
+/* =========================================
+   SEI MART PROMO POPUP
+========================================= */
+
+.promo-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.60);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 99999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.promo-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.promo-popup {
+    width: 100%;
+    max-width: 480px;
+    background: #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.30);
+    transform: translateY(25px) scale(0.96);
+    transition: all 0.3s ease;
+}
+
+.promo-overlay.show .promo-popup {
+    transform: translateY(0) scale(1);
+}
+
+.promo-close {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    width: 34px;
+    height: 34px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.18);
+    color: #ffffff;
+    font-size: 22px;
+    cursor: pointer;
+    z-index: 5;
+    transition: 0.25s ease;
+}
+
+.promo-close:hover {
+    background: #ffffff;
+    color: #3f6f5a;
+}
+
+.promo-top {
+    background: linear-gradient(135deg, #3f6f5a, #315744);
+    color: #ffffff;
+    text-align: center;
+    padding: 32px 25px 28px;
+}
+
+.promo-icon {
+    font-size: 42px;
+    margin-bottom: 8px;
+}
+
+.promo-top h2 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 800;
+}
+
+.promo-top h2 span {
+    color: #e8c65a;
+}
+
+.promo-top p {
+    margin: 8px 0 0;
+    color: #e7f1ec;
+    font-size: 14px;
+}
+
+.promo-body {
+    padding: 25px;
+    text-align: center;
+}
+
+.promo-offer {
+    background: #f7f4e8;
+    border: 1px dashed #d4a017;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 18px;
+}
+
+.promo-offer strong {
+    display: block;
+    color: #3f6f5a;
+    font-size: 20px;
+    margin-bottom: 7px;
+}
+
+.promo-code {
+    display: inline-block;
+    background: #3f6f5a;
+    color: #ffffff;
+    padding: 8px 18px;
+    border-radius: 7px;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.promo-bkash {
+    color: #555555;
+    font-size: 14px;
+    margin: 15px 0 20px;
+}
+
+.promo-bkash strong {
+    color: #3f6f5a;
+}
+
+.promo-browse-btn {
+    display: block;
+    width: 100%;
+    padding: 13px 20px;
+    border-radius: 9px;
+    background: #d4a017;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 700;
+    transition: 0.25s ease;
+}
+
+.promo-browse-btn:hover {
+    background: #b88a0f;
+    transform: translateY(-1px);
+}
+
+.promo-note {
+    margin: 13px 0 0;
+    color: #999999;
+    font-size: 11px;
+}
+
+@media (max-width: 600px) {
+
+    .promo-popup {
+        max-width: 360px;
+        border-radius: 16px;
+    }
+
+    .promo-top {
+        padding: 27px 20px 24px;
+    }
+
+    .promo-top h2 {
+        font-size: 25px;
+    }
+
+    .promo-icon {
+        font-size: 36px;
+    }
+
+    .promo-body {
+        padding: 20px;
+    }
+
+    .promo-offer strong {
+        font-size: 18px;
+    }
+
+    .promo-code {
+        font-size: 16px;
+    }
+}
+
+</style>
+
+
+<!-- =================================
+     JAVASCRIPT
+================================= -->
+
+<script src="script.js"></script>
+
+<!-- =========================================
+     PROMOTIONAL COUPON POPUP
+========================================= -->
+
+<div class="promo-overlay" id="promoOverlay">
+
+    <div class="promo-popup">
+
+        <button
+            type="button"
+            class="promo-close"
+            onclick="closePromoPopup()"
+            aria-label="Close">
+            ×
+        </button>
+
+        <div class="promo-top">
+
+            <div class="promo-icon">
+                🎉
+            </div>
+
+            <h2 id="promoTitle">
+                Special <span>Offer!</span>
+            </h2>
+
+            <p id="promoMessage">
+                Get 10% off with code WELCOME10
+            </p>
+
+        </div>
+
+        <div class="promo-body">
+
+            <div class="promo-offer">
+
+                <strong id="promoOfferTitle">
+                    FREE DELIVERY
+                </strong>
+
+                <div class="promo-code" id="promoOfferCode">
+                    ৳1500+ ORDER
+                </div>
+
+            </div>
+
+            <div class="promo-bkash" id="promoShopText">
+                🚚 Shop <strong>৳1500+</strong> and get <strong>FREE DELIVERY</strong>
+            </div>
+
+            <a
+                href="products.html"
+                class="promo-browse-btn"
+                onclick="closePromoPopup()">
+                🛍 Browse Products
+            </a>
+
+            <p class="promo-note" id="promoNote">
+                Spend ৳1500 or more in one order and your standard ৳120 delivery fee is automatically waived.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<section class="sell-with-banner" style="padding:48px 0;background:#fff;">
+  <div style="width:90%;max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.2fr 1fr;gap:28px;align-items:center;background:linear-gradient(135deg,#3f6f5a,#315744);border-radius:20px;padding:36px 28px;color:#fff;">
+    <div>
+      <small style="color:#e8c65a;font-weight:700;letter-spacing:1.5px;">SELLER PROGRAM</small>
+      <h2 style="margin:8px 0 12px;font-size:28px;">Sell with Sei Mart</h2>
+      <p style="margin:0 0 18px;opacity:.95;line-height:1.6;">Reach more customers across Bangladesh. List your products, manage orders, and grow with our seller tools.</p>
+      <a href="sell-with-seimart.html" style="display:inline-block;background:#e8c65a;color:#17231d;font-weight:800;padding:12px 20px;border-radius:10px;text-decoration:none;">Apply to Sell →</a> <a href="seller-login.html" style="display:inline-block;margin-left:10px;background:#fff;color:#17231d;font-weight:700;padding:12px 18px;border-radius:10px;text-decoration:none;">Seller Login</a> <a href="affiliate.html" style="display:inline-block;margin-left:10px;background:transparent;color:#fff;font-weight:700;padding:12px 18px;border-radius:10px;text-decoration:none;border:1px solid rgba(255,255,255,.4);">Affiliate Login</a>
+    </div>
+    <div style="text-align:center;">
+      <img src="image/logo-seimart.png" alt="Sei Mart" style="width:120px;height:120px;object-fit:contain;background:#fff;border-radius:20px;padding:12px;">
+    </div>
+  </div>
+</section>
+<style>@media(max-width:700px){.sell-with-banner > div{grid-template-columns:1fr!important;text-align:center;}}</style>
+
+
+<script>
+/* =========================================
+   PROMO POPUP CONTROL
+========================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    // ---- Load Website Content (Banner + Popup) ----
+    var content = {};
+    try { content = JSON.parse(localStorage.getItem("seiMartWebsiteContent") || "{}"); } catch (e) {}
+
+    var banner = content.banner || {};
+    if (banner.eyebrow) {
+        var el = document.getElementById("heroEyebrow");
+        if (el) el.textContent = banner.eyebrow;
+    }
+    if (banner.title) {
+        var ht = document.getElementById("heroTitle");
+        var hi = document.getElementById("heroTitleHighlight");
+        if (ht) {
+            var highlight = banner.titleHighlight || "MART";
+            var title = banner.title;
+            if (highlight && title.indexOf(highlight) >= 0) {
+                ht.innerHTML = title.replace(highlight, '<span id="heroTitleHighlight">' + highlight + '</span>');
+            } else {
+                ht.innerHTML = title + ' <span id="heroTitleHighlight">' + highlight + '</span>';
+            }
+        }
+    }
+    if (banner.subtitle) {
+        var hs = document.getElementById("heroSubtitle");
+        if (hs) hs.textContent = banner.subtitle;
+    }
+    if (banner.description) {
+        var hd = document.getElementById("heroDescription");
+        if (hd) hd.textContent = banner.description;
+    }
+    if (banner.buttonText) {
+        var hb = document.getElementById("heroButton");
+        if (hb) {
+            hb.innerHTML = "🛍 " + banner.buttonText;
+            if (banner.buttonLink) hb.setAttribute("href", banner.buttonLink);
+        }
+    }
+    if (banner.image) {
+        var hero = document.querySelector(".special-hero");
+        if (hero) {
+            hero.classList.add("has-image");
+            hero.style.backgroundImage = "url('" + banner.image.replace(/'/g, "%27") + "')";
+        }
+    }
+
+    // Promo popup from admin — all campaign text is controlled from Admin > Website > Promotional Popup
+    var popupData = content.popup || {};
+    var promoClosed = sessionStorage.getItem("seiMartPromoClosed");
+    var enabled = popupData.enabled !== false;
+    var promoDefaults = {
+        title: "Special Offer!",
+        message: "Get 10% off with code WELCOME10",
+        offerTitle: "FREE DELIVERY",
+        offerCode: "৳1500+ ORDER",
+        shopText: "🚚 Shop ৳1500+ and get FREE DELIVERY",
+        note: "Spend ৳1500 or more in one order and your standard ৳120 delivery fee is automatically waived.",
+        buttonText: "Browse Products"
+    };
+    var promo = Object.assign({}, promoDefaults, popupData);
+    var pt = document.getElementById("promoTitle");
+    var pm = document.getElementById("promoMessage");
+    var pot = document.getElementById("promoOfferTitle");
+    var poc = document.getElementById("promoOfferCode");
+    var pst = document.getElementById("promoShopText");
+    var pn = document.getElementById("promoNote");
+    var pb = document.querySelector("#promoOverlay .promo-browse-btn");
+    if (pt) pt.innerHTML = promo.title;
+    if (pm) pm.textContent = promo.message;
+    if (pot) pot.textContent = promo.offerTitle;
+    if (poc) poc.textContent = promo.offerCode;
+    if (pst) {
+        var shop = String(promo.shopText || "");
+        pst.textContent = shop;
+    }
+    if (pn) pn.textContent = promo.note;
+    if (pb) pb.innerHTML = "🛍 " + promo.buttonText;
+
+    if (enabled && !promoClosed) {
+        setTimeout(function () {
+            var popup = document.getElementById("promoOverlay");
+            if (popup) popup.classList.add("show");
+        }, 800);
+    }
+
+    // ---- Today's Deals from products ----
+    renderHomeDeals();
+});
+
+function productCardHTML(p) {
+    var price = Number(p.price) || 0;
+    var disc = Number(p.discount) || 0;
+    var finalP = disc ? Math.round(price * (1 - disc / 100)) : price;
+    var img = p.image || "https://placehold.co/400x400?text=Product";
+    return '<a href="product-details.html?id=' + encodeURIComponent(p.id) + '" class="home-deal-card">' +
+        '<div class="home-deal-img"><img src="' + img + '" alt=""></div>' +
+        (disc ? '<span class="home-deal-badge">-' + disc + '%</span>' : '') +
+        '<div class="home-deal-info"><strong>' + (p.name || "") + '</strong>' +
+        '<div class="home-deal-price">৳' + finalP.toLocaleString("en-BD") +
+        (disc ? ' <small style="text-decoration:line-through;color:#999;margin-left:6px;">৳' + price.toLocaleString("en-BD") + '</small>' : '') +
+        '</div></div></a>';
+}
+
+function renderHomeDeals() {
+    if (typeof getProducts !== "function") return;
+    var all = getProducts();
+
+    var mount = document.getElementById("homeDealsSection");
+    var grid = document.getElementById("homeDealsGrid");
+    if (mount && grid) {
+        var deals = all.filter(function (p) { return p.deal === true; });
+        if (!deals.length) deals = all.filter(function (p) { return Number(p.discount) > 0; }).slice(0, 8);
+        if (!deals.length) mount.style.display = "none";
+        else {
+            mount.style.display = "block";
+            grid.innerHTML = deals.slice(0, 8).map(productCardHTML).join("");
+        }
+    }
+
+    // New arrivals = last items in catalog (or isNew flag)
+    var naMount = document.getElementById("homeNewArrivalsSection");
+    var naGrid = document.getElementById("homeNewArrivalsGrid");
+    if (naMount && naGrid) {
+        var news = all.filter(function (p) { return p.isNew === true; });
+        if (!news.length) news = all.slice().reverse().slice(0, 8);
+        naGrid.innerHTML = news.slice(0, 8).map(productCardHTML).join("");
+    }
+    var rMount = document.getElementById("homeRecentSection");
+    var rGrid = document.getElementById("homeRecentGrid");
+    if (rMount && rGrid && typeof getRecentlyViewedProducts === "function") {
+        var recent = getRecentlyViewedProducts().slice(0, 8);
+        if (recent.length) {
+            rMount.style.display = "block";
+            rGrid.innerHTML = recent.map(productCardHTML).join("");
+        }
+    }
+}
+
+
+
+function closePromoPopup() {
+
+    const popup =
+        document.getElementById("promoOverlay");
+
+    if (popup) {
+        popup.classList.remove("show");
+    }
+
+    sessionStorage.setItem(
+        "seiMartPromoClosed",
+        "true"
+    );
+}
+
+
+/* Close when clicking outside popup */
+
+document.addEventListener("click", function (event) {
+
+    const overlay =
+        document.getElementById("promoOverlay");
+
+    if (
+        overlay &&
+        event.target === overlay
+    ) {
+        closePromoPopup();
+    }
+
+});
+</script>
+
+
+<script>
+(function(){
+  var slides = document.querySelectorAll("#heroSlider .hero-slide");
+  var dots = document.querySelectorAll("#heroDots .hero-dot");
+  var i = 0;
+  function show(n){
+    i = (n + slides.length) % slides.length;
+    slides.forEach(function(s,idx){ s.classList.toggle("active", idx===i); });
+    dots.forEach(function(d,idx){ d.classList.toggle("active", idx===i); });
+  }
+  dots.forEach(function(d){ d.addEventListener("click", function(){ show(Number(d.getAttribute("data-i"))); }); });
+  setInterval(function(){ show(i+1); }, 5000);
+})();
+</script>
+
+<script src="js/pro-enhancements.js"></script>
+</body>
+</html>
+
+
+
